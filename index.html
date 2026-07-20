@@ -10,7 +10,7 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <!-- Layer 0: Canvas for Flowers & Cinematic Dust -->
+    <!-- LAYER 0: Canvas for Flowers & Cinematic Dust -->
     <canvas id="atmosphere-canvas"></canvas>
     
     <div id="youtube-player"></div>
@@ -32,109 +32,119 @@
         </div>
     </div>
 
-    <!-- Scene 2: The Journey (Layer 1 Panels) -->
+    <!-- Scene 2: The Journey -->
     <div id="invitation-content" class="hidden">
         
-        <!-- Section 1: Basmala (Emerald Theme) -->
-        <div class="layer-1-panel bg-quran">
-            <div class="panel-content">
-                <div class="corner top-left">✧</div><div class="corner top-right">✧</div>
-                <div class="corner bottom-left">✧</div><div class="corner bottom-right">✧</div>
-                <div class="basmala">بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ</div>
-                <div class="quran-verse">
-                    "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+        <!-- LAYER 1: Fixed Backgrounds with Fade Animation (Alpha 77%) -->
+        <div id="layer-1-backgrounds">
+            <div class="bg-panel bg-quran active"></div>
+            <div class="bg-panel bg-names"></div>
+            <div class="bg-panel bg-venue"></div>
+            <div class="bg-panel bg-clock"></div>
+            <div class="bg-panel bg-rules"></div>
+            <div class="bg-panel bg-lantern"></div>
+            <div class="bg-panel bg-end"></div>
+        </div>
+
+        <!-- LAYER 2: Scrollable Content with Scroll-Snap -->
+        <div id="layer-2-content">
+            
+            <!-- Card 1: Basmala -->
+            <section class="card-section" data-index="0">
+                <div class="card-glass">
+                    <div class="basmala">بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ</div>
+                    <div class="quran-verse">
+                        "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- Section 2: Names (Burgundy Theme) -->
-        <div class="layer-1-panel bg-names has-decorations">
-            <div class="panel-content">
-                <div class="decorations">
-                    <div class="hanging-star delay-a">✦</div>
-                    <div class="hanging-star delay-b">✧</div>
-                    <div class="hanging-star delay-c">✦</div>
+            <!-- Card 2: Names -->
+            <section class="card-section has-decorations" data-index="1">
+                <div class="card-glass">
+                    <div class="decorations">
+                        <div class="hanging-star delay-a">✦</div>
+                        <div class="hanging-star delay-b">✧</div>
+                        <div class="hanging-star delay-c">✦</div>
+                    </div>
+                    <h1 class="names" data-en="Mohamed<br><span class='and-symbol'>&</span><br>Asmaa">محمد<br><span class="and-symbol">و</span><br>أسماء</h1>
+                    <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab">يتشرفان بدعوتكم لحضور عقد قرانهما</p>
+                    <div class="gold-line"></div>
+                    <p class="date" data-en="Friday, Sept 4, 2026">الجمعة، ٤ سبتمبر ٢٠٢٦</p>
                 </div>
-                <h1 class="names" data-en="Mohamed<br><span class='and-symbol'>&</span><br>Asmaa">محمد<br><span class="and-symbol">و</span><br>أسماء</h1>
-                <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab">يتشرفان بدعوتكم لحضور عقد قرانهما</p>
-                <div class="gold-line"></div>
-                <p class="date" data-en="Friday, Sept 4, 2026">الجمعة، ٤ سبتمبر ٢٠٢٦</p>
-            </div>
-        </div>
+            </section>
 
-        <!-- Section 3: Venue (Midnight Blue Theme) -->
-        <div class="layer-1-panel bg-venue has-car">
-            <div class="car-wrapper"><div class="classic-car"></div></div>
-            <div class="panel-content">
-                <h2 class="section-title" data-en="The Venue">مكان العقد</h2>
-                <div class="venue-card">
-                    <p class="location-name" data-en="Masjid Al-Ali Al-Azim">مسجد العلي العظيم</p>
-                    <p class="location-area" data-en="Almaza, Cairo">ألماظة، القاهرة</p>
-                    <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn map-btn" data-en="Open in Google Maps">فتح على خرائط جوجل</a>
+            <!-- Card 3: Venue -->
+            <section class="card-section has-car" data-index="2">
+                <div class="car-wrapper"><div class="classic-car"></div></div>
+                <div class="card-glass">
+                    <h2 class="section-title" data-en="The Venue">مكان العقد</h2>
+                    <div class="venue-card">
+                        <p class="location-name" data-en="Masjid Al-Ali Al-Azim">مسجد العلي العظيم</p>
+                        <p class="location-area" data-en="Almaza, Cairo">ألماظة، القاهرة</p>
+                        <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn map-btn" data-en="Open in Google Maps">فتح على خرائط جوجل</a>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- Section 4: Clock (Vintage Sepia Theme) -->
-        <div class="layer-1-panel bg-clock clock-section">
-            <div class="panel-content">
-                <div class="clock-face">
-                    <div class="hand hour-hand"></div>
-                    <div class="hand minute-hand"></div>
-                    <div class="clock-center"></div>
+            <!-- Card 4: Clock -->
+            <section class="card-section clock-section" data-index="3">
+                <div class="card-glass">
+                    <div class="clock-face">
+                        <div class="hand hour-hand"></div>
+                        <div class="hand minute-hand"></div>
+                        <div class="clock-center"></div>
+                    </div>
+                    <p class="time-text" data-en="Promptly at Eight in the Evening">في تمام الساعة الثامنة مساءً</p>
                 </div>
-                <p class="time-text" data-en="Promptly at Eight in the Evening">في تمام الساعة الثامنة مساءً</p>
-            </div>
-        </div>
+            </section>
 
-        <!-- Section 5: Rules (Charcoal Theme) -->
-        <div class="layer-1-panel bg-rules rules-section">
-            <div class="panel-content">
-                <h2 class="section-title" data-en="Kindly Note">قواعد الحضور</h2>
-                <ul class="rules-list">
-                    <li data-en="Adults only celebration (No kids allowed, sweet dreams to them!)">نعتذر عن عدم استقبال الأطفال، نتمنى لهم نوماً هنيئاً.</li>
-                    <li data-en="Formal and elegant attire requested.">الالتزام بالزي الرسمي (فورمال).</li>
-                    <li data-en="Please arrive 15 minutes early to secure your seat.">نرجو التواجد قبل الموعد بـ ١٥ دقيقة.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Section 6: Lantern (Deep Purple Night Theme) -->
-        <div class="layer-1-panel bg-lantern interactive-scene">
-            <div class="panel-content">
-                <h2 class="section-title" data-en="Send a Blessing">أمنيات مضيئة</h2>
-                <p class="lantern-text" data-en="Tap the button to light a digital lantern for the couple.">اضغط على الزر لإضاءة وإطلاق فانوس أمنيات للعروسين في سماء هذه الليلة.</p>
-                <button class="btn lantern-btn" onclick="releaseLantern()" data-en="Light a Lantern">إطلاق أمنية</button>
-            </div>
-            <!-- Lanterns container covers full panel -->
-            <div id="lantern-container"></div>
-        </div>
-
-        <!-- Section 7 & 8: Duaa & Countdown (Warm Amber Theme) -->
-        <div class="layer-1-panel bg-end countdown-section">
-            <div class="panel-content">
-                <!-- Duaa -->
-                <div class="gold-line"></div>
-                <h1 class="names duaa" data-en="May Allah bless you, and shower His blessings upon you, and join you together in goodness.">
-                    بَارَكَ اللَّهُ لَكُمَا<br>وَبَارَكَ عَلَيْكُمَا<br>وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
-                </h1>
-                <div class="gold-line"></div>
-
-                <!-- Countdown -->
-                <h2 class="section-title" data-en="Counting Down the Moments" style="margin-top: 40px;">نعد اللحظات</h2>
-                <div id="countdown" class="countdown">
-                    <div class="time-box"><span id="days" class="en-num">00</span><p data-en="Days">يوم</p></div>
-                    <div class="time-box"><span id="hours" class="en-num">00</span><p data-en="Hours">ساعة</p></div>
-                    <div class="time-box"><span id="minutes" class="en-num">00</span><p data-en="Mins">دقيقة</p></div>
-                    <div class="time-box"><span id="seconds" class="en-num">00</span><p data-en="Secs">ثانية</p></div>
+            <!-- Card 5: Rules -->
+            <section class="card-section rules-section" data-index="4">
+                <div class="card-glass">
+                    <h2 class="section-title" data-en="Kindly Note">قواعد الحضور</h2>
+                    <ul class="rules-list">
+                        <li data-en="Adults only celebration (No kids allowed, sweet dreams to them!)">نعتذر عن عدم استقبال الأطفال، نتمنى لهم نوماً هنيئاً.</li>
+                        <li data-en="Formal and elegant attire requested.">الالتزام بالزي الرسمي (فورمال).</li>
+                        <li data-en="Please arrive 15 minutes early to secure your seat.">نرجو التواجد قبل الموعد بـ ١٥ دقيقة.</li>
+                    </ul>
                 </div>
-                
-                <div class="actions">
-                    <button onclick="downloadICS()" class="btn map-btn" data-en="Add to Calendar">أضف للتقويم</button>
+            </section>
+
+            <!-- Card 6: Lantern -->
+            <section class="card-section interactive-scene" data-index="5">
+                <div class="card-glass">
+                    <h2 class="section-title" data-en="Send a Blessing">أمنيات مضيئة</h2>
+                    <p class="lantern-text" data-en="Tap the button to light a digital lantern for the couple.">اضغط على الزر لإضاءة وإطلاق فانوس أمنيات للعروسين في سماء هذه الليلة.</p>
+                    <button class="btn lantern-btn" onclick="releaseLantern()" data-en="Light a Lantern">إطلاق أمنية</button>
                 </div>
-            </div>
+                <div id="lantern-container"></div>
+            </section>
+
+            <!-- Card 7: Duaa & Countdown -->
+            <section class="card-section countdown-section" data-index="6">
+                <div class="card-glass">
+                    <div class="gold-line"></div>
+                    <h1 class="names duaa" data-en="May Allah bless you, and shower His blessings upon you.">
+                        بَارَكَ اللَّهُ لَكُمَا<br>وَبَارَكَ عَلَيْكُمَا<br>وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
+                    </h1>
+                    <div class="gold-line"></div>
+
+                    <h2 class="section-title" data-en="Counting Down the Moments" style="margin-top: 40px;">نعد اللحظات</h2>
+                    <div id="countdown" class="countdown">
+                        <div class="time-box"><span id="days" class="en-num">00</span><p data-en="Days">يوم</p></div>
+                        <div class="time-box"><span id="hours" class="en-num">00</span><p data-en="Hours">ساعة</p></div>
+                        <div class="time-box"><span id="minutes" class="en-num">00</span><p data-en="Mins">دقيقة</p></div>
+                        <div class="time-box"><span id="seconds" class="en-num">00</span><p data-en="Secs">ثانية</p></div>
+                    </div>
+                    
+                    <div class="actions">
+                        <button onclick="downloadICS()" class="btn map-btn" data-en="Add to Calendar">أضف للتقويم</button>
+                    </div>
+                </div>
+            </section>
+            
         </div>
-        
     </div>
     <script src="script.js"></script>
 </body>

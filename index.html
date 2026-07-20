@@ -4,28 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دعوة زفاف - محمد وأسماء</title>
-    
-    <!-- Fixes the favicon 404 error -->
     <link rel="icon" href="data:,">
-    
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <!-- Cinematic Smoke & Dust Background -->
+    <!-- Canvas for Flowers & Cinematic Dust -->
     <canvas id="atmosphere-canvas"></canvas>
-    
-    <!-- Ultra-Realistic Transparent Video Overlay -->
-    <video id="cinematic-petals" autoplay loop muted playsinline>
-        <source src="falling-petals.webm" type="video/webm">
-    </video>
-
     <div id="youtube-player"></div>
-
     <button id="lang-toggle" onclick="toggleLanguage()">EN / عربي</button>
 
-    <!-- Scene 1: The Envelope -->
+    <!-- Scene 1: Envelope -->
     <div id="envelope-scene" class="scene">
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="envelope">
@@ -41,77 +31,87 @@
         </div>
     </div>
 
-    <!-- Scene 2: The Invitation -->
+    <!-- Scene 2: The 7-Section Journey -->
     <div id="invitation-content" class="hidden">
         <div class="card-texture">
-            <div class="corner top-left">✧</div>
-            <div class="corner top-right">✧</div>
-            <div class="corner bottom-left">✧</div>
-            <div class="corner bottom-right">✧</div>
+            <div class="corner top-left">✧</div><div class="corner top-right">✧</div>
+            <div class="corner bottom-left">✧</div><div class="corner bottom-right">✧</div>
 
+            <!-- Section 1: Basmala & Verse -->
             <div class="scroll-section reveal">
+                <div class="basmala">بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ</div>
                 <div class="quran-verse">
                     "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
                 </div>
             </div>
 
-            <div class="scroll-section reveal delay-1">
+            <!-- Section 2: Names & Hanging Decorations -->
+            <div class="scroll-section reveal has-decorations">
+                <!-- Hanging Decorations (CSS Animated) -->
+                <div class="decorations">
+                    <div class="hanging-star delay-a">✦</div>
+                    <div class="hanging-star delay-b">✧</div>
+                    <div class="hanging-star delay-c">✦</div>
+                </div>
+                
                 <h1 class="names" data-en="Mohamed<br><span class='and-symbol'>&</span><br>Asmaa">محمد<br><span class="and-symbol">و</span><br>أسماء</h1>
+                <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab">يتشرفان بدعوتكم لحضور عقد قرانهما</p>
+                <div class="gold-line"></div>
+                <p class="date" data-en="Friday, Sept 4, 2026">الجمعة، ٤ سبتمبر ٢٠٢٦</p>
             </div>
 
-            <div class="scroll-section reveal">
-                <div class="details">
-                    <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab">يتشرفان بدعوتكم لحضور عقد قرانهما</p>
-                    <div class="gold-line"></div>
-                    <p class="date" data-en="Friday, Sept 4, 2026<br>8:00 PM">الجمعة، ٤ سبتمبر ٢٠٢٦<br>٨:٠٠ مساءً</p>
-                    <p class="location" data-en="مسجد العلي العظيم, Almaza, Cairo">مسجد العلي العظيم، ألماظة، القاهرة</p>
+            <!-- Section 3: Venue & Moving Car -->
+            <div class="scroll-section reveal has-car">
+                <!-- Classic Car moving in background -->
+                <div class="car-wrapper"><div class="classic-car"></div></div>
+                
+                <h2 class="section-title" data-en="The Venue">مكان العقد</h2>
+                <div class="venue-card">
+                    <p class="location-name" data-en="Masjid Al-Ali Al-Azim">مسجد العلي العظيم</p>
+                    <p class="location-area" data-en="Almaza, Cairo">ألماظة، القاهرة</p>
+                    <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn map-btn" data-en="Open in Google Maps">فتح على خرائط جوجل</a>
                 </div>
             </div>
 
-            <div class="scroll-section reveal itinerary">
-                <h2 class="section-title" data-en="Timeline">برنامج الحفل</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <span class="time en-num">8:00 PM</span>
-                        <p data-en="Guest Arrival & Welcome">استقبال الضيوف</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="time en-num">8:30 PM</span>
-                        <p data-en="Katb El Ketab Ceremony">مراسم عقد القران</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="time en-num">9:30 PM</span>
-                        <p data-en="Celebration & Photos">الاحتفال والتقاط الصور</p>
-                    </div>
+            <!-- Section 4: 8:00 PM Clock -->
+            <div class="scroll-section reveal clock-section">
+                <div class="clock-face">
+                    <div class="hand hour-hand"></div>
+                    <div class="hand minute-hand"></div>
+                    <div class="clock-center"></div>
                 </div>
+                <p class="time-text" data-en="Promptly at Eight in the Evening">في تمام الساعة الثامنة مساءً</p>
             </div>
 
-            <div class="scroll-section reveal dress-code">
-                <h2 class="section-title" data-en="Dress Code">قواعد الزي</h2>
-                <p data-en="Formal & Elegant. We kindly ask our guests to embrace the classic cinematic theme.">
-                    رسمي وأنيق. نرجو من ضيوفنا الكرام الالتزام بالزي الرسمي الكلاسيكي.
-                </p>
+            <!-- Section 5: Rules -->
+            <div class="scroll-section reveal rules-section">
+                <h2 class="section-title" data-en="Kindly Note">قواعد الحضور</h2>
+                <ul class="rules-list">
+                    <li data-en="Adults only celebration (No kids allowed, sweet dreams to them!)">نعتذر عن عدم استقبال الأطفال، نتمنى لهم نوماً هنيئاً.</li>
+                    <li data-en="Formal and elegant attire requested.">الالتزام بالزي الرسمي (فورمال).</li>
+                    <li data-en="Please arrive 15 minutes early to secure your seat.">نرجو التواجد قبل الموعد بـ ١٥ دقيقة.</li>
+                </ul>
             </div>
 
-            <div class="scroll-section reveal">
-                <div id="countdown" class="countdown">
-                    <div class="time-box"><span id="days" class="en-num">00</span><p data-en="Days">يوم</p></div>
-                    <div class="time-box"><span id="hours" class="en-num">00</span><p data-en="Hours">ساعة</p></div>
-                    <div class="time-box"><span id="minutes" class="en-num">00</span><p data-en="Mins">دقيقة</p></div>
-                    <div class="time-box"><span id="seconds" class="en-num">00</span><p data-en="Secs">ثانية</p></div>
-                </div>
+            <!-- Section 6: Creative Idea (Floating Wish Lantern) -->
+            <div class="scroll-section reveal interactive-scene">
+                <h2 class="section-title" data-en="Send a Blessing">أمنيات مضيئة</h2>
+                <p class="lantern-text" data-en="Tap the button to light a digital lantern for the couple.">اضغط على الزر لإضاءة وإطلاق فانوس أمنيات للعروسين في سماء هذه الليلة.</p>
+                <button class="btn lantern-btn" onclick="releaseLantern()" data-en="Light a Lantern">إطلاق أمنية</button>
+                <div id="lantern-container"></div>
             </div>
 
-            <div class="scroll-section reveal">
-                <div class="actions">
-                    <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map">الموقع على الخريطة</a>
-                    <button onclick="downloadICS()" class="btn" data-en="Add to Calendar">أضف للتقويم</button>
-                </div>
+            <!-- Section 7: Duaa -->
+            <div class="scroll-section reveal duaa-section">
+                <div class="gold-line"></div>
+                <h1 class="names duaa" data-en="May Allah bless you, and shower His blessings upon you, and join you together in goodness.">
+                    بَارَكَ اللَّهُ لَكُمَا<br>وَبَارَكَ عَلَيْكُمَا<br>وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
+                </h1>
+                <div class="gold-line"></div>
             </div>
             
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

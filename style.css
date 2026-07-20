@@ -6,13 +6,12 @@
 
 body {
     background-color: var(--dark-bg);
-    background-image: radial-gradient(circle at center, rgba(60, 25, 10, 0.4) 0%, rgba(5, 3, 2, 1) 100%);
     color: var(--text-light); font-family: 'Amiri', serif; overflow-x: hidden; overflow-y: hidden;
 }
 
 #lang-toggle { position: fixed; top: 20px; left: 20px; z-index: 100; background: rgba(0,0,0,0.5); border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; cursor: pointer; font-family: 'Cinzel', serif; backdrop-filter: blur(4px); transition: all 0.3s ease; }
 
-/* LAYER 0 (Background Animation) */
+/* LAYER 0 (Canvas) */
 #atmosphere-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
 /* ENVELOPE SCENE */
@@ -36,44 +35,15 @@ body {
 .envelope-wrapper.open .mini-letter { transform: translateY(-220px); transition-delay: 0.6s; z-index: 6; }
 .envelope-wrapper.open .envelope { transform: translateY(120vh) rotateZ(10deg); transition-delay: 1.5s; opacity: 0; }
 
-/* INVITATION CONTENT WRAPPER */
-#invitation-content { display: none; width: 100%; padding: 40px 0; }
+#invitation-content { display: none; width: 100%; height: 100vh; position: relative; }
 
 /* ==========================================
-   LAYER 1 PANELS (The 80% width, 100vh sections)
+   LAYER 1 (Fixed Backgrounds - Alpha 77%)
 ========================================== */
-.layer-1-panel {
-    width: 80vw;
-    max-width: 900px;
-    min-height: 100vh; /* Takes full screen height */
-    margin: 40px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    
-    /* The 77% Alpha Setup with Blur */
-    backdrop-filter: blur(8px);
-    border-left: 1px solid rgba(212, 175, 55, 0.4);
-    border-right: 1px solid rgba(212, 175, 55, 0.4);
-    box-shadow: 0 0 40px rgba(0,0,0,0.8);
-    
-    /* Starting state for JS Scroll fade */
-    opacity: 0.1; 
-    transform: scale(0.95);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-}
+#layer-1-backgrounds { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.bg-panel { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1s ease-in-out; }
+.bg-panel.active { opacity: 1; }
 
-.panel-content {
-    padding: 60px 40px;
-    text-align: center;
-    width: 100%;
-    position: relative;
-    z-index: 2;
-}
-
-/* Panel Themes (Imagined Colors with 0.77 Alpha) */
 .bg-quran { background: radial-gradient(circle at center, rgba(15, 35, 20, 0.77), rgba(5, 10, 5, 0.77)); }
 .bg-names { background: radial-gradient(circle at center, rgba(50, 10, 15, 0.77), rgba(15, 2, 5, 0.77)); }
 .bg-venue { background: radial-gradient(circle at center, rgba(10, 20, 45, 0.77), rgba(2, 5, 15, 0.77)); }
@@ -82,10 +52,41 @@ body {
 .bg-lantern { background: linear-gradient(to top, rgba(40, 10, 60, 0.77), rgba(5, 2, 15, 0.77)); }
 .bg-end { background: radial-gradient(circle at center, rgba(50, 40, 10, 0.77), rgba(15, 10, 2, 0.77)); }
 
-/* Corners for Panel 1 */
-.corner { position: absolute; color: var(--gold); font-size: 1.5rem; opacity: 0.5; }
-.top-left { top: 20px; left: 20px; } .top-right { top: 20px; right: 20px; }
-.bottom-left { bottom: 20px; left: 20px; } .bottom-right { bottom: 20px; right: 20px; }
+/* ==========================================
+   LAYER 2 (Scrollable Content with Snap)
+========================================== */
+#layer-2-content {
+    position: relative; z-index: 1; height: 100vh;
+    overflow-y: auto; overflow-x: hidden;
+    scroll-snap-type: y mandatory; /* MAGIC: Forces the fast slide/snap */
+    scroll-behavior: smooth;
+}
+
+.card-section {
+    width: 100%; height: 100vh; /* Each section is full height */
+    display: flex; justify-content: center; align-items: center;
+    scroll-snap-align: center; scroll-snap-stop: always;
+    position: relative;
+}
+
+/* The Glass Card (80% width, light alpha) */
+.card-glass {
+    width: 80%; max-width: 800px;
+    padding: 60px 40px; text-align: center;
+    background: rgba(10, 5, 2, 0.15); /* Very light alpha to show Layer 1 */
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 5px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 20px rgba(212, 175, 55, 0.05);
+    backdrop-filter: blur(4px); /* Slight blur to make text pop while keeping transparency */
+    
+    /* Reveal Animation inside the snapping scroll */
+    opacity: 0; transform: translateY(50px) scale(0.95);
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+.card-section.in-view .card-glass {
+    opacity: 1; transform: translateY(0) scale(1);
+}
 
 /* TYPOGRAPHY */
 .section-title { font-family: 'Aref Ruqaa', serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; text-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
@@ -103,41 +104,41 @@ body {
 .event-type { font-size: 1.6rem; margin-top: 10px; }
 .date { font-size: 1.8rem; font-weight: bold; color: var(--gold); }
 
-/* DECORATIONS (Panel 2) */
-.has-decorations .panel-content { padding-top: 60px; }
-.decorations { position: absolute; top: -10px; left: 0; width: 100%; display: flex; justify-content: space-around; pointer-events: none; }
-.hanging-star { color: var(--gold); font-size: 1.5rem; position: relative; opacity: 0.8; transform-origin: top; animation: swing 4s ease-in-out infinite alternate; }
+/* DECORATIONS */
+.has-decorations .card-glass { padding-top: 60px; }
+.decorations { position: absolute; top: 0; left: 0; width: 100%; display: flex; justify-content: space-around; pointer-events: none; }
+.hanging-star { color: var(--gold); font-size: 1.5rem; position: relative; opacity: 0; transform-origin: top; }
 .hanging-star::before { content: ''; position: absolute; bottom: 100%; left: 50%; width: 1px; height: 150px; background: linear-gradient(to top, var(--gold), transparent); }
+.card-section.in-view .hanging-star { opacity: 0.8; animation: swing 4s ease-in-out infinite alternate; }
 .delay-a { animation-delay: 0s; height: 30px; } .delay-b { animation-delay: 1s; height: 60px; } .delay-c { animation-delay: 2s; height: 20px; }
 @keyframes swing { 0% { transform: rotate(10deg); } 100% { transform: rotate(-10deg); } }
 
-/* VENUE & CAR (Panel 3) */
-.has-car { overflow: hidden; }
-.venue-card { background: rgba(0,0,0,0.4); padding: 30px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); display: inline-block; }
+/* VENUE & CAR */
+.has-car { position: relative; }
+.venue-card { background: rgba(0,0,0,0.2); padding: 30px; border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); display: inline-block; }
 .location-name { font-size: 2.2rem; color: var(--gold); font-family: 'Aref Ruqaa', serif; margin-bottom: 5px; }
 .location-area { font-size: 1.4rem; margin-bottom: 20px; }
 .btn, .map-btn { display: inline-block; background: rgba(212, 175, 55, 0.1); color: var(--gold); border: 1px solid var(--gold); padding: 10px 25px; text-decoration: none; border-radius: 3px; font-family: inherit; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
-.btn:hover, .map-btn:hover { background: var(--gold); color: var(--dark-bg); box-shadow: inset 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(212,175,55,0.4); }
+.btn:hover, .map-btn:hover { background: var(--gold); color: var(--text-light); border-color: var(--text-light); }
 
-.car-wrapper { position: absolute; bottom: 10%; right: -150px; opacity: 0.3; z-index: 1; animation: driveCar 12s linear infinite; }
+.car-wrapper { position: absolute; top: 20%; right: -150px; opacity: 0.3; z-index: 0; pointer-events: none; }
 .classic-car { width: 100px; height: 30px; background: var(--gold); border-radius: 10px 20px 5px 5px; position: relative; }
 .classic-car::before { content: ''; position: absolute; top: -18px; left: 20px; width: 50px; height: 18px; background: var(--gold); border-radius: 15px 15px 0 0; }
 .classic-car::after { content: ''; position: absolute; bottom: -6px; left: 12px; width: 14px; height: 14px; background: var(--dark-bg); border: 2px solid var(--gold); border-radius: 50%; box-shadow: 55px 0 0 0 var(--dark-bg), 55px 0 0 2px var(--gold); }
-@keyframes driveCar { 0% { transform: translateX(200px); } 100% { transform: translateX(-1200px); } }
+.card-section.in-view .car-wrapper { animation: driveCar 12s linear infinite; }
+@keyframes driveCar { 0% { transform: translateX(200px); } 100% { transform: translateX(-1500px); } }
 
-/* CLOCK (Panel 4) */
+/* CLOCK */
 .clock-face { width: 150px; height: 150px; border: 4px solid var(--gold); border-radius: 50%; position: relative; margin: 0 auto 30px auto; box-shadow: 0 0 20px rgba(212,175,55,0.2), inset 0 0 20px rgba(212,175,55,0.2); background: rgba(0,0,0,0.5); }
 .clock-center { position: absolute; top: 50%; left: 50%; width: 12px; height: 12px; background: var(--gold); border-radius: 50%; transform: translate(-50%, -50%); z-index: 5; }
 .hand { position: absolute; bottom: 50%; left: 50%; background: var(--gold); transform-origin: bottom; border-radius: 2px; }
 .hour-hand { width: 4px; height: 40px; margin-left: -2px; transform: rotate(0deg); transition: transform 2s cubic-bezier(0.4, 2.5, 0.3, 1); }
 .minute-hand { width: 2px; height: 60px; margin-left: -1px; transform: rotate(0deg); transition: transform 2s cubic-bezier(0.4, 2.5, 0.3, 1); }
 .time-text { font-size: 2rem; color: var(--gold); font-family: 'Aref Ruqaa', serif; }
+.card-section.in-view .hour-hand { transform: rotate(240deg); }
+.card-section.in-view .minute-hand { transform: rotate(360deg); }
 
-/* Active class triggers the spin */
-.layer-1-panel.in-view .hour-hand { transform: rotate(240deg); } /* 8 o'clock */
-.layer-1-panel.in-view .minute-hand { transform: rotate(360deg); } /* 12 position */
-
-/* RULES (Panel 5) */
+/* RULES */
 .rules-list { list-style: none; padding: 0; max-width: 500px; margin: 0 auto; text-align: right; }
 .rules-list li { font-size: 1.5rem; margin-bottom: 25px; padding-right: 30px; position: relative; line-height: 1.6; }
 .rules-list li::before { content: '✦'; position: absolute; right: 0; top: 0; color: var(--gold); }
@@ -145,14 +146,14 @@ body[dir="ltr"] .rules-list { text-align: left; }
 body[dir="ltr"] .rules-list li { padding-right: 0; padding-left: 30px; }
 body[dir="ltr"] .rules-list li::before { right: auto; left: 0; }
 
-/* LANTERN (Panel 6) */
+/* LANTERN */
 .lantern-text { font-size: 1.4rem; margin-bottom: 30px; opacity: 0.9; line-height: 1.6; }
 #lantern-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 10; }
 .lantern { position: absolute; bottom: -50px; width: 35px; height: 50px; background: rgba(212, 175, 55, 0.85); border-radius: 5px 5px 3px 3px; box-shadow: 0 0 25px var(--gold), 0 0 50px #ff7b00; animation: floatUp 7s ease-in forwards; }
 .lantern::after { content: ''; position: absolute; bottom: -5px; left: 7px; width: 21px; height: 5px; background: #ff4500; filter: blur(2px); }
 @keyframes floatUp { 0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; } 100% { transform: translateY(-120vh) scale(0.6) rotate(10deg); opacity: 0; } }
 
-/* DUAA & COUNTDOWN (Panel 7/8) */
+/* DUAA & COUNTDOWN */
 .duaa { font-size: 3.5rem; margin: 20px 0; }
 .countdown { display: flex; justify-content: center; gap: 25px; margin-top: 20px; direction: ltr; }
 .time-box { text-align: center; }
@@ -161,7 +162,7 @@ body[dir="ltr"] .rules-list li::before { right: auto; left: 0; }
 .actions { margin-top: 40px; display: flex; justify-content: center; }
 
 @media (max-width: 768px) {
-    .layer-1-panel { width: 95vw; }
+    .card-glass { width: 95%; padding: 40px 20px; }
     .names { font-size: 4rem; }
     .duaa { font-size: 2.5rem; }
     .countdown { gap: 10px; }

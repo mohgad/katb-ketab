@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohamed & Asmaa - Wedding Invitation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>دعوة زفاف - محمد وأسماء</title>
+    <!-- Added Aref Ruqaa for the classic Arabic names -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
@@ -13,13 +14,12 @@
     <canvas id="atmosphere-canvas"></canvas>
     <div id="youtube-player"></div>
 
-    <button id="lang-toggle" onclick="toggleLanguage()">عربي / EN</button>
+    <button id="lang-toggle" onclick="toggleLanguage()">EN / عربي</button>
 
     <!-- Scene 1: The Cinematic Envelope -->
     <div id="envelope-scene" class="scene">
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="envelope">
-                <!-- Inside back of the envelope -->
                 <div class="envelope-back"></div>
                 
                 <!-- The physical letter that slides out -->
@@ -38,7 +38,7 @@
                     <span class="seal-initials">M&A</span>
                 </div>
             </div>
-            <div class="tap-hint" data-en="Tap to Open" data-ar="اضغط للفتح">Tap to Open</div>
+            <div class="tap-hint" data-en="Tap to Open">اضغط للفتح</div>
         </div>
     </div>
 
@@ -59,36 +59,36 @@
                 </div>
             </div>
 
-            <!-- Section 2: Names -->
+            <!-- Section 2: Names (Shiny Classic Font) -->
             <div class="scroll-section reveal delay-1">
-                <h1 class="names">Mohamed<br><span class="and-symbol">&</span><br>Asmaa</h1>
+                <h1 class="names" data-en="Mohamed<br><span class='and-symbol'>&</span><br>Asmaa">محمد<br><span class="and-symbol">و</span><br>أسماء</h1>
             </div>
 
             <!-- Section 3: Details -->
             <div class="scroll-section reveal">
                 <div class="details">
-                    <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab" data-ar="يتشرفان بدعوتكم لحضور عقد قرانهما">Joyfully invite you to their Katb El Ketab</p>
+                    <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab">يتشرفان بدعوتكم لحضور عقد قرانهما</p>
                     <div class="gold-line"></div>
-                    <p class="date">Friday, Sept 4, 2026<br>8:00 PM</p>
-                    <p class="location" data-en="مسجد العلي العظيم, Almaza, Cairo" data-ar="مسجد العلي العظيم، ألماظة، القاهرة">مسجد العلي العظيم, Almaza, Cairo</p>
+                    <p class="date" data-en="Friday, Sept 4, 2026<br>8:00 PM">الجمعة، ٤ سبتمبر ٢٠٢٦<br>٨:٠٠ مساءً</p>
+                    <p class="location" data-en="مسجد العلي العظيم, Almaza, Cairo">مسجد العلي العظيم، ألماظة، القاهرة</p>
                 </div>
             </div>
 
             <!-- Section 4: Countdown -->
             <div class="scroll-section reveal">
                 <div id="countdown" class="countdown">
-                    <div class="time-box"><span id="days">00</span><p data-en="Days" data-ar="يوم">Days</p></div>
-                    <div class="time-box"><span id="hours">00</span><p data-en="Hours" data-ar="ساعة">Hours</p></div>
-                    <div class="time-box"><span id="minutes">00</span><p data-en="Mins" data-ar="دقيقة">Mins</p></div>
-                    <div class="time-box"><span id="seconds">00</span><p data-en="Secs" data-ar="ثانية">Secs</p></div>
+                    <div class="time-box"><span id="days" class="en-num">00</span><p data-en="Days">يوم</p></div>
+                    <div class="time-box"><span id="hours" class="en-num">00</span><p data-en="Hours">ساعة</p></div>
+                    <div class="time-box"><span id="minutes" class="en-num">00</span><p data-en="Mins">دقيقة</p></div>
+                    <div class="time-box"><span id="seconds" class="en-num">00</span><p data-en="Secs">ثانية</p></div>
                 </div>
             </div>
 
             <!-- Section 5: Actions -->
             <div class="scroll-section reveal">
                 <div class="actions">
-                    <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map" data-ar="الموقع على الخريطة">View Map</a>
-                    <button onclick="downloadICS()" class="btn" data-en="Add to Calendar" data-ar="أضف للتقويم">Add to Calendar</button>
+                    <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map">الموقع على الخريطة</a>
+                    <button onclick="downloadICS()" class="btn" data-en="Add to Calendar">أضف للتقويم</button>
                 </div>
             </div>
             

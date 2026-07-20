@@ -4,67 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دعوة زفاف - محمد وأسماء</title>
-    <!-- Added Aref Ruqaa for the classic Arabic names -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <!-- 3D Canvas Atmosphere -->
+    <!-- Cinematic Smoke & Dust Background -->
     <canvas id="atmosphere-canvas"></canvas>
+    
+    <!-- Ultra-Realistic Transparent Video Overlay (Place a transparent WebM video in your folder) -->
+    <video id="cinematic-petals" autoplay loop muted playsinline>
+        <source src="falling-petals.webm" type="video/webm">
+    </video>
+
     <div id="youtube-player"></div>
 
     <button id="lang-toggle" onclick="toggleLanguage()">EN / عربي</button>
 
-    <!-- Scene 1: The Cinematic Envelope -->
+    <!-- Scene 1: The Envelope -->
     <div id="envelope-scene" class="scene">
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="envelope">
                 <div class="envelope-back"></div>
-                
-                <!-- The physical letter that slides out -->
-                <div class="mini-letter" id="mini-letter">
-                    <div class="mini-letter-border"></div>
-                </div>
-
-                <!-- 3D Flaps -->
+                <div class="mini-letter" id="mini-letter"><div class="mini-letter-border"></div></div>
                 <div class="flap left-flap"></div>
                 <div class="flap right-flap"></div>
                 <div class="flap bottom-flap"></div>
                 <div class="flap top-flap"></div>
-                
-                <!-- 3D Wax Seal -->
-                <div class="wax-seal">
-                    <span class="seal-initials">M&A</span>
-                </div>
+                <div class="wax-seal"><span class="seal-initials">M&A</span></div>
             </div>
             <div class="tap-hint" data-en="Tap to Open">اضغط للفتح</div>
         </div>
     </div>
 
-    <!-- Scene 2: The Scrolling Invitation Content -->
+    <!-- Scene 2: The Invitation -->
     <div id="invitation-content" class="hidden">
-        
-        <!-- Elegant Card Wrapper -->
         <div class="card-texture">
             <div class="corner top-left">✧</div>
             <div class="corner top-right">✧</div>
             <div class="corner bottom-left">✧</div>
             <div class="corner bottom-right">✧</div>
 
-            <!-- Section 1: Opening -->
+            <!-- Opening -->
             <div class="scroll-section reveal">
                 <div class="quran-verse">
                     "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
                 </div>
             </div>
 
-            <!-- Section 2: Names (Shiny Classic Font) -->
+            <!-- Names -->
             <div class="scroll-section reveal delay-1">
                 <h1 class="names" data-en="Mohamed<br><span class='and-symbol'>&</span><br>Asmaa">محمد<br><span class="and-symbol">و</span><br>أسماء</h1>
             </div>
 
-            <!-- Section 3: Details -->
+            <!-- Event Details -->
             <div class="scroll-section reveal">
                 <div class="details">
                     <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab">يتشرفان بدعوتكم لحضور عقد قرانهما</p>
@@ -74,7 +67,34 @@
                 </div>
             </div>
 
-            <!-- Section 4: Countdown -->
+            <!-- NEW: Timeline / Itinerary -->
+            <div class="scroll-section reveal itinerary">
+                <h2 class="section-title" data-en="Timeline">برنامج الحفل</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="time en-num">8:00 PM</span>
+                        <p data-en="Guest Arrival & Welcome">استقبال الضيوف</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time en-num">8:30 PM</span>
+                        <p data-en="Katb El Ketab Ceremony">مراسم عقد القران</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="time en-num">9:30 PM</span>
+                        <p data-en="Celebration & Photos">الاحتفال والتقاط الصور</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW: Dress Code -->
+            <div class="scroll-section reveal dress-code">
+                <h2 class="section-title" data-en="Dress Code">قواعد الزي</h2>
+                <p data-en="Formal & Elegant. We kindly ask our guests to embrace the classic cinematic theme.">
+                    رسمي وأنيق. نرجو من ضيوفنا الكرام الالتزام بالزي الرسمي الكلاسيكي.
+                </p>
+            </div>
+
+            <!-- Countdown -->
             <div class="scroll-section reveal">
                 <div id="countdown" class="countdown">
                     <div class="time-box"><span id="days" class="en-num">00</span><p data-en="Days">يوم</p></div>
@@ -84,7 +104,7 @@
                 </div>
             </div>
 
-            <!-- Section 5: Actions -->
+            <!-- Actions -->
             <div class="scroll-section reveal">
                 <div class="actions">
                     <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map">الموقع على الخريطة</a>

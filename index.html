@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Tajawal:wght@300;400;500;700&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -17,53 +17,57 @@
 <!-- Language toggle -->
 <button id="langToggle" class="lang-toggle" aria-label="Switch language">EN</button>
 
-<!-- ===== HERO / MASHRABIYA REVEAL ===== -->
-<section class="hero" id="hero">
+<!-- Music control (appears after envelope opens) -->
+<button id="musicToggle" class="music-toggle" hidden aria-label="Toggle music">
+  <span class="music-icon">♪</span>
+</button>
 
-  <div class="hero-content">
-    <p class="bismillah" data-ar="بسم الله الرحمن الرحيم" data-en="In the name of Allah, the Most Gracious, the Most Merciful">بسم الله الرحمن الرحيم</p>
+<!-- background atmosphere layers, sit behind everything, fixed to viewport -->
+<div class="scene-backdrop" aria-hidden="true">
+  <div class="wood-floor"></div>
+  <div class="amber-light"></div>
+  <canvas id="smokeCanvas"></canvas>
+  <canvas id="petalCanvas"></canvas>
+  <div class="vignette"></div>
+</div>
 
-    <div class="star-divider" aria-hidden="true">✦</div>
+<!-- ===== ENVELOPE SCENE ===== -->
+<section class="envelope-scene" id="envelopeScene">
+  <div class="envelope-stage">
 
-    <h1 class="names">
-      <span class="name" data-ar="محمد" data-en="Mohamed">محمد</span>
-      <span class="amp" aria-hidden="true">و</span>
-      <span class="name" data-ar="أسماء" data-en="Asmaa">أسماء</span>
-    </h1>
+    <!-- the letter, hidden inside, slides up and out on open -->
+    <div class="letter" id="letter">
+      <p class="bismillah" data-ar="بسم الله الرحمن الرحيم" data-en="In the name of Allah, the Most Gracious, the Most Merciful">بسم الله الرحمن الرحيم</p>
+      <div class="ornament-line" aria-hidden="true">──── ✦ ────</div>
+      <h1 class="names">
+        <span class="name" data-ar="محمد" data-en="Mohamed">محمد</span>
+        <span class="amp" aria-hidden="true">&amp;</span>
+        <span class="name" data-ar="أسماء" data-en="Asmaa">أسماء</span>
+      </h1>
+      <p class="invite-line" data-ar="يتشرفان بدعوتكم لحضور حفل كتب كتابهما"
+         data-en="Request the honor of your presence at their Katb El Ketab">
+         يتشرفان بدعوتكم لحضور حفل كتب كتابهما
+      </p>
+      <p class="letter-date" data-ar="الجمعة ٤ سبتمبر ٢٠٢٦" data-en="Friday, the Fourth of September, 2026">
+        الجمعة ٤ سبتمبر ٢٠٢٦
+      </p>
+    </div>
 
-    <p class="invite-line" data-ar="يتشرفان بدعوتكم لحضور حفل كتب كتابهما"
-       data-en="Joyfully invite you to celebrate their Katb El Ketab">
-       يتشرفان بدعوتكم لحضور حفل كتب كتابهما
-    </p>
-
-    <p class="hero-date" data-ar="الجمعة ٤ سبتمبر ٢٠٢٦" data-en="Friday, September 4th, 2026">
-      الجمعة ٤ سبتمبر ٢٠٢٦
-    </p>
-
-    <button class="scroll-cue" id="scrollCue" data-ar="مرّر لأسفل" data-en="Scroll down">
-      <span class="chev">︿</span>
+    <!-- envelope body, opens via 3D flap rotation on click -->
+    <button class="envelope" id="envelopeBtn" aria-label="Open the invitation">
+      <div class="envelope-back"></div>
+      <div class="envelope-flap" id="envelopeFlap">
+        <div class="wax-seal">
+          <span>م</span><span>أ</span>
+        </div>
+      </div>
+      <div class="envelope-front"></div>
+      <span class="tap-hint" data-ar="المسوا لفتح الدعوة" data-en="Tap to open the invitation">المسوا لفتح الدعوة</span>
     </button>
   </div>
-
-  <!-- lattice overlay, tap/click to open -->
-  <button class="mashrabiya" id="mashrabiya" aria-label="Open invitation">
-    <svg class="lattice-svg" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <pattern id="starPattern" width="50" height="50" patternUnits="userSpaceOnUse">
-          <g class="tile">
-            <path d="M25 2 L31 19 L48 19 L34 30 L39 47 L25 37 L11 47 L16 30 L2 19 L19 19 Z" fill="none" stroke="currentColor" stroke-width="1.1"/>
-            <circle cx="25" cy="25" r="4" fill="currentColor"/>
-          </g>
-        </pattern>
-      </defs>
-      <rect class="lattice-half lattice-left" x="0" y="0" width="200" height="400" fill="url(#starPattern)"/>
-      <rect class="lattice-half lattice-right" x="200" y="0" width="200" height="400" fill="url(#starPattern)"/>
-    </svg>
-    <span class="tap-hint" data-ar="المسوا لفتح الدعوة" data-en="Tap to open the invitation">المسوا لفتح الدعوة</span>
-  </button>
 </section>
 
-<!-- ===== OUR STORY / VERSE ===== -->
+<!-- ===== VERSE ===== -->
 <section class="verse-section reveal-on-open">
   <div class="ornament-frame">
     <p class="verse-ar">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
@@ -73,7 +77,7 @@
 
 <!-- ===== COUNTDOWN ===== -->
 <section class="countdown-section reveal-on-open">
-  <h2 class="section-title" data-ar="العد التنازلي" data-en="Counting down">العد التنازلي</h2>
+  <h2 class="section-title" data-ar="العد التنازلي" data-en="Counting Down">العد التنازلي</h2>
   <div class="countdown" id="countdown">
     <div class="count-block"><span class="count-num" id="cd-days">00</span><span class="count-label" data-ar="يوم" data-en="Days">يوم</span></div>
     <div class="count-sep">:</div>
@@ -91,7 +95,7 @@
 
   <div class="details-grid">
     <div class="detail-card">
-      <div class="detail-icon" aria-hidden="true">◆</div>
+      <div class="detail-icon" aria-hidden="true">✦</div>
       <h3 data-ar="الموعد" data-en="Date &amp; Time">الموعد</h3>
       <p data-ar="الجمعة، ٤ سبتمبر ٢٠٢٦" data-en="Friday, September 4, 2026">الجمعة، ٤ سبتمبر ٢٠٢٦</p>
       <p data-ar="الساعة ٨:٠٠ مساءً" data-en="8:00 PM">الساعة ٨:٠٠ مساءً</p>
@@ -99,7 +103,7 @@
     </div>
 
     <div class="detail-card">
-      <div class="detail-icon" aria-hidden="true">◆</div>
+      <div class="detail-icon" aria-hidden="true">✦</div>
       <h3 data-ar="المكان" data-en="Venue">المكان</h3>
       <p data-ar="مسجد العلي العظيم" data-en="Al-Aly Al-Azeem Mosque">مسجد العلي العظيم</p>
       <p data-ar="الألماظة، القاهرة" data-en="Almaza, Cairo, Egypt">الألماظة، القاهرة</p>
@@ -161,10 +165,13 @@
 
 <!-- ===== FOOTER ===== -->
 <footer class="footer reveal-on-open">
-  <div class="star-divider" aria-hidden="true">✦</div>
+  <div class="ornament-line" aria-hidden="true">──── ✦ ────</div>
   <p class="footer-names" data-ar="محمد و أسماء" data-en="Mohamed &amp; Asmaa">محمد و أسماء</p>
   <a class="whatsapp-btn" id="whatsappShare" href="#" target="_blank" rel="noopener" data-ar="شارك الدعوة على واتساب" data-en="Share invitation on WhatsApp">شارك الدعوة على واتساب</a>
 </footer>
+
+<!-- hidden YouTube player for background music -->
+<div id="ytPlayer" class="yt-player-hidden" aria-hidden="true"></div>
 
 <script src="script.js"></script>
 </body>

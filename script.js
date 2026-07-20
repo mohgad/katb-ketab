@@ -23,22 +23,17 @@ function openEnvelope() {
     const tapHint = document.querySelector('.tap-hint');
     
     tapHint.style.opacity = '0';
-
     if(player && typeof player.playVideo === 'function') player.playVideo();
 
     container.classList.add('open');
     
     setTimeout(() => {
         scene1.style.opacity = '0'; 
-        
         setTimeout(() => {
             scene1.style.display = 'none';
             scene2.style.display = 'block'; 
             document.body.style.overflowY = 'auto'; 
-            
-            requestAnimationFrame(() => {
-                initScrollAnimations();
-            });
+            requestAnimationFrame(() => initScrollAnimations());
         }, 1000); 
     }, 2200); 
 }
@@ -54,42 +49,40 @@ function initScrollAnimations() {
             }
         });
     }, { threshold: 0.15 }); 
-
-    document.querySelectorAll('.reveal').forEach((el) => {
-        observer.observe(el);
-    });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 }
 
 // ==========================================
-// 4. Countdown Timer
+// 4. Floating Lantern Logic (Section 6)
 // ==========================================
-const targetDate = new Date("September 4, 2026 20:00:00").getTime();
-setInterval(function() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-    if (distance < 0) return;
-    document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-    document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-    document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-    document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-}, 1000);
+function releaseLantern() {
+    const container = document.getElementById('lantern-container');
+    const lantern = document.createElement('div');
+    lantern.classList.add('lantern');
+    // Randomize horizontal start position slightly
+    lantern.style.left = Math.floor(Math.random() * 80 + 10) + '%';
+    container.appendChild(lantern);
+    
+    // Remove from DOM after animation completes
+    setTimeout(() => {
+        lantern.remove();
+    }, 6000);
+}
 
 // ==========================================
 // 5. Bilingual Toggle
 // ==========================================
 let isArabic = true; 
-
 function toggleLanguage() {
     isArabic = !isArabic;
     const body = document.body;
-    
     body.setAttribute('dir', isArabic ? 'rtl' : 'ltr');
     body.style.fontFamily = isArabic ? "'Amiri', serif" : "'Cinzel', serif";
     
-    const namesEl = document.querySelector('.names');
-    if (namesEl) {
-        namesEl.style.fontFamily = isArabic ? "'Aref Ruqaa', serif" : "'Cinzel', serif";
-    }
+    const elementsToChangeFont = document.querySelectorAll('.names, .section-title, .basmala, .time-text, .location-name');
+    elementsToChangeFont.forEach(el => {
+        el.style.fontFamily = isArabic ? "'Aref Ruqaa', serif" : "'Cinzel', serif";
+    });
 
     document.querySelectorAll('[data-en]').forEach(el => {
         if (!el.hasAttribute('data-ar-saved')) {
@@ -100,19 +93,7 @@ function toggleLanguage() {
 }
 
 // ==========================================
-// 6. Action Buttons
-// ==========================================
-function downloadICS() {
-    const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:Mohamed & Asmaa's Katb El Ketab\nDTSTART:20260904T170000Z\nDTEND:20260904T200000Z\nLOCATION:مسجد العلي العظيم, Almaza, Cairo\nDESCRIPTION:Join us to celebrate the Katb El Ketab of Mohamed & Asmaa.\nEND:VEVENT\nEND:VCALENDAR`;
-    const blob = new Blob([icsContent], { type: 'text/calendar' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = 'Mohamed_Asmaa_Wedding.ics';
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-}
-
-// ==========================================
-// 7. Glowing Dust & Smoke Atmosphere
+// 6. Merged Canvas (Petals & Cinematic Dust)
 // ==========================================
 function initCanvas() {
     const canvas = document.getElementById('atmosphere-canvas');
@@ -130,37 +111,84 @@ function initCanvas() {
         constructor() { this.reset(true); }
         reset(initial = false) {
             this.x = Math.random() * canvas.width;
-            this.y = initial ? Math.random() * canvas.height : canvas.height + 50;
-            this.size = Math.random() * 2 + 0.5;
-            this.speedY = -(Math.random() * 0.5 + 0.1); 
-            this.speedX = Math.random() * 1 - 0.5;
-            this.opacity = Math.random() * 0.5 + 0.1;
-            this.pulseSpeed = Math.random() * 0.02 + 0.01;
-            this.pulseDir = Math.random() > 0.5 ? 1 : -1;
+            this.y = initial ? Math.random() * canvas.height : -50;
+            
+            // 30% chance for a flower petal, 70% chance for cinematic dust
+            this.type = Math.random() > 0.7 ? 'petal' : 'dust';
+            
+            if(this.type === 'petal') {
+                this.size = Math.random() * 8 + 6;
+                this.speedY = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1.5 - 0.75;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() * 2 - 1) * 0.02;
+                this.flip = Math.random() * Math.PI; 
+                this.flipSpeed = (Math.random() * 0.05) + 0.01;
+                this.opacity = Math.random() * 0.5 + 0.5;
+            } else {
+                this.y = initial ? Math.random() * canvas.height : canvas.height + 50; // Dust floats up
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = -(Math.random() * 0.5 + 0.1); 
+                this.speedX = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.pulseSpeed = Math.random() * 0.02 + 0.01;
+                this.pulseDir = Math.random() > 0.5 ? 1 : -1;
+            }
         }
+        
         update() {
             this.y += this.speedY;
             this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5; 
             
-            this.opacity += this.pulseSpeed * this.pulseDir;
-            if(this.opacity >= 0.8 || this.opacity <= 0.1) this.pulseDir *= -1;
-
-            if (this.y < -50) this.reset();
+            if(this.type === 'petal') {
+                this.rotation += this.rotationSpeed;
+                this.flip += this.flipSpeed;
+                if (this.y > canvas.height + 50) this.reset();
+            } else {
+                this.opacity += this.pulseSpeed * this.pulseDir;
+                if(this.opacity >= 0.8 || this.opacity <= 0.1) this.pulseDir *= -1;
+                if (this.y < -50) this.reset();
+            }
         }
+        
         draw() {
             ctx.save();
             ctx.translate(this.x, this.y);
-            ctx.shadowColor = 'rgba(212, 175, 55, 0.8)';
-            ctx.shadowBlur = this.size * 3;
-            ctx.fillStyle = `rgba(255, 235, 150, ${this.opacity})`;
-            ctx.beginPath();
-            ctx.arc(0, 0, this.size, 0, Math.PI * 2);
-            ctx.fill();
+            
+            if(this.type === 'petal') {
+                ctx.rotate(this.rotation);
+                ctx.scale(1, Math.abs(Math.cos(this.flip))); // 3D flip effect
+                
+                // Deep dark red rose colors
+                let gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+                gradient.addColorStop(0, `rgba(139, 0, 0, ${this.opacity})`);
+                gradient.addColorStop(1, `rgba(200, 20, 20, ${this.opacity})`);
+                
+                ctx.fillStyle = gradient;
+                ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                ctx.shadowBlur = 5;
+                
+                // Draw petal shape
+                ctx.beginPath();
+                ctx.moveTo(0, -this.size);
+                ctx.bezierCurveTo(this.size, -this.size/2, this.size, this.size/2, 0, this.size);
+                ctx.bezierCurveTo(-this.size, this.size/2, -this.size, -this.size/2, 0, -this.size);
+                ctx.fill();
+            } else {
+                // Draw glowing dust
+                ctx.shadowColor = 'rgba(212, 175, 55, 0.8)';
+                ctx.shadowBlur = this.size * 3;
+                ctx.fillStyle = `rgba(255, 235, 150, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
             ctx.restore();
         }
     }
 
-    for (let i = 0; i < 150; i++) particles.push(new Particle());
+    // Spawn 100 mixed particles
+    for (let i = 0; i < 100; i++) particles.push(new Particle());
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);

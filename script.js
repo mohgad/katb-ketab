@@ -22,38 +22,29 @@ function openEnvelope() {
     const scene2 = document.getElementById('invitation-content');
     const tapHint = document.querySelector('.tap-hint');
     
-    // Fade out hint text immediately
     tapHint.style.opacity = '0';
 
     if(player && typeof player.playVideo === 'function') player.playVideo();
 
-    // Trigger CSS Keyframes for Envelope
     container.classList.add('open');
     
-    // Timeline of events:
-    // 0.0s: Flap opens
-    // 0.6s: Mini letter slides up (CSS transition)
-    // 1.5s: Envelope drops away (CSS transition)
-    // 2.0s: Screen crossfade begins
-    
     setTimeout(() => {
-        scene1.style.opacity = '0'; // Fade out entire scene 1
+        scene1.style.opacity = '0'; 
         
         setTimeout(() => {
             scene1.style.display = 'none';
             scene2.style.display = 'block'; 
-            document.body.style.overflowY = 'auto'; // Unlock scrolling
+            document.body.style.overflowY = 'auto'; 
             
-            // Allow display:block to render before triggering opacity
             requestAnimationFrame(() => {
                 initScrollAnimations();
             });
-        }, 1000); // Wait for fade out
-    }, 2200); // Wait for letter extraction to finish
+        }, 1000); 
+    }, 2200); 
 }
 
 // ==========================================
-// 3. 3D Scroll Reveal (Intersection Observer)
+// 3. 3D Scroll Reveal
 // ==========================================
 function initScrollAnimations() {
     const observer = new IntersectionObserver((entries) => {
@@ -84,15 +75,30 @@ setInterval(function() {
 }, 1000);
 
 // ==========================================
-// 5. Bilingual Toggle
+// 5. Bilingual Toggle (AR to EN)
 // ==========================================
-let isArabic = false;
+let isArabic = true; // Arabic is now default
+
 function toggleLanguage() {
     isArabic = !isArabic;
-    document.body.style.fontFamily = isArabic ? "'Amiri', serif" : "'Cinzel', serif";
-    document.querySelectorAll('[data-ar]').forEach(el => {
-        if (!el.hasAttribute('data-en-saved')) el.setAttribute('data-en-saved', el.innerHTML);
-        el.innerHTML = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en-saved');
+    const body = document.body;
+    
+    // Swap Document Flow & Base Font
+    body.setAttribute('dir', isArabic ? 'rtl' : 'ltr');
+    body.style.fontFamily = isArabic ? "'Amiri', serif" : "'Cinzel', serif";
+    
+    // Swap Name Font specifically to maintain English classic styling
+    const namesEl = document.querySelector('.names');
+    if (namesEl) {
+        namesEl.style.fontFamily = isArabic ? "'Aref Ruqaa', serif" : "'Cinzel', serif";
+    }
+
+    // Swap Text Content
+    document.querySelectorAll('[data-en]').forEach(el => {
+        if (!el.hasAttribute('data-ar-saved')) {
+            el.setAttribute('data-ar-saved', el.innerHTML); // Save the default Arabic HTML
+        }
+        el.innerHTML = isArabic ? el.getAttribute('data-ar-saved') : el.getAttribute('data-en');
     });
 }
 
@@ -130,31 +136,23 @@ function initCanvas() {
             this.x = Math.random() * canvas.width;
             this.y = initial ? Math.random() * canvas.height : -50;
             
-            // Depth of Field logic
-            const depth = Math.random(); // 0 = Background, 1 = Foreground
+            const depth = Math.random(); 
             
             if (this.type === 'petal') {
                 if (depth > 0.8) {
-                    // FOREGROUND: Massive, fast, slightly transparent (simulating lens blur)
                     this.size = Math.random() * 15 + 15;
                     this.speedY = Math.random() * 3 + 2;
                     this.opacity = 0.8;
-                    this.blur = true;
                 } else if (depth < 0.3) {
-                    // BACKGROUND: Tiny, slow, dark
                     this.size = Math.random() * 4 + 3;
                     this.speedY = Math.random() * 0.5 + 0.2;
                     this.opacity = 0.3;
-                    this.blur = false;
                 } else {
-                    // MIDGROUND: Normal, sharp
                     this.size = Math.random() * 8 + 6;
                     this.speedY = Math.random() * 1.5 + 0.8;
                     this.opacity = 0.9;
-                    this.blur = false;
                 }
             } else {
-                // Smoke is always mid/bg
                 this.size = Math.random() * 60 + 30;
                 this.speedY = Math.random() * 0.3 + 0.1;
                 this.opacity = Math.random() * 0.05 + 0.01;
@@ -171,7 +169,6 @@ function initCanvas() {
             this.x += this.speedX + Math.sin(this.y * 0.01) * (this.size * 0.1); 
             this.rotation += this.rotationSpeed;
             this.flip += this.flipSpeed;
-
             if (this.y > canvas.height + 50) this.reset();
         }
         draw() {
@@ -182,7 +179,6 @@ function initCanvas() {
                 ctx.rotate(this.rotation);
                 ctx.scale(1, Math.abs(Math.cos(this.flip))); 
                 
-                // Add cinematic drop shadow
                 ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
                 ctx.shadowBlur = this.size * 0.5;
                 ctx.shadowOffsetY = this.size * 0.3;
@@ -212,7 +208,6 @@ function initCanvas() {
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        // Sort particles by size so foreground is drawn last (on top)
         particles.sort((a, b) => a.size - b.size).forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(animate);
     }

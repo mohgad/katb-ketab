@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دعوة زفاف - محمد وأسماء</title>
+    
+    <!-- Fixes the favicon 404 error -->
+    <link rel="icon" href="data:,">
+    
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -12,7 +16,7 @@
     <!-- Cinematic Smoke & Dust Background -->
     <canvas id="atmosphere-canvas"></canvas>
     
-    <!-- Ultra-Realistic Transparent Video Overlay (Place a transparent WebM video in your folder) -->
+    <!-- Ultra-Realistic Transparent Video Overlay -->
     <video id="cinematic-petals" autoplay loop muted playsinline>
         <source src="falling-petals.webm" type="video/webm">
     </video>
@@ -45,19 +49,16 @@
             <div class="corner bottom-left">✧</div>
             <div class="corner bottom-right">✧</div>
 
-            <!-- Opening -->
             <div class="scroll-section reveal">
                 <div class="quran-verse">
                     "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
                 </div>
             </div>
 
-            <!-- Names -->
             <div class="scroll-section reveal delay-1">
                 <h1 class="names" data-en="Mohamed<br><span class='and-symbol'>&</span><br>Asmaa">محمد<br><span class="and-symbol">و</span><br>أسماء</h1>
             </div>
 
-            <!-- Event Details -->
             <div class="scroll-section reveal">
                 <div class="details">
                     <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab">يتشرفان بدعوتكم لحضور عقد قرانهما</p>
@@ -67,7 +68,6 @@
                 </div>
             </div>
 
-            <!-- NEW: Timeline / Itinerary -->
             <div class="scroll-section reveal itinerary">
                 <h2 class="section-title" data-en="Timeline">برنامج الحفل</h2>
                 <div class="timeline">
@@ -86,7 +86,6 @@
                 </div>
             </div>
 
-            <!-- NEW: Dress Code -->
             <div class="scroll-section reveal dress-code">
                 <h2 class="section-title" data-en="Dress Code">قواعد الزي</h2>
                 <p data-en="Formal & Elegant. We kindly ask our guests to embrace the classic cinematic theme.">
@@ -94,7 +93,6 @@
                 </p>
             </div>
 
-            <!-- Countdown -->
             <div class="scroll-section reveal">
                 <div id="countdown" class="countdown">
                     <div class="time-box"><span id="days" class="en-num">00</span><p data-en="Days">يوم</p></div>
@@ -104,7 +102,6 @@
                 </div>
             </div>
 
-            <!-- Actions -->
             <div class="scroll-section reveal">
                 <div class="actions">
                     <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map">الموقع على الخريطة</a>

@@ -14,7 +14,7 @@ window.onload = function() {
 };
 
 // ==========================================
-// 2. Cinematic Extraction Sequence
+// 2. Envelope Sequence & Layout Reveal
 // ==========================================
 function openEnvelope() {
     const container = document.querySelector('.envelope-wrapper');
@@ -32,53 +32,51 @@ function openEnvelope() {
         setTimeout(() => {
             scene1.style.display = 'none';
             scene2.style.display = 'block'; 
-            document.body.style.overflowY = 'auto'; 
-            // Initialize scroll tracking right after showing content
-            requestAnimationFrame(() => initDynamicScrollAlpha());
+            
+            // Re-lock body scroll, because Layer 2 does its own scrolling
+            document.body.style.overflow = 'hidden'; 
+            
+            // Initialize the Scroll Observer for Layer 1 & 2 Sync
+            initScrollObserver();
         }, 1000); 
     }, 2200); 
 }
 
 // ==========================================
-// 3. Dynamic Alpha on Scroll (السر كله هنا)
+// 3. Sync Layer 1 (Fade) with Layer 2 (Snap)
 // ==========================================
-function initDynamicScrollAlpha() {
-    const panels = document.querySelectorAll('.layer-1-panel');
+function initScrollObserver() {
+    const sections = document.querySelectorAll('.card-section');
+    const backgrounds = document.querySelectorAll('.bg-panel');
     
-    function updateAlpha() {
-        const windowHeight = window.innerHeight;
-        const screenCenter = windowHeight / 2;
-
-        panels.forEach(panel => {
-            const rect = panel.getBoundingClientRect();
-            const panelCenter = rect.top + (rect.height / 2);
-            
-            // Calculate distance from the center of the screen
-            const distance = Math.abs(screenCenter - panelCenter);
-            
-            // Fade logic: 100% opacity when centered, drops as you scroll away
-            let opacity = 1 - (distance / (windowHeight * 0.8));
-            
-            // Constrain between 0.1 and 1
-            if (opacity < 0.1) opacity = 0.1;
-            if (opacity > 1) opacity = 1;
-            
-            panel.style.opacity = opacity;
-            
-            // Add a class for triggering internal animations (like the clock)
-            if (opacity > 0.6) {
-                panel.classList.add('in-view');
-                panel.style.transform = 'scale(1)';
+    // Use IntersectionObserver to track which card is currently snapped in view
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add in-view class to trigger Layer 2 internal animations (Clock, Stars, etc.)
+                entry.target.classList.add('in-view');
+                
+                // Get the index of the active card
+                const index = entry.target.getAttribute('data-index');
+                
+                // Fade in the corresponding Layer 1 Background, fade out the rest
+                backgrounds.forEach((bg, i) => {
+                    if(i == index) {
+                        bg.classList.add('active');
+                    } else {
+                        bg.classList.remove('active');
+                    }
+                });
             } else {
-                panel.classList.remove('in-view');
-                panel.style.transform = 'scale(0.95)';
+                // Remove in-view when card scrolls away
+                entry.target.classList.remove('in-view');
             }
         });
-    }
+    }, { 
+        threshold: 0.5 // Triggers when 50% of the card is visible
+    });
 
-    // Run on scroll and once on load
-    window.addEventListener('scroll', updateAlpha);
-    updateAlpha();
+    sections.forEach(section => observer.observe(section));
 }
 
 // ==========================================

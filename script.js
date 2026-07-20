@@ -1,77 +1,76 @@
 // ==========================================
-// 1. YouTube Audio Setup (The Godfather)
+// 1. YouTube Audio Setup
 // ==========================================
 let player;
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('youtube-player', {
-        height: '0',
-        width: '0',
-        videoId: 'AJgE_dLWsuQ', // Godfather Theme
-        playerVars: {
-            'autoplay': 0,
-            'controls': 0,
-            'loop': 1,
-            'playlist': 'AJgE_dLWsuQ'
-        }
+        height: '0', width: '0', videoId: 'AJgE_dLWsuQ',
+        playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'AJgE_dLWsuQ' }
     });
 }
 
 // ==========================================
-// 2. Custom Guest Tracking (?guest=Name)
+// 2. Initialization & Tracking
 // ==========================================
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     const guestParam = urlParams.get('guest');
     if (guestParam) {
-        const guestName = guestParam.replace(/_/g, ' '); 
-        document.getElementById('guest-tracking').value = guestName;
+        document.getElementById('guest-tracking').value = guestParam.replace(/_/g, ' '); 
     }
-    initCanvas(); // Start particle effects
+    initCanvas();
 };
 
 // ==========================================
-// 3. Envelope Logic & Scene Transitions
+// 3. Envelope Logic & Scroll Unlock
 // ==========================================
 function openEnvelope() {
     const container = document.querySelector('.envelope-wrapper');
     const scene1 = document.getElementById('envelope-scene');
     const scene2 = document.getElementById('invitation-content');
     
-    // Play music on click to bypass browser autoplay restrictions
-    if(player && typeof player.playVideo === 'function') {
-        player.playVideo();
-    }
+    if(player && typeof player.playVideo === 'function') player.playVideo();
 
-    // Trigger 3D CSS animation
     container.classList.add('open');
     
-    // Transition scenes after envelope drops
     setTimeout(() => {
         scene1.style.opacity = '0';
         setTimeout(() => {
-            scene1.classList.add('hidden');
-            scene2.classList.remove('hidden');
+            scene1.style.display = 'none';
+            scene2.style.display = 'block'; // Change to block so it naturally scrolls
+            document.body.style.overflowY = 'auto'; // Unlock body scrolling!
             
-            // Fade in invitation
-            setTimeout(() => {
-                scene2.style.opacity = '1';
-                scene2.style.zIndex = '10';
-            }, 100);
+            // Initialize Intersection Observer for scroll animations
+            initScrollAnimations();
         }, 1500);
     }, 1200); 
 }
 
 // ==========================================
-// 4. Countdown Timer Logic
+// 4. Scroll Reveal Animations (Intersection Observer)
+// ==========================================
+function initScrollAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 }); // Triggers when 10% of the element is visible
+
+    document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+    });
+}
+
+// ==========================================
+// 5. Countdown Timer
 // ==========================================
 const targetDate = new Date("September 4, 2026 20:00:00").getTime();
-
 setInterval(function() {
     const now = new Date().getTime();
     const distance = targetDate - now;
-
     if (distance < 0) return;
-
     document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
     document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
     document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
@@ -79,66 +78,34 @@ setInterval(function() {
 }, 1000);
 
 // ==========================================
-// 5. Bilingual Toggle (English / Arabic)
+// 6. Bilingual Toggle
 // ==========================================
 let isArabic = false;
-
 function toggleLanguage() {
     isArabic = !isArabic;
-    const fontPrimary = isArabic ? "'Amiri', serif" : "'Cinzel', serif";
-    document.body.style.fontFamily = fontPrimary;
+    document.body.style.fontFamily = isArabic ? "'Amiri', serif" : "'Cinzel', serif";
 
-    // Toggle text elements
     document.querySelectorAll('[data-ar]').forEach(el => {
         if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') return; 
-        
-        if (!el.hasAttribute('data-en-saved')) {
-            el.setAttribute('data-en-saved', el.innerHTML);
-        }
+        if (!el.hasAttribute('data-en-saved')) el.setAttribute('data-en-saved', el.innerHTML);
         el.innerHTML = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en-saved');
-    });
-
-    // Toggle input placeholders
-    document.querySelectorAll('[data-placeholder-ar]').forEach(el => {
-        if (!el.hasAttribute('data-placeholder-en-saved')) {
-            el.setAttribute('data-placeholder-en-saved', el.getAttribute('placeholder'));
-        }
-        el.setAttribute('placeholder', isArabic ? el.getAttribute('data-placeholder-ar') : el.getAttribute('data-placeholder-en-saved'));
     });
 }
 
 // ==========================================
-// 6. Action Buttons (ICS & WhatsApp)
+// 7. Action Buttons
 // ==========================================
 function downloadICS() {
-    const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-SUMMARY:Mohamed & Asmaa's Katb El Ketab
-DTSTART:20260904T170000Z
-DTEND:20260904T200000Z
-LOCATION:مسجد العلي العظيم, Almaza, Cairo
-DESCRIPTION:Join us to celebrate the Katb El Ketab of Mohamed & Asmaa.
-END:VEVENT
-END:VCALENDAR`;
-
+    const icsContent = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:Mohamed & Asmaa's Katb El Ketab\nDTSTART:20260904T170000Z\nDTEND:20260904T200000Z\nLOCATION:مسجد العلي العظيم, Almaza, Cairo\nDESCRIPTION:Join us to celebrate the Katb El Ketab of Mohamed & Asmaa.\nEND:VEVENT\nEND:VCALENDAR`;
     const blob = new Blob([icsContent], { type: 'text/calendar' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Mohamed_Asmaa_Wedding.ics';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}
-
-function shareWhatsApp() {
-    const text = encodeURIComponent("Mohamed & Asmaa's Wedding Invitation!\n\nJoin us on Sept 4, 2026.\nOpen the invitation here: " + window.location.href);
-    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    a.href = url; a.download = 'Mohamed_Asmaa_Wedding.ics';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
 
 // ==========================================
-// 7. Canvas Animation (Petals & Smoke)
+// 8. Advanced Canvas (Realistic Petals & Smoke)
 // ==========================================
 function initCanvas() {
     const canvas = document.getElementById('atmosphere-canvas');
@@ -147,48 +114,64 @@ function initCanvas() {
     canvas.height = window.innerHeight;
 
     let particles = [];
-
-    // Resize handler
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
 
     class Particle {
-        constructor() {
-            this.reset();
-            this.y = Math.random() * canvas.height; // Initial random spread
-        }
-        reset() {
+        constructor() { this.reset(true); }
+        reset(initial = false) {
             this.type = Math.random() > 0.6 ? 'petal' : 'smoke';
             this.x = Math.random() * canvas.width;
-            this.y = -50;
-            this.size = this.type === 'petal' ? Math.random() * 8 + 5 : Math.random() * 40 + 20;
-            this.speedY = this.type === 'petal' ? Math.random() * 1.5 + 0.5 : Math.random() * 0.5 + 0.1;
-            this.speedX = Math.random() * 1 - 0.5;
+            this.y = initial ? Math.random() * canvas.height : -50;
+            
+            // Petal Specifics
+            this.size = this.type === 'petal' ? Math.random() * 8 + 8 : Math.random() * 40 + 20;
+            this.speedY = this.type === 'petal' ? Math.random() * 1.5 + 1 : Math.random() * 0.5 + 0.1;
+            this.speedX = Math.random() * 2 - 1;
+            
+            // 3D Math properties
             this.rotation = Math.random() * 360;
-            this.rotationSpeed = Math.random() * 2 - 1;
-            this.opacity = this.type === 'petal' ? Math.random() * 0.5 + 0.5 : Math.random() * 0.1 + 0.02;
+            this.rotationSpeed = (Math.random() * 2 - 1) * 0.02;
+            this.flip = Math.random() * Math.PI; // For 3D tumbling
+            this.flipSpeed = (Math.random() * 0.05) + 0.01;
+            
+            this.opacity = this.type === 'petal' ? Math.random() * 0.4 + 0.6 : Math.random() * 0.08 + 0.02;
         }
         update() {
             this.y += this.speedY;
-            this.x += this.speedX + Math.sin(this.y * 0.01) * 0.5; // Swaying motion
+            this.x += this.speedX + Math.sin(this.y * 0.01) * 1.5; // Natural drift
             this.rotation += this.rotationSpeed;
+            this.flip += this.flipSpeed;
 
             if (this.y > canvas.height + 50) this.reset();
         }
         draw() {
             ctx.save();
             ctx.translate(this.x, this.y);
-            ctx.rotate(this.rotation * Math.PI / 180);
             
             if (this.type === 'petal') {
-                ctx.fillStyle = `rgba(139, 0, 0, ${this.opacity})`; // Dark rose red
+                ctx.rotate(this.rotation);
+                // The magic of 3D flipping: scale Y using cosine
+                ctx.scale(1, Math.abs(Math.cos(this.flip))); 
+                
+                // Realistic gradient (dark red center to brighter red edges)
+                let gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
+                gradient.addColorStop(0, `rgba(139, 0, 0, ${this.opacity})`);
+                gradient.addColorStop(1, `rgba(200, 20, 20, ${this.opacity})`);
+                
+                ctx.fillStyle = gradient;
+                
+                // Draw bezier teardrop/petal shape
                 ctx.beginPath();
-                ctx.ellipse(0, 0, this.size, this.size / 2, 0, 0, Math.PI * 2);
+                ctx.moveTo(0, -this.size);
+                ctx.bezierCurveTo(this.size, -this.size/2, this.size, this.size/2, 0, this.size);
+                ctx.bezierCurveTo(-this.size, this.size/2, -this.size, -this.size/2, 0, -this.size);
                 ctx.fill();
             } else {
-                ctx.fillStyle = `rgba(200, 200, 200, ${this.opacity})`; // Smoke
+                // Smoke
+                ctx.fillStyle = `rgba(200, 200, 200, ${this.opacity})`;
                 ctx.beginPath();
                 ctx.arc(0, 0, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -197,14 +180,12 @@ function initCanvas() {
         }
     }
 
-    for (let i = 0; i < 70; i++) particles.push(new Particle());
+    // Spawn initial particles
+    for (let i = 0; i < 60; i++) particles.push(new Particle());
 
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
+        particles.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(animate);
     }
     animate();

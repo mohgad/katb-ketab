@@ -14,7 +14,7 @@ window.onload = function() {
 };
 
 // ==========================================
-// 2. Envelope Sequence & Layout Reveal
+// 2. Envelope Sequence
 // ==========================================
 function openEnvelope() {
     const container = document.querySelector('.envelope-wrapper');
@@ -32,34 +32,25 @@ function openEnvelope() {
         setTimeout(() => {
             scene1.style.display = 'none';
             scene2.style.display = 'block'; 
-            
-            // Re-lock body scroll, because Layer 2 does its own scrolling
             document.body.style.overflow = 'hidden'; 
-            
-            // Initialize the Scroll Observer for Layer 1 & 2 Sync
             initScrollObserver();
         }, 1000); 
     }, 2200); 
 }
 
 // ==========================================
-// 3. Sync Layer 1 (Fade) with Layer 2 (Snap)
+// 3. Sync Layer 1 with Layer 2
 // ==========================================
 function initScrollObserver() {
     const sections = document.querySelectorAll('.card-section');
     const backgrounds = document.querySelectorAll('.bg-panel');
     
-    // Use IntersectionObserver to track which card is currently snapped in view
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Add in-view class to trigger Layer 2 internal animations (Clock, Stars, etc.)
                 entry.target.classList.add('in-view');
-                
-                // Get the index of the active card
                 const index = entry.target.getAttribute('data-index');
                 
-                // Fade in the corresponding Layer 1 Background, fade out the rest
                 backgrounds.forEach((bg, i) => {
                     if(i == index) {
                         bg.classList.add('active');
@@ -68,13 +59,10 @@ function initScrollObserver() {
                     }
                 });
             } else {
-                // Remove in-view when card scrolls away
                 entry.target.classList.remove('in-view');
             }
         });
-    }, { 
-        threshold: 0.5 // Triggers when 50% of the card is visible
-    });
+    }, { threshold: 0.5 });
 
     sections.forEach(section => observer.observe(section));
 }
@@ -163,7 +151,6 @@ function initCanvas() {
         reset(initial = false) {
             this.x = Math.random() * canvas.width;
             this.y = initial ? Math.random() * canvas.height : -50;
-            
             this.type = Math.random() > 0.7 ? 'petal' : 'dust';
             
             if(this.type === 'petal') {
@@ -208,15 +195,12 @@ function initCanvas() {
             if(this.type === 'petal') {
                 ctx.rotate(this.rotation);
                 ctx.scale(1, Math.abs(Math.cos(this.flip))); 
-                
                 let gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.size);
                 gradient.addColorStop(0, `rgba(139, 0, 0, ${this.opacity})`);
                 gradient.addColorStop(1, `rgba(200, 20, 20, ${this.opacity})`);
-                
                 ctx.fillStyle = gradient;
                 ctx.shadowColor = 'rgba(0,0,0,0.5)';
                 ctx.shadowBlur = 5;
-                
                 ctx.beginPath();
                 ctx.moveTo(0, -this.size);
                 ctx.bezierCurveTo(this.size, -this.size/2, this.size, this.size/2, 0, this.size);

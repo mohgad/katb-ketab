@@ -4,14 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohamed & Asmaa - Wedding Invitation</title>
-    <!-- Fonts: Cinzel for English, Amiri for Arabic -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- YouTube API -->
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <!-- Background Canvas for Smoke & Petals -->
+    <!-- Background Canvas -->
     <canvas id="atmosphere-canvas"></canvas>
 
     <!-- Hidden YouTube Player -->
@@ -36,63 +34,83 @@
         </div>
     </div>
 
-    <!-- Scene 2: The Invitation Content -->
-    <div id="invitation-content" class="scene hidden">
-        <div class="content-wrapper">
-            <!-- Quran Verse -->
+    <!-- Scene 2: The Scrolling Invitation Content -->
+    <div id="invitation-content" class="hidden">
+        
+        <!-- Section 1: Opening -->
+        <div class="scroll-section reveal">
             <div class="quran-verse">
                 "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
             </div>
+        </div>
 
-            <!-- Names -->
-            <h1 class="names">Mohamed & Asmaa</h1>
+        <!-- Section 2: Names -->
+        <div class="scroll-section reveal delay-1">
+            <h1 class="names">Mohamed<br><span class="and-symbol">&</span><br>Asmaa</h1>
+        </div>
 
+        <!-- Section 3: Details -->
+        <div class="scroll-section reveal">
             <div class="details">
-                <p class="event-type" data-en="Invite you to celebrate their Katb El Ketab" data-ar="يتشرفان بدعوتكم لحضور عقد قرانهما">Invite you to celebrate their Katb El Ketab</p>
+                <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab" data-ar="يتشرفان بدعوتكم لحضور عقد قرانهما">Joyfully invite you to their Katb El Ketab</p>
+                <div class="gold-line"></div>
                 <p class="date">Friday, Sept 4, 2026<br>8:00 PM</p>
                 <p class="location" data-en="مسجد العلي العظيم, Almaza, Cairo" data-ar="مسجد العلي العظيم، ألماظة، القاهرة">مسجد العلي العظيم, Almaza, Cairo</p>
             </div>
+        </div>
 
-            <!-- Countdown Timer -->
+        <!-- Section 4: Countdown -->
+        <div class="scroll-section reveal">
             <div id="countdown" class="countdown">
                 <div class="time-box"><span id="days">00</span><p data-en="Days" data-ar="يوم">Days</p></div>
                 <div class="time-box"><span id="hours">00</span><p data-en="Hours" data-ar="ساعة">Hours</p></div>
                 <div class="time-box"><span id="minutes">00</span><p data-en="Mins" data-ar="دقيقة">Mins</p></div>
                 <div class="time-box"><span id="seconds">00</span><p data-en="Secs" data-ar="ثانية">Secs</p></div>
             </div>
+        </div>
 
-            <!-- Action Buttons -->
+        <!-- Section 5: Actions -->
+        <div class="scroll-section reveal">
             <div class="actions">
                 <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map" data-ar="الموقع على الخريطة">View Map</a>
                 <button onclick="downloadICS()" class="btn" data-en="Add to Calendar" data-ar="أضف للتقويم">Add to Calendar</button>
-                <button onclick="shareWhatsApp()" class="btn" data-en="Share via WhatsApp" data-ar="شارك عبر واتساب">Share via WhatsApp</button>
             </div>
+        </div>
 
-            <hr class="divider">
+        <!-- Section 6: Elegant RSVP -->
+        <div class="scroll-section reveal rsvp-wrapper">
+            <h2 class="rsvp-title" data-en="Reserve Your Seat" data-ar="تأكيد الحضور">Reserve Your Seat</h2>
+            <form action="https://formsubmit.co/YOUR_REAL_EMAIL@example.com" method="POST" id="rsvp-form" class="elegant-form">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="Guest_Tracking_ID" id="guest-tracking" value="Organic Visitor">
 
-            <!-- RSVP Form using FormSubmit -->
-            <div class="rsvp-section">
-                <h2 data-en="RSVP" data-ar="تأكيد الحضور">RSVP</h2>
-                <form action="https://formsubmit.co/YOUR_REAL_EMAIL@example.com" method="POST" id="rsvp-form">
-                    <!-- Disable Captcha and set success page (optional) -->
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="Guest_Tracking_ID" id="guest-tracking" value="Organic Visitor">
-
-                    <input type="text" name="name" placeholder="Your Name" required data-placeholder-ar="الاسم">
-                    
+                <div class="input-group">
+                    <input type="text" name="name" required placeholder=" ">
+                    <label data-en="Your Full Name" data-ar="الاسم بالكامل">Your Full Name</label>
+                </div>
+                
+                <div class="input-group">
                     <select name="attending" required>
+                        <option value="" disabled selected hidden data-en="Will you attend?" data-ar="هل ستحضر؟">Will you attend?</option>
                         <option value="Yes" data-en="Joyfully Accepts" data-ar="سأحضر بكل سرور">Joyfully Accepts</option>
                         <option value="No" data-en="Regretfully Declines" data-ar="أعتذر عن الحضور">Regretfully Declines</option>
                     </select>
+                </div>
 
-                    <input type="number" name="guests" placeholder="Number of Guests" min="1" max="5" required data-placeholder-ar="عدد المرافقين">
-                    
-                    <textarea name="message" placeholder="Leave a message for the couple..." rows="3" data-placeholder-ar="اترك رسالة للعروسين..."></textarea>
-                    
-                    <button type="submit" class="btn submit-btn" data-en="Send RSVP" data-ar="إرسال">Send RSVP</button>
-                </form>
-            </div>
+                <div class="input-group">
+                    <input type="number" name="guests" min="1" max="5" required placeholder=" ">
+                    <label data-en="Number of Guests" data-ar="عدد المرافقين">Number of Guests</label>
+                </div>
+                
+                <div class="input-group">
+                    <textarea name="message" rows="1" placeholder=" "></textarea>
+                    <label data-en="A message for the couple..." data-ar="رسالة للعروسين...">A message for the couple...</label>
+                </div>
+                
+                <button type="submit" class="btn submit-btn" data-en="Send Reply" data-ar="إرسال">Send Reply</button>
+            </form>
         </div>
+        
     </div>
 
     <script src="script.js"></script>

@@ -9,23 +9,31 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
-    <!-- Background Canvas -->
+    <!-- 3D Canvas Atmosphere -->
     <canvas id="atmosphere-canvas"></canvas>
-
-    <!-- Hidden YouTube Player -->
     <div id="youtube-player"></div>
 
-    <!-- Language Toggle -->
     <button id="lang-toggle" onclick="toggleLanguage()">عربي / EN</button>
 
     <!-- Scene 1: The Cinematic Envelope -->
     <div id="envelope-scene" class="scene">
         <div class="envelope-wrapper" onclick="openEnvelope()">
             <div class="envelope">
-                <div class="flap top-flap"></div>
-                <div class="flap bottom-flap"></div>
+                <!-- Inside back of the envelope -->
+                <div class="envelope-back"></div>
+                
+                <!-- The physical letter that slides out -->
+                <div class="mini-letter" id="mini-letter">
+                    <div class="mini-letter-border"></div>
+                </div>
+
+                <!-- 3D Flaps -->
                 <div class="flap left-flap"></div>
                 <div class="flap right-flap"></div>
+                <div class="flap bottom-flap"></div>
+                <div class="flap top-flap"></div>
+                
+                <!-- 3D Wax Seal -->
                 <div class="wax-seal">
                     <span class="seal-initials">M&A</span>
                 </div>
@@ -37,80 +45,54 @@
     <!-- Scene 2: The Scrolling Invitation Content -->
     <div id="invitation-content" class="hidden">
         
-        <!-- Section 1: Opening -->
-        <div class="scroll-section reveal">
-            <div class="quran-verse">
-                "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
-            </div>
-        </div>
+        <!-- Elegant Card Wrapper -->
+        <div class="card-texture">
+            <div class="corner top-left">✧</div>
+            <div class="corner top-right">✧</div>
+            <div class="corner bottom-left">✧</div>
+            <div class="corner bottom-right">✧</div>
 
-        <!-- Section 2: Names -->
-        <div class="scroll-section reveal delay-1">
-            <h1 class="names">Mohamed<br><span class="and-symbol">&</span><br>Asmaa</h1>
-        </div>
-
-        <!-- Section 3: Details -->
-        <div class="scroll-section reveal">
-            <div class="details">
-                <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab" data-ar="يتشرفان بدعوتكم لحضور عقد قرانهما">Joyfully invite you to their Katb El Ketab</p>
-                <div class="gold-line"></div>
-                <p class="date">Friday, Sept 4, 2026<br>8:00 PM</p>
-                <p class="location" data-en="مسجد العلي العظيم, Almaza, Cairo" data-ar="مسجد العلي العظيم، ألماظة، القاهرة">مسجد العلي العظيم, Almaza, Cairo</p>
-            </div>
-        </div>
-
-        <!-- Section 4: Countdown -->
-        <div class="scroll-section reveal">
-            <div id="countdown" class="countdown">
-                <div class="time-box"><span id="days">00</span><p data-en="Days" data-ar="يوم">Days</p></div>
-                <div class="time-box"><span id="hours">00</span><p data-en="Hours" data-ar="ساعة">Hours</p></div>
-                <div class="time-box"><span id="minutes">00</span><p data-en="Mins" data-ar="دقيقة">Mins</p></div>
-                <div class="time-box"><span id="seconds">00</span><p data-en="Secs" data-ar="ثانية">Secs</p></div>
-            </div>
-        </div>
-
-        <!-- Section 5: Actions -->
-        <div class="scroll-section reveal">
-            <div class="actions">
-                <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map" data-ar="الموقع على الخريطة">View Map</a>
-                <button onclick="downloadICS()" class="btn" data-en="Add to Calendar" data-ar="أضف للتقويم">Add to Calendar</button>
-            </div>
-        </div>
-
-        <!-- Section 6: Elegant RSVP -->
-        <div class="scroll-section reveal rsvp-wrapper">
-            <h2 class="rsvp-title" data-en="Reserve Your Seat" data-ar="تأكيد الحضور">Reserve Your Seat</h2>
-            <form action="https://formsubmit.co/YOUR_REAL_EMAIL@example.com" method="POST" id="rsvp-form" class="elegant-form">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="Guest_Tracking_ID" id="guest-tracking" value="Organic Visitor">
-
-                <div class="input-group">
-                    <input type="text" name="name" required placeholder=" ">
-                    <label data-en="Your Full Name" data-ar="الاسم بالكامل">Your Full Name</label>
+            <!-- Section 1: Opening -->
+            <div class="scroll-section reveal">
+                <div class="quran-verse">
+                    "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
                 </div>
-                
-                <div class="input-group">
-                    <select name="attending" required>
-                        <option value="" disabled selected hidden data-en="Will you attend?" data-ar="هل ستحضر؟">Will you attend?</option>
-                        <option value="Yes" data-en="Joyfully Accepts" data-ar="سأحضر بكل سرور">Joyfully Accepts</option>
-                        <option value="No" data-en="Regretfully Declines" data-ar="أعتذر عن الحضور">Regretfully Declines</option>
-                    </select>
-                </div>
+            </div>
 
-                <div class="input-group">
-                    <input type="number" name="guests" min="1" max="5" required placeholder=" ">
-                    <label data-en="Number of Guests" data-ar="عدد المرافقين">Number of Guests</label>
+            <!-- Section 2: Names -->
+            <div class="scroll-section reveal delay-1">
+                <h1 class="names">Mohamed<br><span class="and-symbol">&</span><br>Asmaa</h1>
+            </div>
+
+            <!-- Section 3: Details -->
+            <div class="scroll-section reveal">
+                <div class="details">
+                    <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab" data-ar="يتشرفان بدعوتكم لحضور عقد قرانهما">Joyfully invite you to their Katb El Ketab</p>
+                    <div class="gold-line"></div>
+                    <p class="date">Friday, Sept 4, 2026<br>8:00 PM</p>
+                    <p class="location" data-en="مسجد العلي العظيم, Almaza, Cairo" data-ar="مسجد العلي العظيم، ألماظة، القاهرة">مسجد العلي العظيم, Almaza, Cairo</p>
                 </div>
-                
-                <div class="input-group">
-                    <textarea name="message" rows="1" placeholder=" "></textarea>
-                    <label data-en="A message for the couple..." data-ar="رسالة للعروسين...">A message for the couple...</label>
+            </div>
+
+            <!-- Section 4: Countdown -->
+            <div class="scroll-section reveal">
+                <div id="countdown" class="countdown">
+                    <div class="time-box"><span id="days">00</span><p data-en="Days" data-ar="يوم">Days</p></div>
+                    <div class="time-box"><span id="hours">00</span><p data-en="Hours" data-ar="ساعة">Hours</p></div>
+                    <div class="time-box"><span id="minutes">00</span><p data-en="Mins" data-ar="دقيقة">Mins</p></div>
+                    <div class="time-box"><span id="seconds">00</span><p data-en="Secs" data-ar="ثانية">Secs</p></div>
                 </div>
-                
-                <button type="submit" class="btn submit-btn" data-en="Send Reply" data-ar="إرسال">Send Reply</button>
-            </form>
+            </div>
+
+            <!-- Section 5: Actions -->
+            <div class="scroll-section reveal">
+                <div class="actions">
+                    <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map" data-ar="الموقع على الخريطة">View Map</a>
+                    <button onclick="downloadICS()" class="btn" data-en="Add to Calendar" data-ar="أضف للتقويم">Add to Calendar</button>
+                </div>
+            </div>
+            
         </div>
-        
     </div>
 
     <script src="script.js"></script>

@@ -1,178 +1,100 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>محمد و أسماء | كتب الكتاب</title>
-<meta name="description" content="دعوة كتب كتاب محمد و أسماء - الجمعة 4 سبتمبر 2026">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital@0;1&family=Tajawal:wght@300;400;500;700&family=Cinzel:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed & Asmaa - Wedding Invitation</title>
+    <!-- Fonts: Cinzel for English, Amiri for Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
+    <!-- Background Canvas for Smoke & Petals -->
+    <canvas id="atmosphere-canvas"></canvas>
 
-<!-- Language toggle -->
-<button id="langToggle" class="lang-toggle" aria-label="Switch language">EN</button>
+    <!-- Hidden YouTube Player -->
+    <div id="youtube-player"></div>
 
-<!-- Music control (appears after envelope opens) -->
-<button id="musicToggle" class="music-toggle" hidden aria-label="Toggle music">
-  <span class="music-icon">♪</span>
-</button>
+    <!-- Language Toggle -->
+    <button id="lang-toggle" onclick="toggleLanguage()">عربي / EN</button>
 
-<!-- background atmosphere layers, sit behind everything, fixed to viewport -->
-<div class="scene-backdrop" aria-hidden="true">
-  <div class="wood-floor"></div>
-  <div class="amber-light"></div>
-  <canvas id="smokeCanvas"></canvas>
-  <canvas id="petalCanvas"></canvas>
-  <div class="vignette"></div>
-</div>
-
-<!-- ===== ENVELOPE SCENE ===== -->
-<section class="envelope-scene" id="envelopeScene">
-  <div class="envelope-stage">
-
-    <!-- the letter, hidden inside, slides up and out on open -->
-    <div class="letter" id="letter">
-      <p class="bismillah" data-ar="بسم الله الرحمن الرحيم" data-en="In the name of Allah, the Most Gracious, the Most Merciful">بسم الله الرحمن الرحيم</p>
-      <div class="ornament-line" aria-hidden="true">──── ✦ ────</div>
-      <h1 class="names">
-        <span class="name" data-ar="محمد" data-en="Mohamed">محمد</span>
-        <span class="amp" aria-hidden="true">&amp;</span>
-        <span class="name" data-ar="أسماء" data-en="Asmaa">أسماء</span>
-      </h1>
-      <p class="invite-line" data-ar="يتشرفان بدعوتكم لحضور حفل كتب كتابهما"
-         data-en="Request the honor of your presence at their Katb El Ketab">
-         يتشرفان بدعوتكم لحضور حفل كتب كتابهما
-      </p>
-      <p class="letter-date" data-ar="الجمعة ٤ سبتمبر ٢٠٢٦" data-en="Friday, the Fourth of September, 2026">
-        الجمعة ٤ سبتمبر ٢٠٢٦
-      </p>
-    </div>
-
-    <!-- envelope body, opens via 3D flap rotation on click -->
-    <button class="envelope" id="envelopeBtn" aria-label="Open the invitation">
-      <div class="envelope-back"></div>
-      <div class="envelope-flap" id="envelopeFlap">
-        <div class="wax-seal">
-          <span>م</span><span>أ</span>
+    <!-- Scene 1: The Cinematic Envelope -->
+    <div id="envelope-scene" class="scene">
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="flap top-flap"></div>
+                <div class="flap bottom-flap"></div>
+                <div class="flap left-flap"></div>
+                <div class="flap right-flap"></div>
+                <div class="wax-seal">
+                    <span class="seal-initials">M&A</span>
+                </div>
+            </div>
+            <div class="tap-hint" data-en="Tap to Open" data-ar="اضغط للفتح">Tap to Open</div>
         </div>
-      </div>
-      <div class="envelope-front"></div>
-      <span class="tap-hint" data-ar="المسوا لفتح الدعوة" data-en="Tap to open the invitation">المسوا لفتح الدعوة</span>
-    </button>
-  </div>
-</section>
-
-<!-- ===== VERSE ===== -->
-<section class="verse-section reveal-on-open">
-  <div class="ornament-frame">
-    <p class="verse-ar">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً</p>
-    <p class="verse-ref" data-ar="سورة الروم - ٢١" data-en="Surah Ar-Rum, Verse 21">سورة الروم - ٢١</p>
-  </div>
-</section>
-
-<!-- ===== COUNTDOWN ===== -->
-<section class="countdown-section reveal-on-open">
-  <h2 class="section-title" data-ar="العد التنازلي" data-en="Counting Down">العد التنازلي</h2>
-  <div class="countdown" id="countdown">
-    <div class="count-block"><span class="count-num" id="cd-days">00</span><span class="count-label" data-ar="يوم" data-en="Days">يوم</span></div>
-    <div class="count-sep">:</div>
-    <div class="count-block"><span class="count-num" id="cd-hours">00</span><span class="count-label" data-ar="ساعة" data-en="Hours">ساعة</span></div>
-    <div class="count-sep">:</div>
-    <div class="count-block"><span class="count-num" id="cd-mins">00</span><span class="count-label" data-ar="دقيقة" data-en="Minutes">دقيقة</span></div>
-    <div class="count-sep">:</div>
-    <div class="count-block"><span class="count-num" id="cd-secs">00</span><span class="count-label" data-ar="ثانية" data-en="Seconds">ثانية</span></div>
-  </div>
-</section>
-
-<!-- ===== DETAILS ===== -->
-<section class="details-section reveal-on-open">
-  <h2 class="section-title" data-ar="تفاصيل الحفل" data-en="Celebration Details">تفاصيل الحفل</h2>
-
-  <div class="details-grid">
-    <div class="detail-card">
-      <div class="detail-icon" aria-hidden="true">✦</div>
-      <h3 data-ar="الموعد" data-en="Date &amp; Time">الموعد</h3>
-      <p data-ar="الجمعة، ٤ سبتمبر ٢٠٢٦" data-en="Friday, September 4, 2026">الجمعة، ٤ سبتمبر ٢٠٢٦</p>
-      <p data-ar="الساعة ٨:٠٠ مساءً" data-en="8:00 PM">الساعة ٨:٠٠ مساءً</p>
-      <button class="ghost-btn" id="addToCalendar" data-ar="أضف إلى التقويم" data-en="Add to calendar">أضف إلى التقويم</button>
     </div>
 
-    <div class="detail-card">
-      <div class="detail-icon" aria-hidden="true">✦</div>
-      <h3 data-ar="المكان" data-en="Venue">المكان</h3>
-      <p data-ar="مسجد العلي العظيم" data-en="Al-Aly Al-Azeem Mosque">مسجد العلي العظيم</p>
-      <p data-ar="الألماظة، القاهرة" data-en="Almaza, Cairo, Egypt">الألماظة، القاهرة</p>
-      <a class="ghost-btn" id="directionsBtn" href="#" target="_blank" rel="noopener" data-ar="فتح الاتجاهات" data-en="Get directions">فتح الاتجاهات</a>
+    <!-- Scene 2: The Invitation Content -->
+    <div id="invitation-content" class="scene hidden">
+        <div class="content-wrapper">
+            <!-- Quran Verse -->
+            <div class="quran-verse">
+                "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+            </div>
+
+            <!-- Names -->
+            <h1 class="names">Mohamed & Asmaa</h1>
+
+            <div class="details">
+                <p class="event-type" data-en="Invite you to celebrate their Katb El Ketab" data-ar="يتشرفان بدعوتكم لحضور عقد قرانهما">Invite you to celebrate their Katb El Ketab</p>
+                <p class="date">Friday, Sept 4, 2026<br>8:00 PM</p>
+                <p class="location" data-en="مسجد العلي العظيم, Almaza, Cairo" data-ar="مسجد العلي العظيم، ألماظة، القاهرة">مسجد العلي العظيم, Almaza, Cairo</p>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div id="countdown" class="countdown">
+                <div class="time-box"><span id="days">00</span><p data-en="Days" data-ar="يوم">Days</p></div>
+                <div class="time-box"><span id="hours">00</span><p data-en="Hours" data-ar="ساعة">Hours</p></div>
+                <div class="time-box"><span id="minutes">00</span><p data-en="Mins" data-ar="دقيقة">Mins</p></div>
+                <div class="time-box"><span id="seconds">00</span><p data-en="Secs" data-ar="ثانية">Secs</p></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="actions">
+                <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn" data-en="View Map" data-ar="الموقع على الخريطة">View Map</a>
+                <button onclick="downloadICS()" class="btn" data-en="Add to Calendar" data-ar="أضف للتقويم">Add to Calendar</button>
+                <button onclick="shareWhatsApp()" class="btn" data-en="Share via WhatsApp" data-ar="شارك عبر واتساب">Share via WhatsApp</button>
+            </div>
+
+            <hr class="divider">
+
+            <!-- RSVP Form using FormSubmit -->
+            <div class="rsvp-section">
+                <h2 data-en="RSVP" data-ar="تأكيد الحضور">RSVP</h2>
+                <form action="https://formsubmit.co/YOUR_REAL_EMAIL@example.com" method="POST" id="rsvp-form">
+                    <!-- Disable Captcha and set success page (optional) -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="Guest_Tracking_ID" id="guest-tracking" value="Organic Visitor">
+
+                    <input type="text" name="name" placeholder="Your Name" required data-placeholder-ar="الاسم">
+                    
+                    <select name="attending" required>
+                        <option value="Yes" data-en="Joyfully Accepts" data-ar="سأحضر بكل سرور">Joyfully Accepts</option>
+                        <option value="No" data-en="Regretfully Declines" data-ar="أعتذر عن الحضور">Regretfully Declines</option>
+                    </select>
+
+                    <input type="number" name="guests" placeholder="Number of Guests" min="1" max="5" required data-placeholder-ar="عدد المرافقين">
+                    
+                    <textarea name="message" placeholder="Leave a message for the couple..." rows="3" data-placeholder-ar="اترك رسالة للعروسين..."></textarea>
+                    
+                    <button type="submit" class="btn submit-btn" data-en="Send RSVP" data-ar="إرسال">Send RSVP</button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="map-wrap">
-    <iframe
-      title="mosque-location"
-      src="https://www.google.com/maps?q=%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B9%D8%B8%D9%8A%D9%85%20%D8%A7%D9%84%D8%A7%D9%84%D9%85%D8%A7%D8%B8%D8%A9%20%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9&output=embed"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
-</section>
-
-<!-- ===== RSVP ===== -->
-<section class="rsvp-section reveal-on-open">
-  <h2 class="section-title" data-ar="تأكيد الحضور" data-en="RSVP">تأكيد الحضور</h2>
-  <p class="rsvp-sub" data-ar="يسعدنا تأكيد حضوركم قبل ٢٠ أغسطس ٢٠٢٦" data-en="Kindly confirm before August 20, 2026">يسعدنا تأكيد حضوركم قبل ٢٠ أغسطس ٢٠٢٦</p>
-
-  <form class="rsvp-form" id="rsvpForm" method="POST" action="https://formsubmit.co/ajax/YOUR-EMAIL@example.com">
-    <input type="hidden" name="_subject" value="RSVP - كتب كتاب محمد و أسماء">
-    <input type="hidden" name="_template" value="table">
-    <input type="text" name="_honey" class="hidden-field" tabindex="-1" autocomplete="off">
-
-    <div class="field">
-      <label for="fullName" data-ar="الاسم بالكامل" data-en="Full name">الاسم بالكامل</label>
-      <input type="text" id="fullName" name="fullName" required>
-    </div>
-
-    <div class="field">
-      <label for="attending" data-ar="هل ستحضر؟" data-en="Will you attend?">هل ستحضر؟</label>
-      <select id="attending" name="attending" required>
-        <option value="" disabled selected data-ar="اختر" data-en="Choose">اختر</option>
-        <option value="yes" data-ar="نعم، بكل سرور" data-en="Yes, joyfully">نعم، بكل سرور</option>
-        <option value="no" data-ar="أعتذر، لن أستطيع" data-en="Sorry, can't make it">أعتذر، لن أستطيع</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label for="guests" data-ar="عدد المرافقين" data-en="Number of guests">عدد المرافقين</label>
-      <input type="number" id="guests" name="guests" min="0" max="10" value="0">
-    </div>
-
-    <div class="field">
-      <label for="wishes" data-ar="رسالة أو تهنئة (اختياري)" data-en="A message or wish (optional)">رسالة أو تهنئة (اختياري)</label>
-      <textarea id="wishes" name="wishes" rows="3"></textarea>
-    </div>
-
-    <button type="submit" class="submit-btn" data-ar="إرسال" data-en="Send RSVP">إرسال</button>
-  </form>
-
-  <div class="rsvp-success" id="rsvpSuccess" hidden>
-    <p data-ar="شكرًا لكم! تم استلام ردكم بكل سرور." data-en="Thank you! Your response has been received.">شكرًا لكم! تم استلام ردكم بكل سرور.</p>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer class="footer reveal-on-open">
-  <div class="ornament-line" aria-hidden="true">──── ✦ ────</div>
-  <p class="footer-names" data-ar="محمد و أسماء" data-en="Mohamed &amp; Asmaa">محمد و أسماء</p>
-  <a class="whatsapp-btn" id="whatsappShare" href="#" target="_blank" rel="noopener" data-ar="شارك الدعوة على واتساب" data-en="Share invitation on WhatsApp">شارك الدعوة على واتساب</a>
-</footer>
-
-<!-- hidden YouTube player for background music -->
-<div id="ytPlayer" class="yt-player-hidden" aria-hidden="true"></div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

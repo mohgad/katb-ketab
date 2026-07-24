@@ -3,120 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة كتب كتاب | محمد وأسماء</title>
-    <!-- خطوط عربية كلاسيكية من Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    <title>دعوة عقد قران | محمد وأسماء</title>
+    
+    <!-- خطوط جوجل العربية الكلاسيكية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary-navy: #0A192F;
-            --gold: #D4AF37;
-            --bg-color: #F8F5E6; /* لون ورق البردي أو الكريمي */
+            --navy-blue: #0a1128;
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --text-light: #f8f9fa;
         }
-        body {
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        body {
             font-family: 'Amiri', serif;
-            background-color: var(--primary-navy);
-            color: var(--gold);
+            background-color: var(--navy-blue);
+            color: var(--gold-light);
             text-align: center;
             overflow-x: hidden;
+            /* خلفية بنقش أندلسي - يمكنك استبدال الرابط بصورة पैटर्न شفافة */
+            background-image: radial-gradient(circle, rgba(212,175,55,0.05) 10%, transparent 20%), 
+                              radial-gradient(circle, rgba(212,175,55,0.05) 10%, transparent 20%);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
         }
-        .container {
+
+        /* حاوية التصميم الرئيسية */
+        .invitation-container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
-            background-image: url('andalusian-pattern-bg.png'); /* هنحط هنا باترن إسلامي شفاف */
-            background-size: cover;
+            padding: 40px 20px;
+            background: rgba(10, 17, 40, 0.85);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .hero-section {
-            padding: 50px 0;
+
+        /* الأنيميشن الأساسي لدخول العناصر */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s forwards ease-out;
         }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* تأخير ظهور العناصر عشان تظهر بالترتيب */
+        .delay-1 { animation-delay: 0.3s; }
+        .delay-2 { animation-delay: 0.6s; }
+        .delay-3 { animation-delay: 0.9s; }
+        .delay-4 { animation-delay: 1.2s; }
+
+        /* قسم البسملة والآية */
+        .bismillah {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .quran-verse {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* قسم الأسماء */
+        .names-section {
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .names-section::before, .names-section::after {
+            content: '❖';
+            color: var(--gold);
+            font-size: 1.5rem;
+            display: block;
+            margin: 10px auto;
+        }
+
         .names {
             font-family: 'Aref Ruqaa', serif;
-            font-size: 3rem;
-            margin: 20px 0;
+            font-size: 4rem;
+            color: var(--gold);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            line-height: 1.2;
         }
-        .details-section {
-            font-size: 1.2rem;
-            line-height: 2;
-            margin: 40px 0;
-        }
-        .mosque-image-container {
-            margin: 40px auto;
-            width: 80%;
-            border: 3px solid var(--gold);
-            border-radius: 150px 150px 0 0; /* شكل القوس الإسلامي */
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .mosque-image-container img {
-            width: 100%;
-            display: block;
-            filter: sepia(40%) contrast(110%); /* عشان تليق مع الألوان الكلاسيكية */
-        }
-        /* قسم العداد التنازلي في الآخر خالص */
-        .countdown-section {
-            margin-top: 50px;
-            padding: 30px 0;
-            border-top: 1px solid var(--gold);
-        }
-        .timer-display {
+
+        .and-symbol {
             font-size: 2rem;
-            direction: ltr; /* عشان الأرقام تظهر مظبوطة */
+            margin: 10px 0;
+            color: var(--gold-light);
+        }
+
+        /* قسم التفاصيل */
+        .details {
+            font-size: 1.4rem;
+            line-height: 2;
+            margin: 30px 0;
+        }
+
+        .date-highlight {
+            font-size: 1.6rem;
+            color: var(--gold);
+            font-weight: bold;
+            margin: 10px 0;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 10px 0;
+            display: inline-block;
+        }
+
+        /* إطار صورة المسجد الأندلسي */
+        .mosque-container {
+            margin: 40px auto;
+            width: 85%;
+            max-width: 350px;
+            /* شكل القوس الإسلامي */
+            border-radius: 200px 200px 10px 10px;
+            border: 4px solid var(--gold);
+            padding: 5px;
+            background-color: var(--gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+
+        .mosque-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 195px 195px 5px 5px;
+            display: block;
+            /* فلتر لدمج الصورة مع الألوان الكلاسيكية */
+            filter: sepia(30%) brightness(90%) contrast(110%);
+            transition: transform 0.5s ease;
+        }
+
+        .mosque-container:hover .mosque-img {
+            transform: scale(1.05);
+        }
+
+        /* زرار اللوكيشن */
+        .location-btn {
+            display: inline-block;
+            margin: 20px 0 40px 0;
+            padding: 12px 30px;
+            background-color: transparent;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 1.2rem;
+            border: 2px solid var(--gold);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .location-btn:hover {
+            background-color: var(--gold);
+            color: var(--navy-blue);
+        }
+
+        /* قسم العداد التنازلي - في آخر الصفحة */
+        .countdown-wrapper {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px dashed rgba(212, 175, 55, 0.4);
+        }
+
+        .countdown-title {
+            font-size: 1.4rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            direction: ltr; /* لضمان ظهور الأرقام من اليسار لليمين */
+        }
+
+        .time-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            border-radius: 10px;
+            padding: 15px 10px;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--gold);
+            font-family: sans-serif;
+        }
+
+        .time-box p {
+            font-size: 0.9rem;
+            margin-top: 5px;
+            color: var(--gold-light);
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- القسم الأول: المقدمة والأسماء -->
-        <div class="hero-section">
-            <h2>بسم الله الرحمن الرحيم</h2>
-            <p>"وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا..."</p>
-            <div class="names">
-                محمد <br> & <br> أسماء
+
+    <div class="invitation-container">
+        
+        <div>
+            <!-- المقدمة والآية -->
+            <div class="fade-in-up">
+                <div class="bismillah">﷽</div>
+                <div class="quran-verse">
+                    "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+                </div>
+            </div>
+
+            <!-- الأسماء -->
+            <div class="names-section fade-in-up delay-1">
+                <div class="names">محمد</div>
+                <div class="and-symbol">&</div>
+                <div class="names">أسماء</div>
+            </div>
+
+            <!-- تفاصيل الموعد والمكان -->
+            <div class="details fade-in-up delay-2">
+                <p>نتشرف بدعوتكم لحضور عقد القران</p>
+                <div class="date-highlight">
+                    يوم الجمعة ٤ سبتمبر ٢٠٢٦<br>
+                    الساعة ٨:٠٠ مساءً
+                </div>
+                <p>بمسجد العلي العظيم - ألماظة</p>
+            </div>
+
+            <!-- صورة المسجد الأندلسية -->
+            <div class="fade-in-up delay-3">
+                <div class="mosque-container">
+                    <!-- حط مسار صورة المسجد هنا بدل الرابط ده -->
+                    <img src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&q=80&w=600" alt="مسجد العلي العظيم" class="mosque-img">
+                </div>
+                
+                <!-- لينك جوجل ماب (قم بتغيير الرابط للوكيشن الحقيقي) -->
+                <a href="#" class="location-btn" target="_blank">الموقع على الخريطة 📍</a>
             </div>
         </div>
 
-        <!-- القسم الثاني: الموعد والمكان -->
-        <div class="details-section">
-            <p>نتشرف بدعوتكم لحضور عقد القران</p>
-            <h3>يوم الجمعة ٤ سبتمبر ٢٠٢٦</h3>
-            <p>في تمام الساعة ٨:٠٠ مساءً</p>
-            <p><strong>بمسجد العلي العظيم - ألماظة</strong></p>
+        <!-- العداد التنازلي في نهاية الصفحة -->
+        <div class="countdown-wrapper fade-in-up delay-4">
+            <div class="countdown-title">متبقي على الفرحة</div>
+            <div class="countdown-grid" id="countdown">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <p>يوم</p>
+                </div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <p>ساعة</p>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">00</span>
+                    <p>دقيقة</p>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">00</span>
+                    <p>ثانية</p>
+                </div>
+            </div>
         </div>
 
-        <!-- القسم الثالث: صورة المسجد -->
-        <div class="mosque-image-container">
-            <!-- استبدل الرابط بصورة المسجد الفعلية -->
-            <img src="al-ali-al-azeem-mosque.jpg" alt="مسجد العلي العظيم">
-        </div>
-
-        <!-- القسم الأخير: العداد التنازلي -->
-        <div class="countdown-section">
-            <h3>متبقي على الفرحة</h3>
-            <div class="timer-display" id="countdown">00:00:00:00</div>
-        </div>
     </div>
 
     <!-- سكريبت العداد التنازلي -->
     <script>
-        const targetDate = new Date("Sep 4, 2026 20:00:00").getTime();
-        
-        const countdownInterval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+        // تحديد موعد كتب الكتاب: 4 سبتمبر 2026 الساعة 8:00 مساءً
+        const countDownDate = new Date("Sep 4, 2026 20:00:00").getTime();
 
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            // حساب الأيام والساعات والدقائق والثواني
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = 
-                `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+            // عرض النتيجة
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
 
+            // لما الوقت يخلص
             if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById("countdown").innerHTML = "مرحباً بكم!";
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = "<h3 style='color: var(--gold);'>مرحباً بكم في يوم فرحتنا!</h3>";
             }
         }, 1000);
     </script>

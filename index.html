@@ -5,20 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دعوة عقد قران | محمد وأسماء</title>
     
-    <!-- خطوط جوجل العربية -->
+    <!-- خطوط عربية كلاسيكية -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg-color: #e3ddd1; /* لون خلفية الصفحة (رمادي/بيج دافئ) */
-            --paper-color: #f4f1ea; /* لون الورقة الفاتح */
-            --text-dark: #4a3b32; /* بني غامق للكتابة */
-            --accent-orange: #c47c59; /* لون الورد البرتقالي المطفى */
-            --accent-green: #7d8c70; /* لون ورق الشجر */
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -27,264 +19,197 @@
 
         body {
             font-family: 'Amiri', serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
+            color: #4a3b32; /* لون بني داكن لايق مع الكارت */
+            /* ارتفاع الصفحة 600vh عشان يكفي سكرول لـ 6 كروت */
+            height: 600vh; 
+            /* الخلفية الثابتة اللي فيها الظرف والترابيزة */
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             overflow-x: hidden;
-            /* مساحة للسكرول عشان تأثير الورقة يشتغل */
-            min-height: 200vh; 
         }
 
-        /*=========================================
-          الطبقة الأولى: الورقة (Paper Card)
-        =========================================*/
-        .paper-wrapper {
+        /* حاوية الكروت متثبتة في نص الشاشة */
+        .cards-container {
             position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 500px;
+            height: 80vh;
+            max-height: 700px;
+            perspective: 1000px;
+        }
+
+        /* التصميم الأساسي لكل كارت */
+        .card {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            padding: 20px;
-            pointer-events: none; /* عشان نقدر نعمل سكرول من خلالها */
-        }
-
-        .paper-card {
-            width: 100%;
-            max-width: 500px;
-            height: 90vh;
-            background-color: var(--paper-color);
-            border-radius: 5px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 0 40px rgba(0,0,0,0.02);
-            position: relative;
-            text-align: center;
-            padding: 40px 20px;
+            height: 100%;
+            /* صورة الكارت المفرغ اللي هتعملها فوتوشوب */
+            background-image: url('card-blank.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            padding: 15% 10%; /* مساحة عشان الكلام ميركبش على الورد */
+            text-align: center;
+            
+            /* الأنيميشن لما الكارت يطير */
             transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
-            pointer-events: auto;
-            /* خلفية مائية خفيفة جدا للورقة */
-            background-image: radial-gradient(circle at 50% 50%, rgba(196, 124, 89, 0.05) 0%, transparent 60%);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
-        /* كلاس الأنيميشن اللي هيشيل الورقة لفوق */
-        .paper-card.removed {
-            transform: translateY(-120vh) rotate(-3deg);
+        /* ترتيب الكروت (الكارت الأول يكون فوق خالص) */
+        #card1 { z-index: 6; }
+        #card2 { z-index: 5; }
+        #card3 { z-index: 4; }
+        #card4 { z-index: 3; }
+        #card5 { z-index: 2; }
+        #card6 { z-index: 1; } /* ده الكارت الأخير بتاع العداد */
+
+        /* الكلاس اللي الجافاسكريبت هيضيفه عشان يطير الكارت */
+        .card.fly-away {
+            transform: translateY(-150vh) rotate(-15deg);
             opacity: 0;
             pointer-events: none;
         }
 
-        /* تصميم محتوى الورقة (المستوحى من الصور) */
-        .bismillah {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--accent-green);
-        }
-
-        .calligraphy-circle {
-            width: 150px;
-            height: 150px;
-            border: 2px solid var(--accent-orange);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 20px auto;
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 2rem;
-            color: var(--text-dark);
-            background: rgba(196, 124, 89, 0.1);
-        }
-
+        /* ================= تنسيقات المحتوى جوه الكروت ================= */
+        
+        .bismillah { font-size: 1.8rem; margin-bottom: 20px; font-weight: bold; }
+        .verse { font-size: 1.4rem; line-height: 1.8; font-style: italic; }
+        
         .names {
             font-family: 'Aref Ruqaa', serif;
-            font-size: 3.5rem;
-            margin: 20px 0;
-            color: var(--text-dark);
+            font-size: 4rem;
+            line-height: 1.2;
         }
-
-        .date-cover {
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            font-family: sans-serif;
-            color: var(--accent-orange);
-            margin-top: 20px;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 20px;
-            font-size: 1rem;
-            color: var(--accent-green);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        /* زوايا الورد الديكورية (مكان وضع صور الورد المفرغ) */
-        .floral-corner {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            opacity: 0.8;
-        }
-        .floral-top-left { top: 10px; left: 10px; border-top: 2px solid var(--accent-green); border-left: 2px solid var(--accent-green); }
-        .floral-bottom-right { bottom: 10px; right: 10px; border-bottom: 2px solid var(--accent-green); border-right: 2px solid var(--accent-green); }
-
-        /*=========================================
-          الطبقة الثانية: قسم التفاصيل (بيظهر لما الورقة تتشال)
-        =========================================*/
-        .details-section {
-            position: absolute;
-            top: 100vh; /* بيبدأ بعد الشاشة الأولى */
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 60px 20px 40px;
-            text-align: center;
-        }
-
-        .details-box {
-            background: var(--paper-color);
-            padding: 40px;
+        .and-symbol { font-size: 2rem; margin: 10px 0; }
+        
+        .intro-text { font-size: 1.6rem; line-height: 2; }
+        .highlight { font-weight: bold; font-size: 1.8rem; color: #b66d43; margin-top: 15px; display: block; }
+        
+        .mosque-img {
+            width: 80%;
+            height: 200px;
+            object-fit: cover;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 500px;
-            width: 100%;
-            border: 1px solid rgba(125, 140, 112, 0.3);
-        }
-
-        .verse {
-            font-size: 1.3rem;
-            line-height: 2;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-
-        .info-text {
-            font-size: 1.5rem;
-            line-height: 2;
+            border: 3px solid #b66d43;
             margin-bottom: 20px;
         }
 
-        .map-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 35px;
-            background-color: var(--accent-orange);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.2rem;
-            transition: background 0.3s ease;
-        }
-
-        .map-btn:hover {
-            background-color: var(--text-dark);
-        }
-
-        /*=========================================
-          العداد التنازلي - في آخر الصفحة خالص
-        =========================================*/
+        /* ================= العداد التنازلي في آخر الكارت ================= */
         .countdown-wrapper {
-            margin-top: 50px;
+            margin-top: 20px;
             width: 100%;
-            padding-top: 30px;
-            border-top: 1px dashed var(--accent-green);
         }
-
-        .countdown-title {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            color: var(--accent-green);
-            font-weight: bold;
-        }
-
         .countdown-grid {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             direction: ltr;
         }
-
         .time-box {
-            background: rgba(196, 124, 89, 0.1);
-            border: 1px solid var(--accent-orange);
+            background: rgba(182, 109, 67, 0.1);
+            border: 1px solid #b66d43;
             border-radius: 8px;
-            padding: 15px 10px;
-            min-width: 70px;
-            text-align: center;
+            padding: 10px;
+            min-width: 60px;
         }
-
         .time-box span {
             display: block;
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            color: var(--text-dark);
-            font-family: sans-serif;
+        }
+        .time-box p {
+            font-size: 0.9rem;
+            margin-top: 5px;
         }
 
-        .time-box p {
-            font-size: 1rem;
-            margin-top: 5px;
-            color: var(--accent-orange);
-            font-family: 'Amiri', serif;
+        .scroll-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -10px); }
+            60% { transform: translate(-50%, -5px); }
         }
     </style>
 </head>
 <body>
 
-    <!-- الطبقة الأولى (الورقة اللي هتختفي مع السكرول) -->
-    <div class="paper-wrapper">
-        <div class="paper-card" id="mainCard">
-            <!-- ديكور زوايا الورقة (ممكن تحط جواهم صور الورد بـ CSS) -->
-            <div class="floral-corner floral-top-left"></div>
-            <div class="floral-corner floral-bottom-right"></div>
-            
+    <div class="scroll-hint" id="scrollHint">اسحب للأسفل لقراءة الدعوة ↓</div>
+
+    <div class="cards-container">
+        
+        <!-- سيكشن 1: البسملة والآية -->
+        <div class="card" id="card1">
             <div class="bismillah">﷽</div>
-            
-            <!-- شكل الدائرة اللي فيها الخط العربي زي الصورة الأولى -->
-            <div class="calligraphy-circle">
-                محمد<br>&<br>أسماء
-            </div>
-            
-            <div class="date-cover">04 . 09 . 2026</div>
-
-            <div class="scroll-indicator">اسحب للأسفل لمعرفة التفاصيل ↓</div>
-        </div>
-    </div>
-
-    <!-- الطبقة الثانية (التفاصيل اللي هتظهر) -->
-    <div class="details-section">
-        <div class="details-box">
             <div class="verse">
                 "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
             </div>
-            
-            <div class="info-text">
-                نتشرف بدعوتكم لحضور عقد القران<br>
-                <strong>يوم الجمعة ٤ سبتمبر ٢٠٢٦</strong><br>
-                في تمام الساعة ٨:٠٠ مساءً<br>
-                بمسجد العلي العظيم - ألماظة
-            </div>
-            
-            <a href="#" class="map-btn" target="_blank">الموقع على الخريطة 📍</a>
+        </div>
 
-            <!-- العداد التنازلي ثابت في نهاية المحتوى -->
+        <!-- سيكشن 2: الأسماء -->
+        <div class="card" id="card2">
+            <div class="names">محمد</div>
+            <div class="and-symbol">&</div>
+            <div class="names">أسماء</div>
+        </div>
+
+        <!-- سيكشن 3: الترحيب -->
+        <div class="card" id="card3">
+            <div class="intro-text">
+                في ليلة من ليالي الأنس، تكتمل فرحتنا بحضوركم..
+                <span class="highlight">نتشرف بدعوتكم لحضور عقد قراننا</span>
+                لتشاركونا لحظات لا تُنسى.
+            </div>
+        </div>
+
+        <!-- سيكشن 4: الميعاد -->
+        <div class="card" id="card4">
+            <div class="intro-text">
+                <span class="highlight">الزمان</span>
+                يوم الجمعة<br>
+                ٤ سبتمبر ٢٠٢٦<br><br>
+                في تمام الساعة ٨:٠٠ مساءً
+            </div>
+        </div>
+
+        <!-- سيكشن 5: المكان -->
+        <div class="card" id="card5">
+            <div class="intro-text">
+                <span class="highlight">المكان</span>
+                مسجد العلي العظيم<br>
+                ألماظة
+                <br><br>
+                <a href="#" style="color: #b66d43; text-decoration: none; border-bottom: 1px solid;">الموقع على الخريطة 📍</a>
+            </div>
+        </div>
+
+        <!-- سيكشن 6: صورة المكان والعداد التنازلي في الآخر خالص -->
+        <div class="card" id="card6">
+            <img src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&q=80&w=400" alt="المسجد" class="mosque-img">
+            
             <div class="countdown-wrapper">
-                <div class="countdown-title">متبقي على الفرحة</div>
                 <div class="countdown-grid" id="countdown">
                     <div class="time-box">
                         <span id="days">00</span>
@@ -305,23 +230,36 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        // سكريبت إخفاء الورقة عند السكرول
+        // ربط السكرول بطيران الكروت
+        const cards = document.querySelectorAll('.card');
+        const scrollHint = document.getElementById('scrollHint');
+        
         window.addEventListener('scroll', () => {
-            const card = document.getElementById('mainCard');
-            // لو المستخدم نزل أكتر من 50 بيكسل، الورقة تطير لفوق
-            if (window.scrollY > 50) {
-                card.classList.add('removed');
-            } else {
-                card.classList.remove('removed');
-            }
+            let scroll = window.scrollY;
+            let vh = window.innerHeight;
+            
+            // إخفاء رسالة "اسحب للأسفل" بعد أول سكرول
+            if(scroll > 50) scrollHint.style.display = 'none';
+
+            // كل كارت بيطير لما السكرول يعدي مسافة معينة (vh)
+            cards.forEach((card, index) => {
+                if (index < cards.length - 1) { // الكارت الأخير مبيطيرش
+                    // نضرب الـ index في vh عشان نعمل مسافات متساوية للسكرول
+                    if (scroll > (index + 0.6) * vh) {
+                        card.classList.add('fly-away');
+                    } else {
+                        card.classList.remove('fly-away');
+                    }
+                }
+            });
         });
 
-        // سكريبت العداد التنازلي
+        // العداد التنازلي
         const countDownDate = new Date("Sep 4, 2026 20:00:00").getTime();
-
         const x = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
@@ -338,7 +276,7 @@
 
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdown").innerHTML = "<h3>مرحباً بكم في يوم فرحتنا!</h3>";
+                document.getElementById("countdown").innerHTML = "<h3>مرحباً بكم!</h3>";
             }
         }, 1000);
     </script>

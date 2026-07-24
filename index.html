@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دعوة عقد قران | محمد وأسماء</title>
     
-    <!-- خطوط جوجل العربية الكلاسيكية -->
+    <!-- خطوط جوجل العربية -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --dark-red: #7b1113; /* أحمر داكن / مارون */
-            --bg-white: #fdfbf7; /* أبيض كريمي مريح للعين */
-            --gold: #d4af37; /* لمسة دهبي خفيفة للإطارات */
+            --bg-color: #e3ddd1; /* لون خلفية الصفحة (رمادي/بيج دافئ) */
+            --paper-color: #f4f1ea; /* لون الورقة الفاتح */
+            --text-dark: #4a3b32; /* بني غامق للكتابة */
+            --accent-orange: #c47c59; /* لون الورد البرتقالي المطفى */
+            --accent-green: #7d8c70; /* لون ورق الشجر */
         }
 
         * {
@@ -25,221 +27,188 @@
 
         body {
             font-family: 'Amiri', serif;
-            background-color: var(--bg-white);
-            color: var(--dark-red);
-            text-align: center;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
             overflow-x: hidden;
-            /* باترن خفيف جدا يدي ملمس الورق أو الزخرفة */
-            background-image: radial-gradient(circle, rgba(123, 17, 19, 0.03) 10%, transparent 20%);
-            background-size: 40px 40px;
+            /* مساحة للسكرول عشان تأثير الورقة يشتغل */
+            min-height: 200vh; 
         }
 
         /*=========================================
-          تأثير الستارة (Curtain Animation)
+          الطبقة الأولى: الورقة (Paper Card)
         =========================================*/
-        .curtain-overlay {
+        .paper-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            z-index: 9999;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            z-index: 10;
+            padding: 20px;
+            pointer-events: none; /* عشان نقدر نعمل سكرول من خلالها */
         }
 
-        .curtain {
-            position: absolute;
-            top: 0;
-            width: 50vw;
-            height: 100%;
-            background-color: var(--dark-red);
-            /* تأثير ظل وإضاءة خفيف لتبدو كالقماش */
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
-            background-image: repeating-linear-gradient(
-                to right,
-                transparent,
-                transparent 10%,
-                rgba(0,0,0,0.1) 10%,
-                rgba(0,0,0,0.1) 20%
-            );
-            transition: transform 1.5s ease-in-out;
-            z-index: 10000;
-        }
-
-        .curtain-right {
-            right: 0;
-            transform-origin: right;
-        }
-
-        .curtain-left {
-            left: 0;
-            transform-origin: left;
-        }
-
-        /* الكلاس اللي هيتضاف بالجافاسكريبت عشان يفتح الستارة */
-        .curtain-right.open {
-            transform: translateX(100%);
-        }
-
-        .curtain-left.open {
-            transform: translateX(-100%);
-        }
-
-        .open-btn {
-            position: relative;
-            z-index: 10001;
-            padding: 15px 40px;
-            font-size: 1.5rem;
-            font-family: 'Aref Ruqaa', serif;
-            background-color: var(--bg-white);
-            color: var(--dark-red);
-            border: 2px solid var(--gold);
+        .paper-card {
+            width: 100%;
+            max-width: 500px;
+            height: 90vh;
+            background-color: var(--paper-color);
             border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-
-        .open-btn:hover {
-            transform: scale(1.05);
-            background-color: var(--gold);
-            color: #fff;
-        }
-
-        .open-btn.hidden {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-
-        /*=========================================
-          محتوى الدعوة
-        =========================================*/
-        .invitation-container {
-            max-width: 600px;
-            margin: 0 auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 0 40px rgba(0,0,0,0.02);
+            position: relative;
+            text-align: center;
             padding: 40px 20px;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            opacity: 0; /* هتبدأ مخفية لحد ما الستارة تفتح */
-            transition: opacity 1s ease 0.5s;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+            pointer-events: auto;
+            /* خلفية مائية خفيفة جدا للورقة */
+            background-image: radial-gradient(circle at 50% 50%, rgba(196, 124, 89, 0.05) 0%, transparent 60%);
         }
 
-        .invitation-container.visible {
-            opacity: 1;
+        /* كلاس الأنيميشن اللي هيشيل الورقة لفوق */
+        .paper-card.removed {
+            transform: translateY(-120vh) rotate(-3deg);
+            opacity: 0;
+            pointer-events: none;
         }
 
+        /* تصميم محتوى الورقة (المستوحى من الصور) */
         .bismillah {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-
-        .quran-verse {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            margin-bottom: 40px;
-            font-style: italic;
-        }
-
-        .names-section {
-            margin: 40px 0;
-        }
-        
-        .names-section::before, .names-section::after {
-            content: '❖';
-            color: var(--dark-red);
             font-size: 1.5rem;
-            display: block;
-            margin: 10px auto;
+            margin-bottom: 20px;
+            color: var(--accent-green);
+        }
+
+        .calligraphy-circle {
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--accent-orange);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 2rem;
+            color: var(--text-dark);
+            background: rgba(196, 124, 89, 0.1);
         }
 
         .names {
             font-family: 'Aref Ruqaa', serif;
-            font-size: 4.5rem;
-            color: var(--dark-red);
-            line-height: 1.2;
+            font-size: 3.5rem;
+            margin: 20px 0;
+            color: var(--text-dark);
         }
 
-        .and-symbol {
-            font-size: 2.5rem;
-            margin: 5px 0;
+        .date-cover {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            font-family: sans-serif;
+            color: var(--accent-orange);
+            margin-top: 20px;
         }
 
-        .details {
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1rem;
+            color: var(--accent-green);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* زوايا الورد الديكورية (مكان وضع صور الورد المفرغ) */
+        .floral-corner {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+        }
+        .floral-top-left { top: 10px; left: 10px; border-top: 2px solid var(--accent-green); border-left: 2px solid var(--accent-green); }
+        .floral-bottom-right { bottom: 10px; right: 10px; border-bottom: 2px solid var(--accent-green); border-right: 2px solid var(--accent-green); }
+
+        /*=========================================
+          الطبقة الثانية: قسم التفاصيل (بيظهر لما الورقة تتشال)
+        =========================================*/
+        .details-section {
+            position: absolute;
+            top: 100vh; /* بيبدأ بعد الشاشة الأولى */
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px 40px;
+            text-align: center;
+        }
+
+        .details-box {
+            background: var(--paper-color);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 500px;
+            width: 100%;
+            border: 1px solid rgba(125, 140, 112, 0.3);
+        }
+
+        .verse {
+            font-size: 1.3rem;
+            line-height: 2;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .info-text {
             font-size: 1.5rem;
             line-height: 2;
-            margin: 30px 0;
+            margin-bottom: 20px;
         }
 
-        .date-highlight {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin: 15px 0;
-            border-top: 1px solid var(--dark-red);
-            border-bottom: 1px solid var(--dark-red);
-            padding: 10px 0;
+        .map-btn {
             display: inline-block;
-        }
-
-        .mosque-container {
-            margin: 40px auto;
-            width: 85%;
-            max-width: 350px;
-            border-radius: 200px 200px 10px 10px;
-            border: 4px solid var(--dark-red);
-            padding: 5px;
-            background-color: var(--bg-white);
-            box-shadow: 0 10px 25px rgba(123, 17, 19, 0.2);
-            overflow: hidden;
-        }
-
-        .mosque-img {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-            border-radius: 195px 195px 5px 5px;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .mosque-container:hover .mosque-img {
-            transform: scale(1.05);
-        }
-
-        .location-btn {
-            display: inline-block;
-            margin: 20px 0 40px 0;
-            padding: 12px 30px;
-            background-color: var(--dark-red);
-            color: var(--bg-white);
+            margin-top: 20px;
+            padding: 12px 35px;
+            background-color: var(--accent-orange);
+            color: #fff;
             text-decoration: none;
-            font-size: 1.2rem;
             border-radius: 30px;
-            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            transition: background 0.3s ease;
         }
 
-        .location-btn:hover {
-            background-color: var(--gold);
-            color: var(--dark-red);
+        .map-btn:hover {
+            background-color: var(--text-dark);
         }
 
         /*=========================================
-          قسم العداد التنازلي - مثبت في آخر الصفحة
+          العداد التنازلي - في آخر الصفحة خالص
         =========================================*/
         .countdown-wrapper {
             margin-top: 50px;
-            padding-top: 40px;
-            border-top: 1px dashed var(--dark-red);
+            width: 100%;
+            padding-top: 30px;
+            border-top: 1px dashed var(--accent-green);
         }
 
         .countdown-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 20px;
+            color: var(--accent-green);
             font-weight: bold;
         }
 
@@ -251,9 +220,9 @@
         }
 
         .time-box {
-            background: rgba(123, 17, 19, 0.05);
-            border: 1px solid var(--dark-red);
-            border-radius: 10px;
+            background: rgba(196, 124, 89, 0.1);
+            border: 1px solid var(--accent-orange);
+            border-radius: 8px;
             padding: 15px 10px;
             min-width: 70px;
             text-align: center;
@@ -263,101 +232,92 @@
             display: block;
             font-size: 2rem;
             font-weight: bold;
+            color: var(--text-dark);
             font-family: sans-serif;
         }
 
         .time-box p {
             font-size: 1rem;
             margin-top: 5px;
-            text-transform: uppercase;
+            color: var(--accent-orange);
             font-family: 'Amiri', serif;
         }
     </style>
 </head>
 <body>
 
-    <!-- ستارة البداية -->
-    <div class="curtain-overlay" id="curtainOverlay">
-        <div class="curtain curtain-right" id="curtainRight"></div>
-        <div class="curtain curtain-left" id="curtainLeft"></div>
-        <button class="open-btn" id="openBtn" onclick="openCurtain()">افتح الدعوة</button>
-    </div>
-
-    <!-- محتوى الدعوة الرئيسي -->
-    <div class="invitation-container" id="invitationContent">
-        
-        <div>
+    <!-- الطبقة الأولى (الورقة اللي هتختفي مع السكرول) -->
+    <div class="paper-wrapper">
+        <div class="paper-card" id="mainCard">
+            <!-- ديكور زوايا الورقة (ممكن تحط جواهم صور الورد بـ CSS) -->
+            <div class="floral-corner floral-top-left"></div>
+            <div class="floral-corner floral-bottom-right"></div>
+            
             <div class="bismillah">﷽</div>
-            <div class="quran-verse">
-                "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
-            </div>
-
-            <div class="names-section">
-                <div class="names">محمد</div>
-                <div class="and-symbol">&</div>
-                <div class="names">أسماء</div>
-            </div>
-
-            <div class="details">
-                <p>نتشرف بدعوتكم لحضور عقد القران</p>
-                <div class="date-highlight">
-                    يوم الجمعة ٤ سبتمبر ٢٠٢٦<br>
-                    الساعة ٨:٠٠ مساءً
-                </div>
-                <p>بمسجد العلي العظيم - ألماظة</p>
-            </div>
-
-            <div class="mosque-container">
-                <!-- مسار صورة المسجد -->
-                <img src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&q=80&w=600" alt="مسجد العلي العظيم" class="mosque-img">
+            
+            <!-- شكل الدائرة اللي فيها الخط العربي زي الصورة الأولى -->
+            <div class="calligraphy-circle">
+                محمد<br>&<br>أسماء
             </div>
             
-            <a href="#" class="location-btn" target="_blank">الموقع على الخريطة 📍</a>
-        </div>
+            <div class="date-cover">04 . 09 . 2026</div>
 
-        <!-- العداد التنازلي في نهاية الصفحة تماماً -->
-        <div class="countdown-wrapper">
-            <div class="countdown-title">متبقي على الفرحة</div>
-            <div class="countdown-grid" id="countdown">
-                <div class="time-box">
-                    <span id="days">00</span>
-                    <p>يوم</p>
-                </div>
-                <div class="time-box">
-                    <span id="hours">00</span>
-                    <p>ساعة</p>
-                </div>
-                <div class="time-box">
-                    <span id="minutes">00</span>
-                    <p>دقيقة</p>
-                </div>
-                <div class="time-box">
-                    <span id="seconds">00</span>
-                    <p>ثانية</p>
+            <div class="scroll-indicator">اسحب للأسفل لمعرفة التفاصيل ↓</div>
+        </div>
+    </div>
+
+    <!-- الطبقة الثانية (التفاصيل اللي هتظهر) -->
+    <div class="details-section">
+        <div class="details-box">
+            <div class="verse">
+                "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
+            </div>
+            
+            <div class="info-text">
+                نتشرف بدعوتكم لحضور عقد القران<br>
+                <strong>يوم الجمعة ٤ سبتمبر ٢٠٢٦</strong><br>
+                في تمام الساعة ٨:٠٠ مساءً<br>
+                بمسجد العلي العظيم - ألماظة
+            </div>
+            
+            <a href="#" class="map-btn" target="_blank">الموقع على الخريطة 📍</a>
+
+            <!-- العداد التنازلي ثابت في نهاية المحتوى -->
+            <div class="countdown-wrapper">
+                <div class="countdown-title">متبقي على الفرحة</div>
+                <div class="countdown-grid" id="countdown">
+                    <div class="time-box">
+                        <span id="days">00</span>
+                        <p>يوم</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="hours">00</span>
+                        <p>ساعة</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="minutes">00</span>
+                        <p>دقيقة</p>
+                    </div>
+                    <div class="time-box">
+                        <span id="seconds">00</span>
+                        <p>ثانية</p>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
-        // دالة فتح الستارة
-        function openCurtain() {
-            // إخفاء الزرار
-            document.getElementById('openBtn').classList.add('hidden');
-            
-            // تحريك الستارة يمين وشمال
-            document.getElementById('curtainRight').classList.add('open');
-            document.getElementById('curtainLeft').classList.add('open');
-            
-            // إظهار محتوى الدعوة
-            document.getElementById('invitationContent').classList.add('visible');
-            
-            // إخفاء طبقة الستارة بالكامل بعد انتهاء الأنيميشن عشان متمنعش الضغط على اللينكات
-            setTimeout(() => {
-                document.getElementById('curtainOverlay').style.display = 'none';
-            }, 1500);
-        }
+        // سكريبت إخفاء الورقة عند السكرول
+        window.addEventListener('scroll', () => {
+            const card = document.getElementById('mainCard');
+            // لو المستخدم نزل أكتر من 50 بيكسل، الورقة تطير لفوق
+            if (window.scrollY > 50) {
+                card.classList.add('removed');
+            } else {
+                card.classList.remove('removed');
+            }
+        });
 
         // سكريبت العداد التنازلي
         const countDownDate = new Date("Sep 4, 2026 20:00:00").getTime();

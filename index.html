@@ -3,149 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة زفاف - محمد وأسماء</title>
-    <link rel="icon" href="data:,">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <title>دعوة كتب كتاب | محمد وأسماء</title>
+    <!-- خطوط عربية كلاسيكية من Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #0A192F;
+            --gold: #D4AF37;
+            --bg-color: #F8F5E6; /* لون ورق البردي أو الكريمي */
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Amiri', serif;
+            background-color: var(--primary-navy);
+            color: var(--gold);
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-image: url('andalusian-pattern-bg.png'); /* هنحط هنا باترن إسلامي شفاف */
+            background-size: cover;
+        }
+        .hero-section {
+            padding: 50px 0;
+        }
+        .names {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+        .details-section {
+            font-size: 1.2rem;
+            line-height: 2;
+            margin: 40px 0;
+        }
+        .mosque-image-container {
+            margin: 40px auto;
+            width: 80%;
+            border: 3px solid var(--gold);
+            border-radius: 150px 150px 0 0; /* شكل القوس الإسلامي */
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .mosque-image-container img {
+            width: 100%;
+            display: block;
+            filter: sepia(40%) contrast(110%); /* عشان تليق مع الألوان الكلاسيكية */
+        }
+        /* قسم العداد التنازلي في الآخر خالص */
+        .countdown-section {
+            margin-top: 50px;
+            padding: 30px 0;
+            border-top: 1px solid var(--gold);
+        }
+        .timer-display {
+            font-size: 2rem;
+            direction: ltr; /* عشان الأرقام تظهر مظبوطة */
+        }
+    </style>
 </head>
 <body>
-    <!-- LAYER 0 -->
-    <canvas id="atmosphere-canvas"></canvas>
-    
-    <div id="youtube-player"></div>
-    <button id="lang-toggle" onclick="toggleLanguage()">EN / عربي</button>
-
-    <!-- Scene 1: Envelope -->
-    <div id="envelope-scene" class="scene">
-        <div class="envelope-wrapper" onclick="openEnvelope()">
-            <div class="envelope">
-                <div class="envelope-back"></div>
-                <div class="mini-letter" id="mini-letter"><div class="mini-letter-border"></div></div>
-                <div class="flap left-flap"></div>
-                <div class="flap right-flap"></div>
-                <div class="flap bottom-flap"></div>
-                <div class="flap top-flap"></div>
-                <div class="wax-seal"><span class="seal-initials">M&A</span></div>
+    <div class="container">
+        <!-- القسم الأول: المقدمة والأسماء -->
+        <div class="hero-section">
+            <h2>بسم الله الرحمن الرحيم</h2>
+            <p>"وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا..."</p>
+            <div class="names">
+                محمد <br> & <br> أسماء
             </div>
-            <div class="tap-hint" data-en="Tap to Open">اضغط للفتح</div>
+        </div>
+
+        <!-- القسم الثاني: الموعد والمكان -->
+        <div class="details-section">
+            <p>نتشرف بدعوتكم لحضور عقد القران</p>
+            <h3>يوم الجمعة ٤ سبتمبر ٢٠٢٦</h3>
+            <p>في تمام الساعة ٨:٠٠ مساءً</p>
+            <p><strong>بمسجد العلي العظيم - ألماظة</strong></p>
+        </div>
+
+        <!-- القسم الثالث: صورة المسجد -->
+        <div class="mosque-image-container">
+            <!-- استبدل الرابط بصورة المسجد الفعلية -->
+            <img src="al-ali-al-azeem-mosque.jpg" alt="مسجد العلي العظيم">
+        </div>
+
+        <!-- القسم الأخير: العداد التنازلي -->
+        <div class="countdown-section">
+            <h3>متبقي على الفرحة</h3>
+            <div class="timer-display" id="countdown">00:00:00:00</div>
         </div>
     </div>
 
-    <!-- Scene 2: The Journey -->
-    <div id="invitation-content" class="hidden">
+    <!-- سكريبت العداد التنازلي -->
+    <script>
+        const targetDate = new Date("Sep 4, 2026 20:00:00").getTime();
         
-        <!-- LAYER 1: Backgrounds -->
-        <div id="layer-1-backgrounds">
-            <div class="bg-panel bg-quran active"></div>
-            <div class="bg-panel bg-names"></div>
-            <div class="bg-panel bg-venue"></div>
-            <div class="bg-panel bg-clock"></div>
-            <div class="bg-panel bg-rules"></div>
-            <div class="bg-panel bg-lantern"></div>
-            <div class="bg-panel bg-end"></div>
-        </div>
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-        <!-- LAYER 2: Scrollable Content with Glowing Frame -->
-        <div id="layer-2-content">
-            
-            <!-- Card 1: Basmala -->
-            <section class="card-section" data-index="0">
-                <div class="card-glass">
-                    <div class="basmala">بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ</div>
-                    <div class="quran-verse">
-                        "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً"
-                    </div>
-                </div>
-            </section>
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            <!-- Card 2: Names (With Moving Shine) -->
-            <section class="card-section has-decorations" data-index="1">
-                <div class="card-glass">
-                    <div class="decorations">
-                        <div class="hanging-star delay-a">✦</div>
-                        <div class="hanging-star delay-b">✧</div>
-                        <div class="hanging-star delay-c">✦</div>
-                    </div>
-                    <h1 class="names" data-en="Mohamed<br><span class='and-symbol'>&</span><br>Asmaa">محمد<br><span class="and-symbol">و</span><br>أسماء</h1>
-                    <p class="event-type" data-en="Joyfully invite you to their Katb El Ketab">يتشرفان بدعوتكم لحضور عقد قرانهما</p>
-                    <div class="gold-line"></div>
-                    <p class="date" data-en="Friday, Sept 4, 2026">الجمعة، ٤ سبتمبر ٢٠٢٦</p>
-                </div>
-            </section>
+            document.getElementById("countdown").innerHTML = 
+                `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
 
-            <!-- Card 3: Venue & Realistic Car -->
-            <section class="card-section has-car" data-index="2">
-                <div class="car-wrapper"><div class="realistic-car"></div></div>
-                <div class="card-glass">
-                    <h2 class="section-title" data-en="The Venue">مكان العقد</h2>
-                    <div class="venue-card">
-                        <p class="location-name" data-en="Masjid Al-Ali Al-Azim">مسجد العلي العظيم</p>
-                        <p class="location-area" data-en="Almaza, Cairo">ألماظة، القاهرة</p>
-                        <a href="https://maps.google.com/?q=مسجد+العلي+العظيم,+Almaza,+Cairo" target="_blank" class="btn map-btn" data-en="Open in Google Maps">فتح على خرائط جوجل</a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Card 4: Clock -->
-            <section class="card-section clock-section" data-index="3">
-                <div class="card-glass">
-                    <div class="clock-face">
-                        <div class="hand hour-hand"></div>
-                        <div class="hand minute-hand"></div>
-                        <div class="clock-center"></div>
-                    </div>
-                    <p class="time-text" data-en="Promptly at Eight in the Evening">في تمام الساعة الثامنة مساءً</p>
-                </div>
-            </section>
-
-            <!-- Card 5: Rules -->
-            <section class="card-section rules-section" data-index="4">
-                <div class="card-glass">
-                    <h2 class="section-title" data-en="Kindly Note">قواعد الحضور</h2>
-                    <ul class="rules-list">
-                        <li data-en="Adults only celebration (No kids allowed, sweet dreams to them!)">نعتذر عن عدم استقبال الأطفال، نتمنى لهم نوماً هنيئاً.</li>
-                        <li data-en="Formal and elegant attire requested.">الالتزام بالزي الرسمي (فورمال).</li>
-                        <li data-en="Please arrive 15 minutes early to secure your seat.">نرجو التواجد قبل الموعد بـ ١٥ دقيقة.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Card 6: Lantern -->
-            <section class="card-section interactive-scene" data-index="5">
-                <div class="card-glass">
-                    <h2 class="section-title" data-en="Send a Blessing">أمنيات مضيئة</h2>
-                    <p class="lantern-text" data-en="Tap the button to light a digital lantern for the couple.">اضغط على الزر لإضاءة وإطلاق فانوس أمنيات للعروسين في سماء هذه الليلة.</p>
-                    <button class="btn lantern-btn" onclick="releaseLantern()" data-en="Light a Lantern">إطلاق أمنية</button>
-                </div>
-                <div id="lantern-container"></div>
-            </section>
-
-            <!-- Card 7: Duaa & Countdown -->
-            <section class="card-section countdown-section" data-index="6">
-                <div class="card-glass">
-                    <div class="gold-line"></div>
-                    <h1 class="names duaa" data-en="May Allah bless you, and shower His blessings upon you.">
-                        بَارَكَ اللَّهُ لَكُمَا<br>وَبَارَكَ عَلَيْكُمَا<br>وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
-                    </h1>
-                    <div class="gold-line"></div>
-
-                    <h2 class="section-title" data-en="Counting Down the Moments" style="margin-top: 40px;">نعد اللحظات</h2>
-                    <div id="countdown" class="countdown">
-                        <div class="time-box"><span id="days" class="en-num">00</span><p data-en="Days">يوم</p></div>
-                        <div class="time-box"><span id="hours" class="en-num">00</span><p data-en="Hours">ساعة</p></div>
-                        <div class="time-box"><span id="minutes" class="en-num">00</span><p data-en="Mins">دقيقة</p></div>
-                        <div class="time-box"><span id="seconds" class="en-num">00</span><p data-en="Secs">ثانية</p></div>
-                    </div>
-                    
-                    <div class="actions">
-                        <button onclick="downloadICS()" class="btn map-btn" data-en="Add to Calendar">أضف للتقويم</button>
-                    </div>
-                </div>
-            </section>
-            
-        </div>
-    </div>
-    <script src="script.js"></script>
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "مرحباً بكم!";
+            }
+        }, 1000);
+    </script>
 </body>
 </html>

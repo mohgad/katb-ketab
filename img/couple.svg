@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 400" fill="none" stroke="#141414" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bride -->
+  <!-- hair -->
+  <path d="M150 60 C 120 70, 108 108, 116 150 C 108 190, 100 230, 96 262" />
+  <path d="M150 60 C 186 52, 210 78, 208 116 C 210 160, 216 200, 224 232" />
+  <path d="M116 150 C 122 186, 118 224, 108 254" />
+  <!-- face hidden by hand -->
+  <path d="M138 132 C 136 108, 148 92, 166 92 C 184 92, 194 108, 192 134 C 192 150, 184 160, 166 160 C 150 160, 140 150, 138 132 Z" fill="#f4f2ee"/>
+  <path d="M148 96 L 148 152 M 160 90 L 160 158 M 172 90 L 172 158 M 184 96 L 184 150" stroke-width="3"/>
+  <!-- ring -->
+  <circle cx="160" cy="118" r="4" stroke-width="3"/>
+  <!-- dress -->
+  <path d="M132 176 C 150 168, 182 168, 200 176 C 208 220, 216 290, 228 360 L 96 360 C 110 296, 120 232, 132 176 Z" fill="#f4f2ee"/>
+  <path d="M132 200 C 156 210, 178 210, 200 200" stroke-width="3"/>
+  <!-- arm + bouquet -->
+  <path d="M136 190 C 110 190, 88 168, 78 140" />
+  <path d="M78 140 C 60 118, 56 96, 64 78 C 84 70, 106 78, 118 96 C 112 116, 96 132, 78 140 Z" fill="#f4f2ee"/>
+  <path d="M70 92 C 78 88, 88 90, 92 98 M 84 78 C 92 82, 96 92, 92 100 M 100 90 C 102 98, 98 106, 90 108" stroke-width="3"/>
+  <path d="M66 142 L 58 168 M 74 146 L 70 172 M 84 148 L 84 172 M 94 144 L 98 168" stroke-width="3"/>
+
+  <!-- Groom -->
+  <!-- hair -->
+  <path d="M262 88 C 258 56, 282 36, 312 40 C 340 44, 354 68, 348 96" />
+  <!-- face hidden by hand -->
+  <path d="M266 128 C 264 102, 278 86, 300 86 C 322 86, 336 104, 334 130 C 332 148, 320 158, 300 158 C 282 158, 268 148, 266 128 Z" fill="#f4f2ee"/>
+  <path d="M278 92 L 278 150 M 292 86 L 292 156 M 306 86 L 306 156 M 320 92 L 320 150" stroke-width="3"/>
+  <!-- ring -->
+  <circle cx="306" cy="112" r="4" stroke-width="3"/>
+  <!-- suit -->
+  <path d="M258 176 C 280 166, 322 166, 344 176 C 356 232, 364 300, 370 360 L 232 360 C 240 298, 248 230, 258 176 Z" fill="#141414" stroke="#141414"/>
+  <!-- shirt + lapels -->
+  <path d="M284 172 L 300 210 L 316 172 Z" fill="#f4f2ee" stroke="#f4f2ee" stroke-width="3"/>
+  <path d="M284 172 C 288 194, 294 204, 300 210 M 316 172 C 312 194, 306 204, 300 210" stroke="#f4f2ee" stroke-width="3"/>
+  <!-- raised arm -->
+  <path d="M262 180 C 250 160, 250 140, 262 124" stroke="#141414"/>
+</svg>

@@ -1,69 +1,54 @@
-# محمد و أسماء — Wedding Invitation (Cinematic Edition)
+# Wedding Invitation Website 💍
 
-A single-page wedding invitation with a cinematic, dark wood-and-amber
-aesthetic: a 3D envelope that opens on click revealing the invitation card,
-canvas-animated falling rose petals, drifting smoke/atmosphere, background
-music from a YouTube video (starts on the envelope-open click, which
-satisfies browsers' autoplay-with-sound rules), a bilingual Arabic/English
-toggle, live countdown, add-to-calendar, map directions, WhatsApp share, and
-an RSVP form powered by FormSubmit.co (no backend needed).
+A one-page animated wedding invitation site — envelope opening, hero, save-the-date,
+venue, program timeline, photo gallery, live countdown, and background music.
+Everything is controlled from **one config file**, no coding needed.
 
-> Hosting note: this targets **GitHub Pages**, not Netlify — as of mid-2026
-> `*.netlify.app` sites are widely reported unreachable from Egyptian ISPs
-> without a VPN.
+## Structure
 
-## 1. Required setup before deploying
-
-**RSVP email** — open `index.html`, find:
-```html
-<form class="rsvp-form" id="rsvpForm" method="POST" action="https://formsubmit.co/ajax/YOUR-EMAIL@example.com">
 ```
-Replace `YOUR-EMAIL@example.com` with your real address. The first-ever
-submission triggers a one-time confirmation email from FormSubmit — click
-it to activate. Every submission after that lands straight in your inbox.
-
-**Music video** — open `script.js`, find near the top:
-```js
-var YT_VIDEO_ID = "AJgE_dLWsuQ"; // replace with your own video ID if desired
+├── index.html      ← the page (don't edit unless you know HTML)
+├── config.js       ← ✏️ EDIT THIS — all names, dates, texts, links, colors
+├── css/style.css   ← styles
+├── js/main.js      ← logic (countdown, envelope animation, music…)
+├── img/            ← 🖼️ put your photos here
+└── audio/          ← 🎵 put your music file here (optional)
 ```
-This is the ID from the YouTube link you shared. To use a different video,
-swap in its ID (the part after `youtu.be/` or `v=` in its URL).
 
-A quick copyright note: the site embeds the video via YouTube's own player
-(an iframe pointing at YouTube), which is how any YouTube "background music"
-embed works — nothing is downloaded, copied, or rehosted. It plays through
-YouTube itself, same as if a guest opened the video directly.
+## How to customize
 
-## 2. Deploy to GitHub Pages (free)
+1. Open `config.js` in any text editor.
+2. Change names, wedding date, venue info, program items, texts — save the file.
+3. Replace the placeholder images in `img/` **keeping the same file names**
+   (or change the paths in `config.js` to your own file names):
+   - `photo-1.jpg`, `photo-2.jpg` — the two tilted photos on the first screen
+   - `gallery-1.jpg` … `gallery-4.jpg` — the gallery (add more paths in the config for more photos)
+   - `venue.jpg` — the big background photo of the venue
+   - `couple.svg` — the line-art illustration (swap with your own if you like)
+4. **Music (optional):** drop an `.mp3` into `audio/` and set
+   `music.src: "audio/yourfile.mp3"` in the config.
+5. **Colors:** the `theme` block at the bottom of the config controls the whole
+   palette (cream paper, ink black, gold seal, etc.).
 
-1. Create a repo at https://github.com/new (e.g. `mohamed-asmaa-wedding`).
-2. Upload all files in this folder (drag-and-drop on github.com works, or
-   `git push` if you prefer the CLI).
-3. **Settings → Pages → Source** → branch `main`, folder `/ (root)` → Save.
-4. Live in a minute or two at:
-   `https://YOUR-USERNAME.github.io/mohamed-asmaa-wedding/`
+## Preview locally
 
-## Local preview
+Just open `index.html` in a browser, or run a tiny server:
 
-Open `index.html` directly in a browser — everything runs client-side.
-(RSVP submission needs a real deployed URL; FormSubmit won't accept
-requests from a local `file://` page.)
+```bash
+python -m http.server 8000
+```
 
-## Customizing
+then open http://localhost:8000
 
-- **Text/copy**: `data-ar` / `data-en` attributes in `index.html`.
-- **Colors**: `:root` block at the top of `style.css`.
-- **Date/time**: `EVENT_START` in `script.js` (and the visible text in
-  `index.html`).
-- **Petals/smoke density or speed**: `COUNT` and `speed` values inside the
-  petals/smoke IIFEs in `script.js`.
-- **Venue/map**: the Google Maps query in the `iframe src` in `index.html`
-  and in the directions link in `script.js`.
+## Host on GitHub Pages (free)
 
-## Files
+1. Create a new repository on GitHub (e.g. `wedding`).
+2. Upload all these files to the repository (drag & drop works on github.com →
+   *Add file → Upload files*).
+3. Go to **Settings → Pages** → under *Build and deployment* choose
+   **Deploy from a branch**, branch **main**, folder **/ (root)** → Save.
+4. After ~1 minute your site is live at
+   `https://<your-username>.github.io/<repo-name>/`
 
-- `index.html` — envelope scene, letter, verse, countdown, details, RSVP, footer
-- `style.css` — cinematic wood/amber/wine design system (tokens at top)
-- `script.js` — envelope open + music trigger, canvas petals & smoke,
-  language toggle, countdown, calendar, directions, WhatsApp share, RSVP
-- `.nojekyll` — tells GitHub Pages to serve files as-is
+Any time you edit `config.js` or swap images and push/upload again, the site
+updates automatically.

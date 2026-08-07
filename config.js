@@ -59,7 +59,7 @@ const CONFIG = {
     titleItalic: "very full",
     titleEnd: "moon.",
     name: "Al Aly Al Azeem Mosque Almaza",
-    when: "4 Sep 2026 · 6pm",
+    when: "4 Sep 2026 · 7:30 PM",
     dress: "Soft pastels",
     mapsUrl: "https://maps.app.goo.gl/9LDw7PWMbuk4L6Mp9",
     background: "img/venue.jpg", // big background photo of the venue
@@ -73,7 +73,7 @@ const CONFIG = {
     // Add / remove / edit as many items as you want
     items: [
       {
-        time: "8:00 PM",
+        time: "7:30 PM",
         title: "The Ceremony",
         note: "Where the forever part happens.",
       },

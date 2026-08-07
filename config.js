@@ -16,7 +16,7 @@ const CONFIG = {
 
   /* ---------- WEDDING DATE & TIME (for the live countdown) ----------
      Format: "YYYY-MM-DDTHH:MM:SS"  (24h clock, local time)            */
-  weddingDate: "2026-09-04T18:00:00",
+  weddingDate: "2026-09-04T19:30:00",
 
   /* ---------- BROWSER TAB ---------- */
   page: {
@@ -60,7 +60,7 @@ const CONFIG = {
     titleEnd: "moon.",
     name: "Al Aly Al Azeem Mosque Almaza",
     when: "4 Sep 2026 · 7:30 PM",
-    dress: "Soft pastels",
+    dress: "Formal",
     mapsUrl: "https://maps.app.goo.gl/9LDw7PWMbuk4L6Mp9",
     background: "img/venue.jpg", // big background photo of the venue
   },

@@ -60,7 +60,7 @@ const CONFIG = {
     titleEnd: "moon.",
     name: "Al Aly Al Azeem Mosque Almaza",
     when: "4 Sep 2026 · 7:30 PM",
-    dress: "Formal",
+    dress: "Dress Code: Formal dress for men and simple soirée dress for women.",
     mapsUrl: "https://maps.app.goo.gl/9LDw7PWMbuk4L6Mp9",
     background: "img/venue.jpg", // big background photo of the venue
   },

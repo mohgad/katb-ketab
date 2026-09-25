@@ -13,7 +13,7 @@
   --seal: #a4763c;
   --line: #dcd9d2;
 
-  --serif: "Playfair Display", Georgia, serif;
+  --serif: "Cinzel", "Playfair Display", Georgia, serif;
   --script: "Caveat", cursive;
   --sans: "Inter", -apple-system, system-ui, sans-serif;
 }
@@ -280,33 +280,87 @@ section { padding: 6rem 1.5rem; }
 .hero__date::before,
 .hero__date::after { content: ""; width: 2.4rem; height: 1px; background: var(--ink-soft); }
 
-.hero__photos {
+/* ════════ TOP BANNER ════════ */
+.top-banner {
+  background: var(--dark);
+  color: var(--light);
+  padding: 0.8rem 1rem;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   position: relative;
-  width: min(92vw, 560px);
-  height: clamp(340px, 60vw, 480px);
-  margin-top: 3.5rem;
+  z-index: 10;
 }
-.hero__photo {
-  position: absolute;
-  border-radius: 28px;
-  overflow: hidden;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+.top-banner__icon {
+  font-size: 1.1rem;
+  animation: twinkle 2s infinite ease-in-out alternate;
 }
-.hero__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.hero__photo--left {
-  left: 2%; top: 14%;
-  width: 46%; height: 62%;
-  transform: rotate(-5deg);
-  z-index: 1;
-}
-.hero__photo--right {
-  right: 0; top: 0;
-  width: 62%; height: 88%;
-  transform: rotate(4deg);
-  z-index: 2;
+@keyframes twinkle {
+  0% { opacity: 0.4; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1.1); }
 }
 
-.hero__scroll { margin: 3rem 0 2rem; color: var(--ink-soft); }
+/* ════════ GLASS CARD & PARTICLES ════════ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 4rem 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: var(--light);
+}
+.glass-card .hero__date, .glass-card .hero__kicker { color: rgba(255, 255, 255, 0.9); }
+.glass-card .hero__date::before, .glass-card .hero__date::after { background: rgba(255, 255, 255, 0.6); }
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../img/citadel.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  filter: brightness(0.6) sepia(0.3) hue-rotate(-10deg);
+  z-index: -2;
+  transform: scale(1.05);
+  animation: slowZoom 20s infinite alternate linear;
+}
+@keyframes slowZoom {
+  0% { transform: scale(1.05); }
+  100% { transform: scale(1.15); }
+}
+
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(212,175,55,0.15) 10%, transparent 10%),
+                    radial-gradient(circle, rgba(212,175,55,0.15) 10%, transparent 10%);
+  background-size: 50px 50px;
+  background-position: 0 0, 25px 25px;
+  z-index: -1;
+  animation: floatUp 15s linear infinite;
+  opacity: 0.6;
+}
+@keyframes floatUp {
+  0% { background-position: 0 0, 25px 25px; }
+  100% { background-position: 0 -100px, 25px -75px; }
+}
+
+.hero__content {
+  width: min(90vw, 600px);
+  margin-top: 2rem;
+}
+
+
+.hero__scroll { margin: 3rem 0 2rem; color: var(--light); opacity: 0.8; z-index: 10; position: relative; }
 
 /* ════════ SAVE THE DATE ════════ */
 .std { text-align: center; padding-top: 7rem; }

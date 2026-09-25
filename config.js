@@ -128,7 +128,7 @@ const CONFIG = {
   /* ---------- CLOSING MESSAGE ---------- */
   message: {
     title: "We're so excited to see you!",
-    text: "Our next chapter starts with all of you beside us. See you on our special day.<br><br>No kids allowed / ممنوع اصطحاب الأطفال",
+    text: "Our next chapter starts with all of you beside us. See you on our special day.",
   },
 
   /* ---------- FOOTER ---------- */

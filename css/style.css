@@ -81,10 +81,13 @@ section { padding: 6rem 1.5rem; }
 /* ---------- reveal on scroll ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.3, 1), transform 1.2s cubic-bezier(0.25, 1, 0.3, 1);
 }
-.reveal.is-visible { opacity: 1; transform: none; }
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
 
 /* ════════ ENVELOPE ════════ */
 .envelope {
@@ -284,7 +287,8 @@ section { padding: 6rem 1.5rem; }
 
 /* ════════ TOP BANNER ════════ */
 .top-banner {
-  background: var(--dark);
+  background: linear-gradient(90deg, #130f0c, #2a1f18, #130f0c);
+  background-size: 200% auto;
   color: var(--light);
   padding: 0.8rem 1rem;
   text-align: center;
@@ -295,9 +299,14 @@ section { padding: 6rem 1.5rem; }
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
   position: relative;
   z-index: 10;
+  animation: shineBg 6s linear infinite;
+}
+@keyframes shineBg {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 .top-banner__icon {
   font-size: 1.1rem;
@@ -393,9 +402,21 @@ section { padding: 6rem 1.5rem; }
 
 .std__rule {
   border: none;
-  border-top: 1.5px solid var(--ink);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--seal), transparent);
   width: min(76vw, 540px);
-  margin: 3.2rem auto 2.6rem;
+  margin: 4rem auto;
+  position: relative;
+}
+.std__rule::after {
+  content: '✦';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--seal);
+  font-size: 1.5rem;
+  background: var(--paper);
+  padding: 0 15px;
 }
 
 .std__names { font-size: 0.95rem; letter-spacing: 0.3em; margin-bottom: 1.1rem; }
@@ -519,10 +540,16 @@ section { padding: 6rem 1.5rem; }
 }
 .countdown__card {
   background: var(--paper);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(156, 82, 52, 0.2);
   border-radius: 26px;
   padding: 3rem 1rem 2.6rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  position: relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.countdown__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(156, 82, 52, 0.15);
 }
 .countdown__num {
   display: block;
@@ -538,9 +565,21 @@ section { padding: 6rem 1.5rem; }
 .msg { text-align: center; padding: 2rem 1.8rem 9rem; }
 .msg__rule {
   border: none;
-  border-top: 1px solid var(--line);
-  width: 8rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--seal), transparent);
+  width: min(50vw, 300px);
   margin: 0 auto 5rem;
+  position: relative;
+}
+.msg__rule::after {
+  content: '✦';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--seal);
+  font-size: 1.2rem;
+  background: var(--paper);
+  padding: 0 15px;
 }
 .msg__title {
   font-weight: 600;

@@ -60,7 +60,7 @@ const CONFIG = {
     titleEnd: "moon.",
     name: "Salah El-Din Citadel",
     when: "27 Dec 2026 · 5:30 PM Arrival",
-    dress: "Men: Formal | Women: Simple soirée",
+    dress: "No Kids Allowed / ممنوع اصطحاب الأطفال",
     mapsUrl: "https://maps.app.goo.gl/9LDw7PWMbuk4L6Mp9",
     background: "img/citadel_new.jpg", // big background photo of the venue
   },

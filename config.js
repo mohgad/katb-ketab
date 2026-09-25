@@ -8,19 +8,19 @@
 const CONFIG = {
   /* ---------- COUPLE ---------- */
   couple: {
-    firstName: "Mohamed", // shown first  (Name1 & Name2)
-    secondName: "Asmaa",
+    firstName: "Gad", // shown first  (Name1 & Name2)
+    secondName: "Habiba",
     // Short date shown under the names, e.g. 30 . 11 . 2026
-    dateDisplay: "4 . 9 . 2026",
+    dateDisplay: "27 . 12 . 2026",
   },
 
   /* ---------- WEDDING DATE & TIME (for the live countdown) ----------
      Format: "YYYY-MM-DDTHH:MM:SS"  (24h clock, local time)            */
-  weddingDate: "2026-09-04T19:30:00",
+  weddingDate: "2026-12-27T17:30:00",
 
   /* ---------- BROWSER TAB ---------- */
   page: {
-    title: "Mohamed & Asmaa — Wedding Invitation",
+    title: "Gad & Habiba — Wedding Invitation",
     // Emoji shown in the browser tab
     favicon: "💍",
   },
@@ -34,7 +34,7 @@ const CONFIG = {
 
   /* ---------- HERO (first screen) ---------- */
   hero: {
-    kicker: "we’re getting married", // handwritten line above the names
+    kicker: "you are invited to our katb ketab", // handwritten line above the names
     buttonText: "Save the Date",
     // Clicking the button scrolls to this section id:
     //   "save-the-date" | "venue" | "program" | "gallery" | "countdown"
@@ -58,11 +58,11 @@ const CONFIG = {
     titleStart: "Under one",
     titleItalic: "very full",
     titleEnd: "moon.",
-    name: "Al Aly Al Azeem Mosque Almaza",
-    when: "4 Sep 2026 · 7:30 PM",
+    name: "Salah El-Din Citadel",
+    when: "27 Dec 2026 · 5:30 PM Arrival",
     dress: "Men: Formal | Women: Simple soirée",
     mapsUrl: "https://maps.app.goo.gl/9LDw7PWMbuk4L6Mp9",
-    background: "img/venue.jpg", // big background photo of the venue
+    background: "img/citadel.png", // big background photo of the venue
   },
 
   /* ---------- PROGRAM / TIMELINE ---------- */
@@ -73,8 +73,13 @@ const CONFIG = {
     // Add / remove / edit as many items as you want
     items: [
       {
+        time: "5:30 PM",
+        title: "Arrival",
+        note: "Welcome and gathering before the ceremony.",
+      },
+      {
         time: "7:30 PM",
-        title: "The Ceremony",
+        title: "Katb Ketab",
         note: "Where the forever part happens.",
       },
       // {
@@ -123,7 +128,7 @@ const CONFIG = {
   /* ---------- CLOSING MESSAGE ---------- */
   message: {
     title: "We're so excited to see you!",
-    text: "Our next chapter starts with all of you beside us. See you on our special day.",
+    text: "Our next chapter starts with all of you beside us. See you on our special day.<br><br>No kids allowed / ممنوع اصطحاب الأطفال",
   },
 
   /* ---------- FOOTER ---------- */

@@ -326,11 +326,11 @@ section { padding: 6rem 1.5rem; }
 .hero__bg {
   position: absolute;
   inset: 0;
-  background-image: url('../img/citadel.png');
+  background-image: url('../img/citadel_new.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  filter: brightness(0.6) sepia(0.3) hue-rotate(-10deg);
+  filter: brightness(0.7) contrast(1.1);
   z-index: -2;
   transform: scale(1.05);
   animation: slowZoom 20s infinite alternate linear;

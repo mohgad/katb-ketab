@@ -62,7 +62,7 @@ const CONFIG = {
     when: "27 Dec 2026 · 5:30 PM Arrival",
     dress: "Men: Formal | Women: Simple soirée",
     mapsUrl: "https://maps.app.goo.gl/9LDw7PWMbuk4L6Mp9",
-    background: "img/citadel.png", // big background photo of the venue
+    background: "img/citadel_new.jpg", // big background photo of the venue
   },
 
   /* ---------- PROGRAM / TIMELINE ---------- */

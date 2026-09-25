@@ -42,8 +42,8 @@
   $("hero-date").textContent = c.dateDisplay;
   $("hero-btn-text").textContent = CONFIG.hero.buttonText;
   $("hero-scroll-text").textContent = CONFIG.hero.scrollHint;
-  $("hero-photo-left").src = CONFIG.hero.photoLeft;
-  $("hero-photo-right").src = CONFIG.hero.photoRight;
+  if ($("hero-photo-left")) $("hero-photo-left").src = CONFIG.hero.photoLeft;
+  if ($("hero-photo-right")) $("hero-photo-right").src = CONFIG.hero.photoRight;
   $("hero-btn").addEventListener("click", () => {
     const target = document.getElementById(CONFIG.hero.buttonTarget);
     if (target) target.scrollIntoView({ behavior: "smooth" });

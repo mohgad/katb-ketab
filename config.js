@@ -151,13 +151,13 @@ const CONFIG = {
   /* ---------- THEME COLORS ----------
      The whole look is driven by these. Defaults match the original. */
   theme: {
-    paper: "#f4f2ee", // cream background
-    paperSoft: "#efede8", // slightly darker cream (cards)
-    ink: "#141414", // main text (near-black)
-    inkSoft: "#6b6b6b", // secondary gray text
-    dark: "#0c0c0c", // black sections background
-    light: "#f6f4f0", // text on dark sections
-    seal: "#a4763c", // wax-seal bronze/gold
-    line: "#dcd9d2", // thin divider lines
+    paper: "#eee8df", // sandstone / warm beige
+    paperSoft: "#e6dfd3", // darker sandstone for cards
+    ink: "#2a1f18", // deep earthy brown (near-black)
+    inkSoft: "#5c4a3d", // warm secondary gray/brown
+    dark: "#241a13", // rich dark charcoal/brown
+    light: "#f5eedf", // warm text on dark sections
+    seal: "#9c5234", // terracotta/brick red seal
+    line: "#d3c8b8", // warm thin divider lines
   },
 };

@@ -196,7 +196,10 @@
   const envelope = $("envelope");
   const invited = $("invited");
   const site = $("site");
-  $("envelope-hint").textContent = CONFIG.envelope.hint;
+
+  // Update hint text (the new structure has a nested cta-text)
+  const ctaText = document.querySelector(".envelope__cta-text");
+  if (ctaText) ctaText.textContent = CONFIG.envelope.hint || "TAP TO OPEN";
   $("invited-text").textContent = CONFIG.envelope.revealText;
 
   function showSite() {
@@ -205,23 +208,86 @@
     if (hasMusic) musicBtn.hidden = false;
   }
 
+  /* ---------- floating petals canvas ---------- */
+  function initPetalsCanvas() {
+    const canvas = $("petals-canvas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    let w, h;
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    const petals = [];
+    const COUNT = 18;
+    for (let i = 0; i < COUNT; i++) {
+      petals.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        size: Math.random() * 6 + 3,
+        speedY: Math.random() * 0.4 + 0.15,
+        speedX: Math.random() * 0.3 - 0.15,
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.01,
+        opacity: Math.random() * 0.25 + 0.08,
+        wobble: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.008 + 0.003,
+      });
+    }
+
+    let raf;
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      petals.forEach((p) => {
+        p.wobble += p.wobbleSpeed;
+        p.x += p.speedX + Math.sin(p.wobble) * 0.3;
+        p.y += p.speedY;
+        p.rotation += p.rotSpeed;
+        if (p.y > h + 20) { p.y = -20; p.x = Math.random() * w; }
+        if (p.x > w + 20) p.x = -20;
+        if (p.x < -20) p.x = w + 20;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.moveTo(0, -p.size);
+        ctx.bezierCurveTo(p.size * 0.6, -p.size * 0.5, p.size * 0.6, p.size * 0.5, 0, p.size);
+        ctx.bezierCurveTo(-p.size * 0.6, p.size * 0.5, -p.size * 0.6, -p.size * 0.5, 0, -p.size);
+        ctx.fill();
+        ctx.restore();
+      });
+      raf = requestAnimationFrame(draw);
+    }
+    draw();
+    return () => cancelAnimationFrame(raf);
+  }
+
   if (!CONFIG.envelope.enabled) {
     envelope.remove();
     invited.remove();
     showSite();
   } else {
     document.body.classList.add("locked");
+    const stopPetals = initPetalsCanvas();
     let opened = false;
     const open = () => {
       if (opened) return;
       opened = true;
       envelope.classList.add("is-open");
       if (hasMusic && CONFIG.music.autoplay) playMusic();
-      setTimeout(() => invited.classList.add("is-visible"), 600);
-      // leave the interstitial on screen long enough for the plant to grow
+      // Show the invited interstitial after the envelope fades (flap lifts + card slides)
+      setTimeout(() => invited.classList.add("is-visible"), 1200);
+      // Transition to the site
       setTimeout(() => {
         showSite();
         invited.classList.remove("is-visible");
+        if (stopPetals) stopPetals();
         setTimeout(() => {
           envelope.remove();
           invited.remove();

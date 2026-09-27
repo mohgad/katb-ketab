@@ -28,7 +28,7 @@ const CONFIG = {
   /* ---------- ENVELOPE INTRO ---------- */
   envelope: {
     enabled: true, // false = skip the envelope, go straight to the site
-    hint: "Click to open",
+    hint: "TAP TO OPEN",
     revealText: "You are invited!",
   },
 

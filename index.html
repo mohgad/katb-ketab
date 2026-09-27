@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&family=Inter:wght@300..700&display=swap"
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css?v=3" />
 </head>
+
 <body>
 
   <!-- ════════ ENVELOPE INTRO ════════ -->
@@ -21,8 +22,8 @@
 
     <!-- Dried botanical decorations (top-right corner) -->
     <div class="envelope__botanicals" aria-hidden="true">
-      <svg class="envelope__branch" viewBox="0 0 200 320" fill="none" stroke="currentColor"
-           stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <svg class="envelope__branch" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="1.6"
+        stroke-linecap="round" stroke-linejoin="round">
         <!-- main stem arching from top-right -->
         <path d="M180 10 C 160 50, 130 100, 90 160 C 60 210, 40 260, 35 310" />
         <!-- leaves along the stem -->
@@ -72,8 +73,9 @@
     <div class="envelope__cta" id="envelope-hint">
       <p class="envelope__cta-text">TAP TO OPEN</p>
       <div class="envelope__cta-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 5v14M5 12l7 7 7-7"/>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M12 5v14M5 12l7 7 7-7" />
         </svg>
       </div>
     </div>
@@ -87,8 +89,8 @@
   <!-- ════════ "YOU ARE INVITED" INTERSTITIAL ════════ -->
   <div id="invited" class="invited" aria-hidden="true">
     <!-- Ornamental top flourish -->
-    <svg class="invited__flourish invited__flourish--top" viewBox="0 0 200 60" fill="none"
-         stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+    <svg class="invited__flourish invited__flourish--top" viewBox="0 0 200 60" fill="none" stroke="currentColor"
+      stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
       <path pathLength="1" style="--d:0s; --dur:1.2s" d="M10 50 C 40 20, 80 10, 100 10 C 120 10, 160 20, 190 50" />
       <path pathLength="1" style="--d:0.4s" d="M60 30 C 55 22, 58 14, 66 12 C 68 20, 65 27, 60 30 Z" />
       <path pathLength="1" style="--d:0.6s" d="M140 30 C 145 22, 142 14, 134 12 C 132 20, 135 27, 140 30 Z" />
@@ -99,8 +101,8 @@
     <p class="invited__text" id="invited-text">You are invited!</p>
 
     <!-- Ornamental bottom flourish (mirrored) -->
-    <svg class="invited__flourish invited__flourish--bottom" viewBox="0 0 200 60" fill="none"
-         stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+    <svg class="invited__flourish invited__flourish--bottom" viewBox="0 0 200 60" fill="none" stroke="currentColor"
+      stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
       <path pathLength="1" style="--d:0.3s; --dur:1.2s" d="M10 10 C 40 40, 80 50, 100 50 C 120 50, 160 40, 190 10" />
       <path pathLength="1" style="--d:0.7s" d="M60 30 C 55 38, 58 46, 66 48 C 68 40, 65 33, 60 30 Z" />
       <path pathLength="1" style="--d:0.9s" d="M140 30 C 145 38, 142 46, 134 48 C 132 40, 135 33, 140 30 Z" />
@@ -121,7 +123,7 @@
     <section class="hero" id="hero">
       <div class="hero__bg"></div>
       <div class="hero__particles"></div>
-      
+
       <div class="hero__content glass-card reveal">
         <p class="hero__kicker script" id="hero-kicker"></p>
         <h1 class="hero__names serif">
@@ -145,7 +147,7 @@
         <span class="std__save">SAVE</span>
         <span class="std__the-date"><em class="script">the</em><span>DATE!</span></span>
       </h2>
-      <img class="std__illustration reveal" id="std-illustration" src="" alt="Bride and groom illustration" />
+      <!-- <img class="std__illustration reveal" id="std-illustration" src="" alt="Bride and groom illustration" /> -->
       <hr class="std__rule" />
       <p class="std__names label reveal" id="std-names"></p>
       <p class="std__date label reveal" id="std-date"></p>
@@ -161,9 +163,18 @@
           <span id="venue-title-end"></span>
         </h2>
         <dl class="venue__details">
-          <div class="reveal"><dt class="label">Venue</dt><dd class="serif" id="venue-name"></dd></div>
-          <div class="reveal"><dt class="label">When</dt><dd class="serif" id="venue-when"></dd></div>
-          <div class="reveal"><dt class="label">Notice</dt><dd class="serif" id="venue-dress"></dd></div>
+          <div class="reveal">
+            <dt class="label">Venue</dt>
+            <dd class="serif" id="venue-name"></dd>
+          </div>
+          <div class="reveal">
+            <dt class="label">When</dt>
+            <dd class="serif" id="venue-when"></dd>
+          </div>
+          <div class="reveal">
+            <dt class="label">Notice</dt>
+            <dd class="serif" id="venue-dress"></dd>
+          </div>
         </dl>
         <a class="btn btn--ghost reveal" id="venue-maps" href="#" target="_blank" rel="noopener">
           <span class="label">Open in Maps</span><span class="btn__arrow">↗</span>
@@ -190,10 +201,14 @@
     <section class="countdown" id="countdown">
       <h2 class="countdown__title serif reveal" id="countdown-title"></h2>
       <div class="countdown__grid">
-        <div class="countdown__card reveal"><span class="countdown__num serif" id="cd-days">0</span><span class="label" id="cd-days-label"></span></div>
-        <div class="countdown__card reveal"><span class="countdown__num serif" id="cd-hours">0</span><span class="label" id="cd-hours-label"></span></div>
-        <div class="countdown__card reveal"><span class="countdown__num serif" id="cd-minutes">0</span><span class="label" id="cd-minutes-label"></span></div>
-        <div class="countdown__card reveal"><span class="countdown__num serif" id="cd-seconds">0</span><span class="label" id="cd-seconds-label"></span></div>
+        <div class="countdown__card reveal"><span class="countdown__num serif" id="cd-days">0</span><span class="label"
+            id="cd-days-label"></span></div>
+        <div class="countdown__card reveal"><span class="countdown__num serif" id="cd-hours">0</span><span class="label"
+            id="cd-hours-label"></span></div>
+        <div class="countdown__card reveal"><span class="countdown__num serif" id="cd-minutes">0</span><span
+            class="label" id="cd-minutes-label"></span></div>
+        <div class="countdown__card reveal"><span class="countdown__num serif" id="cd-seconds">0</span><span
+            class="label" id="cd-seconds-label"></span></div>
       </div>
       <p class="countdown__closing script reveal" id="countdown-closing"></p>
     </section>
@@ -223,12 +238,17 @@
 
   <!-- MUSIC BUTTON -->
   <button id="music-btn" class="music-btn" hidden aria-label="Play / pause music">
-    <svg class="music-btn__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-    <svg class="music-btn__pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+    <svg class="music-btn__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+    <svg class="music-btn__pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+    </svg>
   </button>
   <audio id="music" loop preload="none"></audio>
 
   <script src="config.js"></script>
   <script src="js/main.js"></script>
 </body>
+
 </html>

@@ -291,10 +291,11 @@ section { padding: 6rem 1.5rem; }
   animation: seal-breathe 2.8s ease-in-out infinite;
 }
 .envelope__seal-img {
-  width: 100%;
-  height: 100%;
+  width: 130%;
+  height: 130%;
   object-fit: cover;
   display: block;
+  margin: -15%;
 }
 .envelope.is-open .envelope__seal {
   transform: translate(-50%, -50%) scale(0);

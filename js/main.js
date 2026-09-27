@@ -50,7 +50,7 @@
   });
 
   // save the date
-  $("std-illustration").src = CONFIG.saveTheDate.illustration;
+  // $("std-illustration").src = CONFIG.saveTheDate.illustration;
   $("std-names").textContent = `${c.firstName} + ${c.secondName}`;
   $("std-date").textContent = c.dateDisplay;
 
@@ -167,7 +167,7 @@
   function playMusic() {
     audio.play().then(
       () => musicBtn.classList.add("is-playing"),
-      () => {} // autoplay blocked — user can tap the button
+      () => { } // autoplay blocked — user can tap the button
     );
   }
   musicBtn.addEventListener("click", () => {

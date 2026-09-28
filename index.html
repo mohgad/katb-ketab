@@ -8,105 +8,39 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&family=Inter:wght@300..700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&family=Pinyon+Script&family=Inter:wght@300..700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="css/style.css?v=4" />
 </head>
 
 <body>
 
-  <!-- ════════ ENVELOPE INTRO ════════ -->
+  <!-- ════════ ENVELOPE INTRO (full-screen, 3D flap opening) ════════ -->
   <div id="envelope" class="envelope" role="button" tabindex="0" aria-label="Open the invitation">
-    <!-- Soft floating petals canvas -->
-    <canvas id="petals-canvas" class="envelope__petals-canvas" aria-hidden="true"></canvas>
+    <!-- the envelope paper (pocket) -->
+    <div class="envelope__paper" aria-hidden="true"></div>
 
-    <!-- Dried botanical decorations (top-right corner) -->
-    <div class="envelope__botanicals" aria-hidden="true">
-      <svg class="envelope__branch" viewBox="0 0 200 320" fill="none" stroke="currentColor" stroke-width="1.6"
-        stroke-linecap="round" stroke-linejoin="round">
-        <!-- main stem arching from top-right -->
-        <path d="M180 10 C 160 50, 130 100, 90 160 C 60 210, 40 260, 35 310" />
-        <!-- leaves along the stem -->
-        <path d="M160 35 C 170 45, 175 60, 168 72 C 158 62, 155 47, 160 35 Z" />
-        <path d="M145 65 C 132 58, 122 65, 118 78 C 130 82, 140 75, 145 65 Z" />
-        <path d="M130 100 C 142 105, 148 118, 142 130 C 130 125, 125 112, 130 100 Z" />
-        <path d="M115 130 C 102 125, 92 132, 88 145 C 100 148, 110 140, 115 130 Z" />
-        <path d="M100 160 C 110 168, 112 182, 104 192 C 94 184, 92 170, 100 160 Z" />
-        <path d="M82 195 C 70 190, 60 198, 58 212 C 70 214, 78 205, 82 195 Z" />
-        <path d="M65 235 C 74 242, 75 256, 68 266 C 58 258, 56 244, 65 235 Z" />
-        <!-- wispy secondary branches -->
-        <path d="M155 50 C 175 55, 190 70, 192 88" />
-        <path d="M110 140 C 88 135, 70 142, 60 158" />
-      </svg>
+    <!-- text printed on the envelope -->
+    <div class="envelope__content">
+      <p class="envelope__bismillah" dir="rtl" id="envelope-bismillah">بسم الله الرحمن الرحيم</p>
+      <p class="envelope__title" id="envelope-title">You're invited</p>
     </div>
 
-    <!-- The physical cream envelope -->
-    <div class="envelope__body">
-      <!-- Inner card (slides out on open) -->
-      <div class="envelope__card" id="envelope-card">
-        <div class="envelope__card-border">
-          <p class="envelope__bismillah" dir="rtl">بسم الله الرحمن الرحيم</p>
-          <div class="envelope__card-ornament">✦</div>
-        </div>
-      </div>
+    <!-- darkness inside the pocket + shadow cast by the flap -->
+    <div class="envelope__pocket" aria-hidden="true"></div>
+    <div class="envelope__shadow" aria-hidden="true"><div class="envelope__shadow-shape"></div></div>
 
-      <!-- Envelope back -->
-      <div class="envelope__back"></div>
-
-      <!-- Flap (triangular top) -->
-      <div class="envelope__flap" id="envelope-flap"></div>
-
-      <!-- Side folds -->
-      <div class="envelope__fold-left"></div>
-      <div class="envelope__fold-right"></div>
-
-      <!-- Bottom fold -->
-      <div class="envelope__fold-bottom"></div>
-
-      <!-- Gold wax seal with leaf -->
+    <!-- the 3D flap (swings up toward the viewer and off the top) -->
+    <div class="envelope__flap" id="envelope-flap" aria-hidden="true">
+      <div class="envelope__flap-face envelope__flap-face--front"></div>
+      <div class="envelope__flap-face envelope__flap-face--back"></div>
       <div class="envelope__seal" id="envelope-seal">
-        <img src="img/wax-seal.jpg" alt="" class="envelope__seal-img" />
+        <img src="img/wax-seal.png" alt="" class="envelope__seal-img" />
       </div>
     </div>
 
-    <!-- "Tap to Open" hint -->
-    <div class="envelope__cta" id="envelope-hint">
-      <p class="envelope__cta-text">TAP TO OPEN</p>
-      <div class="envelope__cta-arrow">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-          stroke-linejoin="round">
-          <path d="M12 5v14M5 12l7 7 7-7" />
-        </svg>
-      </div>
-    </div>
-
-    <!-- Scattered white petals -->
-    <div class="envelope__petal envelope__petal--1" aria-hidden="true"></div>
-    <div class="envelope__petal envelope__petal--2" aria-hidden="true"></div>
-    <div class="envelope__petal envelope__petal--3" aria-hidden="true"></div>
-  </div>
-
-  <!-- ════════ "YOU ARE INVITED" INTERSTITIAL ════════ -->
-  <div id="invited" class="invited" aria-hidden="true">
-    <!-- Ornamental top flourish -->
-    <svg class="invited__flourish invited__flourish--top" viewBox="0 0 200 60" fill="none" stroke="currentColor"
-      stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
-      <path pathLength="1" style="--d:0s; --dur:1.2s" d="M10 50 C 40 20, 80 10, 100 10 C 120 10, 160 20, 190 50" />
-      <path pathLength="1" style="--d:0.4s" d="M60 30 C 55 22, 58 14, 66 12 C 68 20, 65 27, 60 30 Z" />
-      <path pathLength="1" style="--d:0.6s" d="M140 30 C 145 22, 142 14, 134 12 C 132 20, 135 27, 140 30 Z" />
-      <path pathLength="1" style="--d:0.8s" d="M100 10 C 100 2, 104 -2, 110 0 C 108 8, 104 12, 100 12 Z" />
-      <path pathLength="1" style="--d:0.8s" d="M100 10 C 100 2, 96 -2, 90 0 C 92 8, 96 12, 100 12 Z" />
-    </svg>
-
-    <p class="invited__text" id="invited-text">You are invited!</p>
-
-    <!-- Ornamental bottom flourish (mirrored) -->
-    <svg class="invited__flourish invited__flourish--bottom" viewBox="0 0 200 60" fill="none" stroke="currentColor"
-      stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
-      <path pathLength="1" style="--d:0.3s; --dur:1.2s" d="M10 10 C 40 40, 80 50, 100 50 C 120 50, 160 40, 190 10" />
-      <path pathLength="1" style="--d:0.7s" d="M60 30 C 55 38, 58 46, 66 48 C 68 40, 65 33, 60 30 Z" />
-      <path pathLength="1" style="--d:0.9s" d="M140 30 C 145 38, 142 46, 134 48 C 132 40, 135 33, 140 30 Z" />
-    </svg>
+    <!-- hint -->
+    <p class="envelope__cta" id="envelope-hint">TAP TO OPEN</p>
   </div>
 
   <!-- ════════ SITE ════════ -->
@@ -247,8 +181,8 @@
   </button>
   <audio id="music" loop preload="none"></audio>
 
-  <script src="config.js"></script>
-  <script src="js/main.js"></script>
+  <script src="config.js?v=4"></script>
+  <script src="js/main.js?v=4"></script>
 </body>
 
 </html>

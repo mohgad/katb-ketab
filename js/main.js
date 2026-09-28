@@ -192,15 +192,20 @@
   );
   document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 
-  /* ---------- envelope intro flow ---------- */
+  /* ---------- envelope intro (3D flap opening) ---------- */
   const envelope = $("envelope");
-  const invited = $("invited");
   const site = $("site");
+  const E = CONFIG.envelope || {};
 
-  // Update hint text (the new structure has a nested cta-text)
-  const ctaText = document.querySelector(".envelope__cta-text");
-  if (ctaText) ctaText.textContent = CONFIG.envelope.hint || "TAP TO OPEN";
-  $("invited-text").textContent = CONFIG.envelope.revealText;
+  const hint = $("envelope-hint");
+  if (hint) hint.textContent = E.hint || "TAP TO OPEN";
+  const title = $("envelope-title");
+  if (title) title.textContent = E.title || E.revealText || "You're invited";
+  const bismillah = $("envelope-bismillah");
+  if (bismillah) {
+    if (E.bismillah === "") bismillah.remove();
+    else if (E.bismillah) bismillah.textContent = E.bismillah;
+  }
 
   function showSite() {
     site.hidden = false;
@@ -208,95 +213,39 @@
     if (hasMusic) musicBtn.hidden = false;
   }
 
-  /* ---------- floating petals canvas ---------- */
-  function initPetalsCanvas() {
-    const canvas = $("petals-canvas");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let w, h;
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener("resize", resize);
-
-    const petals = [];
-    const COUNT = 18;
-    for (let i = 0; i < COUNT; i++) {
-      petals.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        size: Math.random() * 6 + 3,
-        speedY: Math.random() * 0.4 + 0.15,
-        speedX: Math.random() * 0.3 - 0.15,
-        rotation: Math.random() * Math.PI * 2,
-        rotSpeed: (Math.random() - 0.5) * 0.01,
-        opacity: Math.random() * 0.25 + 0.08,
-        wobble: Math.random() * Math.PI * 2,
-        wobbleSpeed: Math.random() * 0.008 + 0.003,
-      });
-    }
-
-    let raf;
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      petals.forEach((p) => {
-        p.wobble += p.wobbleSpeed;
-        p.x += p.speedX + Math.sin(p.wobble) * 0.3;
-        p.y += p.speedY;
-        p.rotation += p.rotSpeed;
-        if (p.y > h + 20) { p.y = -20; p.x = Math.random() * w; }
-        if (p.x > w + 20) p.x = -20;
-        if (p.x < -20) p.x = w + 20;
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rotation);
-        ctx.globalAlpha = p.opacity;
-        ctx.fillStyle = "#fff";
-        ctx.beginPath();
-        ctx.moveTo(0, -p.size);
-        ctx.bezierCurveTo(p.size * 0.6, -p.size * 0.5, p.size * 0.6, p.size * 0.5, 0, p.size);
-        ctx.bezierCurveTo(-p.size * 0.6, p.size * 0.5, -p.size * 0.6, -p.size * 0.5, 0, -p.size);
-        ctx.fill();
-        ctx.restore();
-      });
-      raf = requestAnimationFrame(draw);
-    }
-    draw();
-    return () => cancelAnimationFrame(raf);
-  }
-
-  if (!CONFIG.envelope.enabled) {
+  if (!E.enabled) {
     envelope.remove();
-    invited.remove();
     showSite();
   } else {
     document.body.classList.add("locked");
-    const stopPetals = initPetalsCanvas();
+    window.scrollTo(0, 0);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let opened = false;
+
     const open = () => {
       if (opened) return;
       opened = true;
-      envelope.classList.add("is-open");
       if (hasMusic && CONFIG.music.autoplay) playMusic();
-      // Show the invited interstitial after the envelope fades (flap lifts + card slides)
-      setTimeout(() => invited.classList.add("is-visible"), 1200);
-      // Transition to the site
+
+      // 1) the flap swings up toward you and off the top of the screen
+      envelope.classList.add("is-opening");
+
+      // 2) near the end of the swing, the site appears underneath and the envelope dissolves
       setTimeout(() => {
         showSite();
-        invited.classList.remove("is-visible");
-        if (stopPetals) stopPetals();
-        setTimeout(() => {
-          envelope.remove();
-          invited.remove();
-        }, 1000);
-      }, 4800);
+        envelope.classList.add("is-leaving");
+      }, reduced ? 50 : 1550);
+
+      // 3) clean up
+      setTimeout(() => envelope.remove(), reduced ? 1100 : 2700);
     };
+
     envelope.addEventListener("click", open);
     envelope.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") open();
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        open();
+      }
     });
   }
 })();

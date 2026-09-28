@@ -29,7 +29,8 @@ const CONFIG = {
   envelope: {
     enabled: true, // false = skip the envelope, go straight to the site
     hint: "TAP TO OPEN",
-    revealText: "You are invited!",
+    title: "You're invited", // handwritten line printed on the envelope
+    bismillah: "بسم الله الرحمن الرحيم", // small line above it ("" hides it)
   },
 
   /* ---------- HERO (first screen) ---------- */

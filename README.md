@@ -21,7 +21,8 @@ Everything is controlled from **one config file**, no coding needed.
 2. Change names, wedding date, venue info, program items, texts — save the file.
 3. Replace the placeholder images in `img/` **keeping the same file names**
    (or change the paths in `config.js` to your own file names):
-   - `photo-1.jpg`, `photo-2.jpg` — the two tilted photos on the first screen
+   - `sahn-watercolor.jpg` / `sahn.jpg` — background of the animated first screen
+     (the courtyard of Mohamed Ali Mosque; pick one with `hero.background`)
    - `gallery-1.jpg` … `gallery-4.jpg` — the gallery (add more paths in the config for more photos)
    - `venue.jpg` — the big background photo of the venue
    - `couple.svg` — the line-art illustration (swap with your own if you like)

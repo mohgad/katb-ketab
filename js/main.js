@@ -35,19 +35,48 @@
   /* ---------- fill text content ---------- */
   const c = CONFIG.couple;
 
-  // hero
-  $("hero-kicker").textContent = CONFIG.hero.kicker;
+  // hero (animated couple scene)
+  const H = CONFIG.hero || {};
+  $("hero-kicker").textContent = H.kicker || "";
   $("name-first").textContent = c.firstName;
   $("name-second").textContent = c.secondName;
+  const heroSub = $("hero-sub");
+  if (H.subtitle) heroSub.textContent = H.subtitle;
+  else heroSub.remove();
   $("hero-date").textContent = c.dateDisplay;
-  $("hero-btn-text").textContent = CONFIG.hero.buttonText;
-  $("hero-scroll-text").textContent = CONFIG.hero.scrollHint;
-  if ($("hero-photo-left")) $("hero-photo-left").src = CONFIG.hero.photoLeft;
-  if ($("hero-photo-right")) $("hero-photo-right").src = CONFIG.hero.photoRight;
-  $("hero-btn").addEventListener("click", () => {
-    const target = document.getElementById(CONFIG.hero.buttonTarget);
-    if (target) target.scrollIntoView({ behavior: "smooth" });
-  });
+  $("hero-scroll-text").textContent = H.scrollHint || "SCROLL";
+  const heroImg = `url("${H.background || "img/sahn-watercolor.jpg"}")`;
+  $("hero-bg").style.backgroundImage = heroImg;
+  $("hero-bg-fill").style.backgroundImage = heroImg;
+
+  if (H.petals !== false) {
+    const petals = $("hero-petals");
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement("span");
+      p.className = "petal";
+      const size = 6 + Math.random() * 6;
+      p.style.left = `${Math.random() * 100}%`;
+      p.style.width = `${size}px`;
+      p.style.height = `${size * 0.75}px`;
+      p.style.setProperty("--drift", `${(Math.random() * 2 - 1) * 90}px`);
+      p.style.animationDuration = `${9 + Math.random() * 8}s`;
+      p.style.animationDelay = `${1 + Math.random() * 12}s`;
+      petals.appendChild(p);
+    }
+  }
+
+  // keep the scene exactly one screen tall below the "No kids" banner
+  const banner = document.querySelector(".top-banner");
+  function fitHero() {
+    const h = banner ? banner.offsetHeight : 0;
+    document.documentElement.style.setProperty("--banner-h", `${h}px`);
+  }
+  window.addEventListener("resize", fitHero);
+
+  function startHero() {
+    fitHero();
+    $("hero").classList.add("is-live");
+  }
 
   // save the date
   // $("std-illustration").src = CONFIG.saveTheDate.illustration;
@@ -98,24 +127,36 @@
   });
 
   // countdown
-  $("countdown-title").textContent = CONFIG.countdown.title;
-  $("countdown-closing").textContent = CONFIG.countdown.closing;
-  $("cd-days-label").textContent = CONFIG.countdown.labels.days;
-  $("cd-hours-label").textContent = CONFIG.countdown.labels.hours;
-  $("cd-minutes-label").textContent = CONFIG.countdown.labels.minutes;
-  $("cd-seconds-label").textContent = CONFIG.countdown.labels.seconds;
+  const CD = CONFIG.countdown;
+  $("countdown-title").textContent = CD.title;
+  $("countdown-text").textContent = CD.text || "";
+  $("countdown-closing").textContent = CD.closing || "";
+  $("cd-days-label").textContent = CD.labels.days;
+  $("cd-hours-label").textContent = CD.labels.hours;
+  $("cd-minutes-label").textContent = CD.labels.minutes;
+  $("cd-seconds-label").textContent = CD.labels.seconds;
 
+  const pad = (n) => String(n).padStart(2, "0");
   const weddingTime = new Date(CONFIG.weddingDate).getTime();
+  const hourHand = $("clock-hour");
+  const minHand = $("clock-min");
   function tick() {
     let diff = Math.max(0, weddingTime - Date.now());
     const days = Math.floor(diff / 86400000);
     const hours = Math.floor(diff / 3600000) % 24;
     const minutes = Math.floor(diff / 60000) % 60;
     const seconds = Math.floor(diff / 1000) % 60;
-    $("cd-days").textContent = days;
-    $("cd-hours").textContent = hours;
-    $("cd-minutes").textContent = minutes;
-    $("cd-seconds").textContent = seconds;
+    $("cd-days").textContent = pad(days);
+    $("cd-hours").textContent = pad(hours);
+    $("cd-minutes").textContent = pad(minutes);
+    $("cd-seconds").textContent = pad(seconds);
+
+    // the little clock shows the real time
+    const now = new Date();
+    const m = now.getMinutes() + now.getSeconds() / 60;
+    const h = (now.getHours() % 12) + m / 60;
+    if (hourHand) hourHand.setAttribute("transform", `rotate(${h * 30} 86 70)`);
+    if (minHand) minHand.setAttribute("transform", `rotate(${m * 6} 86 70)`);
   }
   tick();
   setInterval(tick, 1000);
@@ -209,6 +250,7 @@
 
   function showSite() {
     site.hidden = false;
+    startHero();
     document.body.classList.remove("locked");
     if (hasMusic) musicBtn.hidden = false;
   }

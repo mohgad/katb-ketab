@@ -33,17 +33,18 @@ const CONFIG = {
     bismillah: "بسم الله الرحمن الرحيم", // small line above it ("" hides it)
   },
 
-  /* ---------- HERO (first screen) ---------- */
+  /* ---------- HERO (first screen, right after the envelope) ----------
+     Animated scene: the bride & groom walk in hand in hand
+     in the sahn (courtyard) of Mohamed Ali Mosque.                      */
   hero: {
-    kicker: "you are invited to our katb ketab", // handwritten line above the names
-    buttonText: "Save the Date",
-    // Clicking the button scrolls to this section id:
-    //   "save-the-date" | "venue" | "program" | "gallery" | "countdown"
-    buttonTarget: "save-the-date",
+    kicker: "We are getting married", // small line above the names
+    subtitle: "Join us to celebrate our Katb Ketab", // line under the names ("" hides it)
     scrollHint: "SCROLL",
-    // The two tilted photos under the names (put your files in img/)
-    photoLeft: "img/photo-1.jpg",
-    photoRight: "img/photo-2.jpg",
+    // Background picture of the scene:
+    //   "img/sahn-watercolor.jpg" = soft painted look (matches the illustrated couple)
+    //   "img/sahn.jpg"            = the original photo
+    background: "img/sahn-watercolor.jpg",
+    petals: true, // little petals floating down over the scene
   },
 
   /* ---------- SAVE THE DATE SECTION ---------- */
@@ -116,8 +117,9 @@ const CONFIG = {
 
   /* ---------- COUNTDOWN ---------- */
   countdown: {
-    title: "Counting the days",
-    closing: "Until forever begins ✽",
+    title: "Countdown", // written in script
+    text: "You are invited to celebrate our Katb Ketab on the 27th of December.",
+    closing: "", // optional script line under the numbers ("" hides it)
     labels: {
       days: "Days",
       hours: "Hours",

@@ -353,25 +353,28 @@ section { padding: 6rem 1.5rem; }
 }
 .hero__fill { display: none; }
 
-/* a soft shade behind the names so they read on the light painting */
+/* a soft shade at the top so the names read over the white domes */
 .hero__scrim {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(90% 26% at 50% 27%, rgba(60, 42, 28, 0.30), rgba(60, 42, 28, 0) 75%),
-    linear-gradient(180deg, rgba(40, 28, 18, 0.12) 0%, rgba(40, 28, 18, 0) 25%, rgba(40, 28, 18, 0) 80%, rgba(40, 28, 18, 0.22) 100%);
+    linear-gradient(180deg, rgba(36, 24, 15, 0.55) 0%, rgba(36, 24, 15, 0.28) 16%, rgba(36, 24, 15, 0) 34%, rgba(36, 24, 15, 0) 82%, rgba(36, 24, 15, 0.22) 100%);
 }
 
+/* names sit in the sky, centred on the mosque's axis;
+   the column is never wider than the portrait video itself */
 .hero__text {
   position: absolute;
   left: 0;
   right: 0;
-  top: 21%;
+  top: 6%;
+  margin: 0 auto;
+  max-width: calc((100svh - var(--banner-h, 0px)) * 0.5625);
   padding: 0 1.25rem;
   text-align: center;
-  text-shadow: 0 2px 16px rgba(70, 48, 30, 0.45), 0 1px 2px rgba(70, 48, 30, 0.35);
+  text-shadow: 0 2px 18px rgba(40, 26, 14, 0.55), 0 1px 3px rgba(40, 26, 14, 0.45);
 }
 .hero__text > * {
   opacity: 0;
@@ -394,7 +397,7 @@ section { padding: 6rem 1.5rem; }
 .hero__names {
   font-family: "Playfair Display", Georgia, serif;
   font-weight: 700;
-  font-size: clamp(2.8rem, 13vw, 5.6rem);
+  font-size: min(13vw, calc((100svh - var(--banner-h, 0px)) * 0.5625 * 0.13), 5.6rem);
   line-height: 1.05;
   color: #fff8ee;
 }
@@ -445,7 +448,7 @@ section { padding: 6rem 1.5rem; }
     filter: blur(28px) brightness(1.02) saturate(0.9);
   }
   .hero__video { object-fit: contain; object-position: 50% 50%; }
-  .hero__text { top: 16%; }
+  .hero__text { top: 5%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -34,17 +34,18 @@ const CONFIG = {
   },
 
   /* ---------- HERO (first screen, right after the envelope) ----------
-     A painted video of the bride & groom walking hand in hand in the
-     sahn of Mohamed Ali Mosque. It starts when the envelope opens,
-     plays once (no sound) and rests on its last frame.                   */
+     Video of the bride & groom walking hand in hand in the sahn of
+     Mohamed Ali Mosque (portrait, centred on the mosque so the arcades
+     mirror each other). It starts when the envelope opens, plays once
+     (no sound) and rests on its last frame.                              */
   hero: {
     names: "Habiba & Gad", // shown over the video
     kicker: "", // small line above the names ("" hides it)
     subtitle: "", // line under the names ("" hides it)
     showDate: false, // true = show the date under the names
     scrollHint: "SCROLL",
-    video: "img/hero-couple.mp4",
-    poster: "img/hero-couple-poster.jpg", // still image shown while the video loads
+    video: "img/hero-gemini.mp4",
+    poster: "img/hero-gemini-poster.jpg", // still image shown while the video loads
     loop: false, // true = repeat the video instead of resting on the last frame
   },
 

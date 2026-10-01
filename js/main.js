@@ -35,35 +35,26 @@
   /* ---------- fill text content ---------- */
   const c = CONFIG.couple;
 
-  // hero (animated couple scene)
+  // hero (painted couple video)
   const H = CONFIG.hero || {};
-  $("hero-kicker").textContent = H.kicker || "";
-  $("name-first").textContent = c.firstName;
-  $("name-second").textContent = c.secondName;
-  const heroSub = $("hero-sub");
-  if (H.subtitle) heroSub.textContent = H.subtitle;
-  else heroSub.remove();
-  $("hero-date").textContent = c.dateDisplay;
+  const setOrRemove = (id, text) => { const el = $(id); if (text) el.textContent = text; else el.remove(); };
+  setOrRemove("hero-kicker", H.kicker);
+  $("hero-names").textContent = H.names || `${c.firstName} & ${c.secondName}`;
+  setOrRemove("hero-sub", H.subtitle);
+  setOrRemove("hero-date", H.showDate ? c.dateDisplay : "");
   $("hero-scroll-text").textContent = H.scrollHint || "SCROLL";
-  const heroImg = `url("${H.background || "img/sahn-watercolor.jpg"}")`;
-  $("hero-bg").style.backgroundImage = heroImg;
-  $("hero-bg-fill").style.backgroundImage = heroImg;
-
-  if (H.petals !== false) {
-    const petals = $("hero-petals");
-    for (let i = 0; i < 14; i++) {
-      const p = document.createElement("span");
-      p.className = "petal";
-      const size = 6 + Math.random() * 6;
-      p.style.left = `${Math.random() * 100}%`;
-      p.style.width = `${size}px`;
-      p.style.height = `${size * 0.75}px`;
-      p.style.setProperty("--drift", `${(Math.random() * 2 - 1) * 90}px`);
-      p.style.animationDuration = `${9 + Math.random() * 8}s`;
-      p.style.animationDelay = `${1 + Math.random() * 12}s`;
-      petals.appendChild(p);
-    }
+  const heroVideo = $("hero-video");
+  if (H.poster) {
+    heroVideo.poster = H.poster;
+    $("hero-fill").style.backgroundImage = `url("${H.poster}")`;
   }
+  const mp4 = H.video || "img/hero-couple.mp4";
+  const webm = mp4.replace(/\.mp4$/, ".webm");
+  // H.264 MP4 for Safari/Chrome/phones, VP9 WebM fallback for browsers without H.264
+  heroVideo.src = heroVideo.canPlayType("video/mp4; codecs=avc1.640028") ? mp4 : webm;
+  heroVideo.loop = !!H.loop;
+  heroVideo.muted = true;              // no sound; also required for autoplay on phones
+  heroVideo.load();
 
   // keep the scene exactly one screen tall below the "No kids" banner
   const banner = document.querySelector(".top-banner");
@@ -76,6 +67,9 @@
   function startHero() {
     fitHero();
     $("hero").classList.add("is-live");
+    try { heroVideo.currentTime = 0; } catch (e) { }
+    const p = heroVideo.play();
+    if (p && p.catch) p.catch(() => { });   // if autoplay is blocked, the poster stays visible
   }
 
   // save the date

@@ -43,9 +43,11 @@
   setOrRemove("hero-names", H.names === undefined ? `${c.firstName} & ${c.secondName}` : H.names);
   setOrRemove("hero-sub", H.subtitle);
   setOrRemove("hero-date", H.showDate ? c.dateDisplay : "");
-  $("hero-scroll-text").textContent = H.scrollHint || "SCROLL";
+  const scrollText = $("hero-scroll-text");
+  if (scrollText) scrollText.textContent = H.scrollHint || "SCROLL";
   // the button glides down to the Save the Date section
-  $("hero-cta").addEventListener("click", (e) => {
+  const heroCta = $("hero-cta");
+  if (heroCta) heroCta.addEventListener("click", (e) => {
     const target = $("save-the-date");
     if (!target) return;
     e.preventDefault();

@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&family=Pinyon+Script&family=Parisienne&family=Inter:wght@300..700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=8" />
+  <link rel="stylesheet" href="css/style.css?v=10" />
 </head>
 
 <body>
@@ -70,7 +70,11 @@
         <p class="hero__date" id="hero-date"></p>
       </div>
 
-      <p class="hero__scroll"><span class="hero__scroll-arrow">↓</span><span id="hero-scroll-text"></span></p>
+      <!-- button that glides down to the Save the Date section -->
+      <a class="hero__cta" id="hero-cta" href="#save-the-date">
+        <span class="hero__cta-text" id="hero-scroll-text"></span>
+        <svg class="hero__cta-chev" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8 14.5 1.5" /></svg>
+      </a>
     </section>
 
     <!-- SAVE THE DATE -->
@@ -245,8 +249,8 @@
   </button>
   <audio id="music" loop preload="none"></audio>
 
-  <script src="config.js?v=8"></script>
-  <script src="js/main.js?v=8"></script>
+  <script src="config.js?v=10"></script>
+  <script src="js/main.js?v=10"></script>
 </body>
 
 </html>

@@ -414,27 +414,58 @@ section { padding: 6rem 1.5rem; }
   margin-top: 1rem;
 }
 
-.hero__scroll {
+/* "Save the date" button — cream paper pill with a double gold rule, like the banner */
+.hero__cta {
+  --gold: #b08d57;
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 1.6svh;
-  display: flex;
+  left: 50%;
+  bottom: max(2.4svh, calc(env(safe-area-inset-bottom) + 0.75rem));
+  transform: translate(-50%, 8px);
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.36em;
-  color: #fff;
-  text-shadow: 0 1px 6px rgba(40, 26, 14, 0.5);
+  gap: 0.3rem;
+  padding: 0.75rem 1.7rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--gold);
+  background: rgba(238, 232, 223, 0.9);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow:
+    inset 0 0 0 3px rgba(238, 232, 223, 0.9),
+    inset 0 0 0 4px color-mix(in srgb, var(--gold) 55%, transparent),
+    0 8px 22px rgba(30, 20, 12, 0.28);
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
   opacity: 0;
-  transition: opacity 1s ease 2.5s;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 1s ease 2.5s, transform 1s cubic-bezier(0.2, 0.8, 0.2, 1) 2.5s, background-color 0.3s ease;
 }
-.hero.is-live .hero__scroll { opacity: 0.95; }
-.hero__scroll-arrow { font-size: 1.3rem; letter-spacing: 0; animation: nudge 1.8s ease-in-out infinite; }
-@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+.hero.is-live .hero__cta { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.hero__cta-text {
+  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-right: -0.28em; /* cancel the trailing letter-space so it centres */
+}
+.hero__cta-chev {
+  width: 0.85rem;
+  height: auto;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: nudge 1.8s ease-in-out infinite;
+}
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+.hero__cta:hover { background-color: #f5efe4; }
+.hero.is-live .hero__cta:active { transform: translate(-50%, 1px); transition-delay: 0s; }
+.hero__cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 
 /* wide screens: the portrait painting sits in the middle, framed by a blurred copy of itself */
 @media (min-aspect-ratio: 4/5) {
@@ -452,7 +483,7 @@ section { padding: 6rem 1.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero__scroll-arrow { animation: none; }
+  .hero__cta-chev { animation: none; }
 }
 
 /* ════════ TOP BANNER ════════

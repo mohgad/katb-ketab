@@ -44,6 +44,14 @@
   setOrRemove("hero-sub", H.subtitle);
   setOrRemove("hero-date", H.showDate ? c.dateDisplay : "");
   $("hero-scroll-text").textContent = H.scrollHint || "SCROLL";
+  // the button glides down to the Save the Date section
+  $("hero-cta").addEventListener("click", (e) => {
+    const target = $("save-the-date");
+    if (!target) return;
+    e.preventDefault();
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  });
   const heroVideo = $("hero-video");
   if (H.poster) {
     heroVideo.poster = H.poster;

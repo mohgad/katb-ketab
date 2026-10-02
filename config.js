@@ -43,7 +43,7 @@ const CONFIG = {
     kicker: "", // small line above the names ("" hides it)
     subtitle: "", // line under the names ("" hides it)
     showDate: false, // true = show the date under the names
-    scrollHint: "SCROLL",
+    scrollHint: "Save the date", // text on the button at the bottom of the video (it scrolls to Save the Date)
     video: "img/hero-wedding.mp4",
     poster: "img/hero-wedding-poster.jpg", // still image shown while the video loads
     loop: false, // true = repeat the video instead of resting on the last frame

@@ -353,14 +353,14 @@ section { padding: 6rem 1.5rem; }
 }
 .hero__fill { display: none; }
 
-/* a soft shade at the top so the names read over the white domes */
+/* a light shade at the very top and bottom (keeps the scroll hint readable) */
 .hero__scrim {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(36, 24, 15, 0.55) 0%, rgba(36, 24, 15, 0.28) 16%, rgba(36, 24, 15, 0) 34%, rgba(36, 24, 15, 0) 82%, rgba(36, 24, 15, 0.22) 100%);
+    linear-gradient(180deg, rgba(36, 24, 15, 0.18) 0%, rgba(36, 24, 15, 0) 14%, rgba(36, 24, 15, 0) 80%, rgba(36, 24, 15, 0.28) 100%);
 }
 
 /* names sit in the sky, centred on the mosque's axis;
@@ -455,36 +455,81 @@ section { padding: 6rem 1.5rem; }
   .hero__scroll-arrow { animation: none; }
 }
 
-/* ════════ TOP BANNER ════════ */
+/* ════════ TOP BANNER ════════
+   Cream paper strip framed by thin gold rules — same paper, ink and gold
+   as the envelope and the rest of the invitation.                         */
 .top-banner {
-  background: linear-gradient(90deg, #130f0c, #2a1f18, #130f0c);
-  background-size: 200% auto;
-  color: var(--light);
-  padding: 0.8rem 1rem;
-  text-align: center;
-  font-family: var(--sans);
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  --gold: #b08d57;
   position: relative;
   z-index: 10;
-  animation: shineBg 6s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1rem 0.95rem;
+  text-align: center;
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  border-bottom: 1px solid color-mix(in srgb, var(--gold) 70%, transparent);
+  box-shadow: 0 6px 18px rgba(42, 31, 24, 0.12);
 }
-@keyframes shineBg {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+/* second, finer gold rule just inside the bottom edge (double-rule frame) */
+.top-banner::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 3px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--gold) 55%, transparent) 18%, color-mix(in srgb, var(--gold) 55%, transparent) 82%, transparent);
 }
-.top-banner__icon {
-  font-size: 1.1rem;
-  animation: twinkle 2s infinite ease-in-out alternate;
+.top-banner__text {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.85rem;
+  margin: 0;
 }
-@keyframes twinkle {
-  0% { opacity: 0.4; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1.1); }
+.top-banner__en {
+  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-right: -0.3em; /* cancel the trailing letter-space so it centres */
+}
+.top-banner__sep {
+  font-size: 0.42rem;
+  color: var(--gold);
+  transform: translateY(-0.15em);
+}
+.top-banner__ar {
+  font-family: "Amiri", serif;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: var(--ink-soft);
+}
+.top-banner__orn {
+  flex: none;
+  width: 2.6rem;
+  height: auto;
+  fill: var(--gold);
+  stroke: var(--gold);
+  stroke-width: 0.8;
+}
+.top-banner__orn line { stroke-linecap: round; }
+.top-banner__orn path, .top-banner__orn circle { stroke: none; }
+.top-banner__orn--r { transform: scaleX(-1); }
+
+/* phones: English on one line, Arabic underneath, ornaments either side */
+@media (max-width: 480px) {
+  .top-banner { gap: 0.6rem; padding: 0.7rem 0.75rem 0.8rem; }
+  .top-banner__text { flex-direction: column; align-items: center; }
+  .top-banner__sep { display: none; }
+  .top-banner__en { font-size: 0.7rem; letter-spacing: 0.26em; margin-right: -0.26em; }
+  .top-banner__orn { width: 2rem; }
 }
 
 /* ════════ SAVE THE DATE ════════ */

@@ -39,7 +39,8 @@
   const H = CONFIG.hero || {};
   const setOrRemove = (id, text) => { const el = $(id); if (text) el.textContent = text; else el.remove(); };
   setOrRemove("hero-kicker", H.kicker);
-  $("hero-names").textContent = H.names || `${c.firstName} & ${c.secondName}`;
+  // names over the video: "" hides them (e.g. when the video already shows them)
+  setOrRemove("hero-names", H.names === undefined ? `${c.firstName} & ${c.secondName}` : H.names);
   setOrRemove("hero-sub", H.subtitle);
   setOrRemove("hero-date", H.showDate ? c.dateDisplay : "");
   $("hero-scroll-text").textContent = H.scrollHint || "SCROLL";

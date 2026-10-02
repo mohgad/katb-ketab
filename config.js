@@ -39,13 +39,13 @@ const CONFIG = {
      mirror each other). It starts when the envelope opens, plays once
      (no sound) and rests on its last frame.                              */
   hero: {
-    names: "Habiba & Gad", // shown over the video
+    names: "", // "" = no text on top (the names are already written in the video)
     kicker: "", // small line above the names ("" hides it)
     subtitle: "", // line under the names ("" hides it)
     showDate: false, // true = show the date under the names
     scrollHint: "SCROLL",
-    video: "img/hero-gemini.mp4",
-    poster: "img/hero-gemini-poster.jpg", // still image shown while the video loads
+    video: "img/hero-wedding.mp4",
+    poster: "img/hero-wedding-poster.jpg", // still image shown while the video loads
     loop: false, // true = repeat the video instead of resting on the last frame
   },
 

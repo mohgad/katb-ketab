@@ -116,61 +116,102 @@
     list.appendChild(li);
   });
 
-  // gallery — one photo at a time, swipe / tap the dots (Invitlo "Pictures" style)
+  // gallery — one photo at a time, endless loop: swipe / tap the dots / auto-play
   $("gallery-title").textContent = CONFIG.gallery.title;
   $("gallery-subtitle").textContent = CONFIG.gallery.subtitle;
   const track = $("gallery-track");
   const dotsWrap = $("gallery-dots");
   const photos = CONFIG.gallery.photos || [];
+  const n = photos.length;
+  const looping = n > 1;
   const dots = [];
-  photos.forEach((src, i) => {
+
+  function makeSlide(src, i, eager) {
     const fig = document.createElement("figure");
     fig.className = "gallery__slide";
     const img = document.createElement("img");
     img.src = src;
     img.alt = `Engagement photo ${i + 1}`;
-    img.loading = i === 0 ? "eager" : "lazy";
+    img.loading = eager ? "eager" : "lazy";
     img.draggable = false;
     fig.appendChild(img);
-    track.appendChild(fig);
-
+    return fig;
+  }
+  // [clone of last] 1 2 3 … n [clone of first]  → lets it wrap around seamlessly
+  if (looping) track.appendChild(makeSlide(photos[n - 1], n - 1, false)).setAttribute("aria-hidden", "true");
+  photos.forEach((src, i) => {
+    track.appendChild(makeSlide(src, i, i === 0));
     const dot = document.createElement("button");
     dot.type = "button";
     dot.className = "gallery__dot" + (i === 0 ? " is-active" : "");
     dot.setAttribute("aria-label", `Show photo ${i + 1}`);
-    dot.addEventListener("click", () => { stopAuto(); goTo(i); });
+    dot.addEventListener("click", () => { userTouched(); goTo(i); });
     dotsWrap.appendChild(dot);
     dots.push(dot);
   });
-  if (photos.length < 2) dotsWrap.style.display = "none";
+  if (looping) track.appendChild(makeSlide(photos[0], 0, false)).setAttribute("aria-hidden", "true");
+  else dotsWrap.style.display = "none";
 
-  let current = 0;
-  function goTo(i) {
-    track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
+  const offset = looping ? 1 : 0;           // real photo i sits at slide position i + offset
+  const slideW = () => Math.max(1, track.clientWidth);
+  const position = () => Math.round(track.scrollLeft / slideW());
+  function jumpTo(pos) {                    // instant, invisible jump (used at the clones)
+    track.style.scrollSnapType = "none";
+    track.scrollLeft = pos * slideW();
+    void track.offsetWidth;
+    track.style.scrollSnapType = "";
   }
-  function setActive(i) {
-    if (i === current) return;
-    current = i;
+  function goTo(i) {
+    track.scrollTo({ left: (i + offset) * slideW(), behavior: "smooth" });
+  }
+  function setActive(pos) {
+    const i = ((pos - offset) % n + n) % n;
     dots.forEach((d, k) => d.classList.toggle("is-active", k === i));
   }
-  let scrollRaf;
+  function settle() {
+    if (!looping) return;
+    const pos = position();
+    if (pos === 0) jumpTo(curPos = n);          // swiped back past the first → real last
+    else if (pos === n + 1) jumpTo(curPos = 1); // moved past the last → real first
+  }
+  let curPos = offset;                       // last settled slide position
+  if (looping) jumpTo(curPos);
+  // the site starts hidden behind the envelope (width 0) — re-centre whenever the size changes
+  if ("ResizeObserver" in window) new ResizeObserver(() => jumpTo(curPos)).observe(track);
+  else window.addEventListener("resize", () => jumpTo(curPos));
+
+  let scrollRaf, settleTimer;
   track.addEventListener("scroll", () => {
     cancelAnimationFrame(scrollRaf);
-    scrollRaf = requestAnimationFrame(() =>
-      setActive(Math.round(track.scrollLeft / Math.max(1, track.clientWidth)))
-    );
+    scrollRaf = requestAnimationFrame(() => { if (track.clientWidth) { curPos = position(); setActive(curPos); } });
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(settle, 140);  // fallback for browsers without "scrollend"
   }, { passive: true });
+  track.addEventListener("scrollend", () => { clearTimeout(settleTimer); settle(); });
 
-  // gentle auto-advance; stops for good once the guest swipes or taps
-  const autoMs = CONFIG.gallery.autoplaySeconds ? CONFIG.gallery.autoplaySeconds * 1000 : 0;
-  let autoTimer = null;
-  function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
-  if (autoMs && photos.length > 1) {
-    autoTimer = setInterval(() => goTo((current + 1) % photos.length), autoMs);
-    ["pointerdown", "touchstart", "wheel"].forEach((ev) =>
-      track.addEventListener(ev, stopAuto, { passive: true, once: true })
-    );
+  // auto-play forever; pauses while the guest is swiping, then carries on
+  const autoMs = (CONFIG.gallery.autoplaySeconds || 0) * 1000;
+  let autoTimer = null, resumeTimer = null;
+  function next() { track.scrollTo({ left: (position() + 1) * slideW(), behavior: "smooth" }); }
+  function startAuto() {
+    if (!autoMs || !looping || autoTimer) return;
+    autoTimer = setInterval(next, autoMs);
   }
+  function userTouched() {
+    clearInterval(autoTimer); autoTimer = null;
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(startAuto, autoMs + 3000);
+  }
+  ["pointerdown", "touchstart", "wheel"].forEach((ev) =>
+    track.addEventListener(ev, userTouched, { passive: true })
+  );
+  // only run while the section is on screen
+  new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) startAuto();
+      else { clearInterval(autoTimer); autoTimer = null; }
+    });
+  }, { threshold: 0.3 }).observe(track);
 
   // countdown
   const CD = CONFIG.countdown;

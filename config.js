@@ -109,7 +109,7 @@ const CONFIG = {
   gallery: {
     title: "Pictures", // written in script
     subtitle: "A few moments from our journey together.",
-    autoplaySeconds: 5, // slides on its own until the guest swipes (0 = off)
+    autoplaySeconds: 4, // loops forever; pauses while a guest swipes (0 = off)
     photos: [
       "img/engagement-1.jpg",
       "img/engagement-2.jpg",
@@ -138,7 +138,7 @@ const CONFIG = {
 
   /* ---------- FOOTER ---------- */
   footer: {
-    creditLabel: "Thank you for visiting our wedding site. Made with love",
+    creditLabel: "Thank you",
     creditName: "", // your name / brand
     creditUrl: "", // optional link on the credit (leave "" for none)
     instagram: "", // e.g. "https://instagram.com/yourpage"  ("" hides the icon)

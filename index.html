@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&family=Pinyon+Script&family=Parisienne&family=Inter:wght@300..700&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=11" />
+  <link rel="stylesheet" href="css/style.css?v=12" />
 </head>
 
 <body>
@@ -128,9 +128,12 @@
 
     <!-- GALLERY -->
     <section class="gallery" id="gallery">
-      <h2 class="gallery__title serif reveal" id="gallery-title"></h2>
+      <h2 class="gallery__title reveal" id="gallery-title"></h2>
       <p class="gallery__subtitle reveal" id="gallery-subtitle"></p>
-      <div class="gallery__grid" id="gallery-grid"></div>
+      <div class="gallery__carousel reveal">
+        <div class="gallery__track" id="gallery-track" aria-label="Engagement photos"></div>
+      </div>
+      <div class="gallery__dots" id="gallery-dots" role="tablist"></div>
     </section>
 
     <!-- COUNTDOWN -->
@@ -249,8 +252,8 @@
   </button>
   <audio id="music" loop preload="none"></audio>
 
-  <script src="config.js?v=11"></script>
-  <script src="js/main.js?v=11"></script>
+  <script src="config.js?v=12"></script>
+  <script src="js/main.js?v=12"></script>
 </body>
 
 </html>

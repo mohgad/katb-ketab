@@ -116,20 +116,61 @@
     list.appendChild(li);
   });
 
-  // gallery
+  // gallery — one photo at a time, swipe / tap the dots (Invitlo "Pictures" style)
   $("gallery-title").textContent = CONFIG.gallery.title;
   $("gallery-subtitle").textContent = CONFIG.gallery.subtitle;
-  const grid = $("gallery-grid");
-  CONFIG.gallery.photos.forEach((src, i) => {
+  const track = $("gallery-track");
+  const dotsWrap = $("gallery-dots");
+  const photos = CONFIG.gallery.photos || [];
+  const dots = [];
+  photos.forEach((src, i) => {
     const fig = document.createElement("figure");
-    fig.className = "gallery__item reveal";
+    fig.className = "gallery__slide";
     const img = document.createElement("img");
     img.src = src;
-    img.alt = `Photo ${i + 1}`;
-    img.loading = "lazy";
+    img.alt = `Engagement photo ${i + 1}`;
+    img.loading = i === 0 ? "eager" : "lazy";
+    img.draggable = false;
     fig.appendChild(img);
-    grid.appendChild(fig);
+    track.appendChild(fig);
+
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "gallery__dot" + (i === 0 ? " is-active" : "");
+    dot.setAttribute("aria-label", `Show photo ${i + 1}`);
+    dot.addEventListener("click", () => { stopAuto(); goTo(i); });
+    dotsWrap.appendChild(dot);
+    dots.push(dot);
   });
+  if (photos.length < 2) dotsWrap.style.display = "none";
+
+  let current = 0;
+  function goTo(i) {
+    track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
+  }
+  function setActive(i) {
+    if (i === current) return;
+    current = i;
+    dots.forEach((d, k) => d.classList.toggle("is-active", k === i));
+  }
+  let scrollRaf;
+  track.addEventListener("scroll", () => {
+    cancelAnimationFrame(scrollRaf);
+    scrollRaf = requestAnimationFrame(() =>
+      setActive(Math.round(track.scrollLeft / Math.max(1, track.clientWidth)))
+    );
+  }, { passive: true });
+
+  // gentle auto-advance; stops for good once the guest swipes or taps
+  const autoMs = CONFIG.gallery.autoplaySeconds ? CONFIG.gallery.autoplaySeconds * 1000 : 0;
+  let autoTimer = null;
+  function stopAuto() { clearInterval(autoTimer); autoTimer = null; }
+  if (autoMs && photos.length > 1) {
+    autoTimer = setInterval(() => goTo((current + 1) % photos.length), autoMs);
+    ["pointerdown", "touchstart", "wheel"].forEach((ev) =>
+      track.addEventListener(ev, stopAuto, { passive: true, once: true })
+    );
+  }
 
   // countdown
   const CD = CONFIG.countdown;

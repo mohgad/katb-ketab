@@ -82,7 +82,7 @@ const CONFIG = {
         note: "Welcome and gathering before the ceremony.",
       },
       {
-        time: "7:30 PM",
+        time: "6:00 PM",
         title: "Katb Ketab",
         note: "Where the forever part happens.",
       },
@@ -104,16 +104,17 @@ const CONFIG = {
     ],
   },
 
-  /* ---------- GALLERY (black section) ---------- */
+  /* ---------- GALLERY ("Pictures" — swipe carousel, film-toned photos) ----------
+     Photos already have the warm film look baked in.
+     Best size: portrait 4:5 (e.g. 1200 × 1500).                       */
   gallery: {
-    title: "Moments, Framed.",
-    subtitle: "A love letter, in fragments. Tap, hover, linger.",
-    // Add as many photos as you want — they flow in a 2-column grid
+    title: "Pictures", // written in script
+    subtitle: "A few moments from our journey together.",
+    autoplaySeconds: 5, // slides on its own until the guest swipes (0 = off)
     photos: [
-      "img/gallery-1.jpg",
-      "img/gallery-2.jpg",
-      "img/gallery-3.jpg",
-      "img/gallery-4.jpg",
+      "img/engagement-1.jpg",
+      "img/engagement-2.jpg",
+      "img/engagement-3.jpg",
     ],
   },
 

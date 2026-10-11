@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&family=Amiri:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&family=Pinyon+Script&family=Parisienne&family=Inter:wght@300..700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css?v=13" />
+</head>
+
+<body>
+
+  <!-- ════════ ENVELOPE INTRO (full-screen, 3D flap opening) ════════ -->
+  <div id="envelope" class="envelope" role="button" tabindex="0" aria-label="Open the invitation">
+    <!-- the envelope paper (pocket) -->
+    <div class="envelope__paper" aria-hidden="true"></div>
+
+    <!-- text printed on the envelope -->
+    <div class="envelope__content">
+      <p class="envelope__bismillah" dir="rtl" id="envelope-bismillah">بسم الله الرحمن الرحيم</p>
+      <p class="envelope__title" id="envelope-title">You're invited</p>
+    </div>
+
+    <!-- darkness inside the pocket + shadow cast by the flap -->
+    <div class="envelope__pocket" aria-hidden="true"></div>
+    <div class="envelope__shadow" aria-hidden="true"><div class="envelope__shadow-shape"></div></div>
+
+    <!-- the 3D flap (swings up toward the viewer and off the top) -->
+    <div class="envelope__flap" id="envelope-flap" aria-hidden="true">
+      <div class="envelope__flap-face envelope__flap-face--front"></div>
+      <div class="envelope__flap-face envelope__flap-face--back"></div>
+      <div class="envelope__seal" id="envelope-seal">
+        <img src="img/wax-seal.png" alt="" class="envelope__seal-img" />
+      </div>
+    </div>
+
+    <!-- hint -->
+    <p class="envelope__cta" id="envelope-hint">TAP TO OPEN</p>
+  </div>
+
+  <!-- ════════ SITE ════════ -->
+  <main id="site" class="site" hidden>
+
+    <!-- BANNER — cream paper strip with gold rules, same look as the envelope -->
+    <div class="top-banner" role="note">
+      <svg class="top-banner__orn" viewBox="0 0 46 12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" /><path d="M40 1.5 44.5 6 40 10.5 35.5 6Z" /><circle cx="30" cy="6" r="1.3" /></svg>
+      <p class="top-banner__text">
+        <span class="top-banner__en">No kids allowed</span>
+        <span class="top-banner__sep" aria-hidden="true">◆</span>
+        <span class="top-banner__ar" dir="rtl" lang="ar">ممنوع اصطحاب الأطفال</span>
+      </p>
+      <svg class="top-banner__orn top-banner__orn--r" viewBox="0 0 46 12" aria-hidden="true"><line x1="0" y1="6" x2="34" y2="6" /><path d="M40 1.5 44.5 6 40 10.5 35.5 6Z" /><circle cx="30" cy="6" r="1.3" /></svg>
+    </div>
+
+    <!-- HERO — video of the bride & groom (names are part of the video) walking in the sahn of Mohamed Ali Mosque (plays when the envelope opens) -->
+    <section class="hero" id="hero">
+      <div class="hero__fill" id="hero-fill" aria-hidden="true"></div>
+      <video class="hero__video" id="hero-video" muted playsinline preload="auto" aria-hidden="true"></video>
+      <div class="hero__scrim" aria-hidden="true"></div>
+
+      <div class="hero__text">
+        <p class="hero__kicker" id="hero-kicker"></p>
+        <h1 class="hero__names" id="hero-names"></h1>
+        <p class="hero__sub" id="hero-sub"></p>
+        <p class="hero__date" id="hero-date"></p>
+      </div>
+
+      <!-- button that glides down to the Save the Date section -->
+      <a class="hero__cta" id="hero-cta" href="#save-the-date">
+        <span class="hero__cta-text" id="hero-scroll-text"></span>
+        <svg class="hero__cta-chev" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 1.5 8 8 14.5 1.5" /></svg>
+      </a>
+    </section>
+
+    <!-- SAVE THE DATE -->
+    <section class="std" id="save-the-date">
+      <h2 class="std__title reveal">
+        <span class="std__save">SAVE</span>
+        <span class="std__the-date"><em class="script">the</em><span>DATE!</span></span>
+      </h2>
+      <!-- <img class="std__illustration reveal" id="std-illustration" src="" alt="Bride and groom illustration" /> -->
+      <hr class="std__rule" />
+      <p class="std__names label reveal" id="std-names"></p>
+      <p class="std__date label reveal" id="std-date"></p>
+    </section>
+
+    <!-- VENUE -->
+    <section class="venue" id="venue">
+      <div class="venue__bg" id="venue-bg"></div>
+      <div class="venue__content">
+        <h2 class="venue__title serif reveal">
+          <span id="venue-title-start"></span>
+          <em class="serif-italic" id="venue-title-italic"></em>
+          <span id="venue-title-end"></span>
+        </h2>
+        <dl class="venue__details">
+          <div class="reveal">
+            <dt class="label">Venue</dt>
+            <dd class="serif" id="venue-name"></dd>
+          </div>
+          <div class="reveal">
+            <dt class="label">When</dt>
+            <dd class="serif" id="venue-when"></dd>
+          </div>
+          <div class="reveal">
+            <dt class="label">Notice</dt>
+            <dd class="serif" id="venue-dress"></dd>
+          </div>
+        </dl>
+        <a class="btn btn--ghost reveal" id="venue-maps" href="#" target="_blank" rel="noopener">
+          <span class="label">Open in Maps</span><span class="btn__arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- PROGRAM -->
+    <section class="program" id="program">
+      <p class="program__kicker script reveal" id="program-kicker"></p>
+      <h2 class="program__title serif reveal" id="program-title"></h2>
+      <ol class="program__list" id="program-list"></ol>
+      <p class="program__closing script reveal" id="program-closing"></p>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+      <h2 class="gallery__title reveal" id="gallery-title"></h2>
+      <p class="gallery__subtitle reveal" id="gallery-subtitle"></p>
+      <div class="gallery__carousel reveal">
+        <div class="gallery__track" id="gallery-track" aria-label="Engagement photos"></div>
+      </div>
+      <div class="gallery__dots" id="gallery-dots" role="tablist"></div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section class="countdown" id="countdown">
+      <h2 class="countdown__title reveal" id="countdown-title"></h2>
+
+      <!-- vintage clock with a little bouquet — its hands show the real time -->
+      <svg class="countdown__clock reveal" viewBox="0 0 160 170" aria-hidden="true">
+        <defs>
+          <radialGradient id="gClockFace" cx=".45" cy=".4" r=".7">
+            <stop offset="0" stop-color="#fffdf7" />
+            <stop offset="1" stop-color="#efe5d2" />
+          </radialGradient>
+          <linearGradient id="gClockRim" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#e6cf9a" />
+            <stop offset=".5" stop-color="#c9a86a" />
+            <stop offset="1" stop-color="#a88649" />
+          </linearGradient>
+        </defs>
+        <circle cx="86" cy="12" r="6" fill="none" stroke="url(#gClockRim)" stroke-width="3" />
+        <rect x="81" y="16" width="10" height="8" rx="2" fill="url(#gClockRim)" />
+        <circle cx="86" cy="70" r="47" fill="url(#gClockRim)" />
+        <circle cx="86" cy="70" r="41" fill="url(#gClockFace)" stroke="#b8975a" stroke-width="1" />
+        <circle cx="86" cy="70" r="35" fill="none" stroke="#d9c49a" stroke-width=".8" />
+        <g font-family="Cinzel, serif" font-size="7.5" fill="#9a7a45" text-anchor="middle">
+          <text x="86" y="41">XII</text><text x="115" y="73">III</text>
+          <text x="86" y="104">VI</text><text x="57" y="73">IX</text>
+        </g>
+        <g fill="#b8975a">
+          <circle cx="101" cy="44" r="1.2" /><circle cx="112" cy="55" r="1.2" />
+          <circle cx="112" cy="85" r="1.2" /><circle cx="101" cy="96" r="1.2" />
+          <circle cx="71" cy="96" r="1.2" /><circle cx="60" cy="85" r="1.2" />
+          <circle cx="60" cy="55" r="1.2" /><circle cx="71" cy="44" r="1.2" />
+        </g>
+        <g stroke="#5a4428" stroke-linecap="round">
+          <line id="clock-hour" x1="86" y1="70" x2="86" y2="50" stroke-width="2.4" />
+          <line id="clock-min" x1="86" y1="70" x2="86" y2="40" stroke-width="1.5" />
+        </g>
+        <circle cx="86" cy="70" r="2.6" fill="#a88649" />
+        <!-- bouquet at the bottom left -->
+        <g transform="translate(-12 -20) scale(1.2)"><g class="countdown__flowers">
+          <path d="M44 128 Q30 118 22 104 Q36 108 46 120 Z" fill="#9aa585" />
+          <path d="M52 132 Q46 146 34 150 Q36 136 48 128 Z" fill="#8a9676" />
+          <path d="M70 124 Q84 134 98 134 Q88 122 72 118 Z" fill="#a3ad8e" />
+          <path d="M40 112 Q34 96 38 84 Q48 96 46 110 Z" fill="#b1b99c" />
+          <g transform="translate(52 114)">
+            <g fill="#fbf7ef" stroke="#e2d6c1" stroke-width=".8">
+              <ellipse rx="6" ry="11" transform="rotate(0)" /><ellipse rx="6" ry="11" transform="rotate(72)" />
+              <ellipse rx="6" ry="11" transform="rotate(144)" /><ellipse rx="6" ry="11" transform="rotate(216)" />
+              <ellipse rx="6" ry="11" transform="rotate(288)" />
+            </g>
+            <circle r="3.6" fill="#d9b66f" />
+          </g>
+          <g transform="translate(72 126) scale(.72)">
+            <g fill="#f6ede0" stroke="#e2d0b8" stroke-width=".9">
+              <ellipse rx="6" ry="11" transform="rotate(20)" /><ellipse rx="6" ry="11" transform="rotate(92)" />
+              <ellipse rx="6" ry="11" transform="rotate(164)" /><ellipse rx="6" ry="11" transform="rotate(236)" />
+              <ellipse rx="6" ry="11" transform="rotate(308)" />
+            </g>
+            <circle r="3.6" fill="#cfa962" />
+          </g>
+          <g transform="translate(34 128) scale(.55)">
+            <g fill="#f3e6e0" stroke="#e0c9bf" stroke-width="1">
+              <ellipse rx="6" ry="11" transform="rotate(10)" /><ellipse rx="6" ry="11" transform="rotate(82)" />
+              <ellipse rx="6" ry="11" transform="rotate(154)" /><ellipse rx="6" ry="11" transform="rotate(226)" />
+              <ellipse rx="6" ry="11" transform="rotate(298)" />
+            </g>
+            <circle r="3.6" fill="#d9b66f" />
+          </g>
+          <g fill="#e9dcc3"><circle cx="86" cy="132" r="2" /><circle cx="91" cy="129" r="1.6" /><circle cx="28" cy="112" r="1.8" /></g>
+        </g></g>
+      </svg>
+
+      <p class="countdown__text reveal" id="countdown-text"></p>
+
+      <div class="countdown__grid reveal">
+        <div class="countdown__unit"><span class="countdown__num" id="cd-days">00</span><span class="countdown__label" id="cd-days-label"></span></div>
+        <div class="countdown__unit"><span class="countdown__num" id="cd-hours">00</span><span class="countdown__label" id="cd-hours-label"></span></div>
+        <div class="countdown__unit"><span class="countdown__num" id="cd-minutes">00</span><span class="countdown__label" id="cd-minutes-label"></span></div>
+        <div class="countdown__unit"><span class="countdown__num" id="cd-seconds">00</span><span class="countdown__label" id="cd-seconds-label"></span></div>
+      </div>
+      <p class="countdown__closing reveal" id="countdown-closing"></p>
+    </section>
+
+    <!-- MESSAGE -->
+    <section class="msg" id="message">
+      <hr class="msg__rule" />
+      <h2 class="msg__title serif reveal" id="msg-title"></h2>
+      <p class="msg__text serif-italic reveal" id="msg-text"></p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p class="footer__names serif">
+        <span id="footer-name-first"></span>
+        <span class="amp serif-italic">&amp;</span>
+        <span id="footer-name-second"></span>
+      </p>
+      <p class="footer__date label" id="footer-date"></p>
+      <p class="footer__credit label">
+        <span id="footer-credit-label"></span>
+        <a id="footer-credit-name" href="#"></a>
+      </p>
+      <div class="footer__social" id="footer-social"></div>
+    </footer>
+  </main>
+
+  <!-- MUSIC BUTTON -->
+  <button id="music-btn" class="music-btn" hidden aria-label="Play / pause music">
+    <svg class="music-btn__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+    <svg class="music-btn__pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+    </svg>
+  </button>
+  <audio id="music" loop preload="none"></audio>
+
+  <script src="config.js?v=13"></script>
+  <script src="js/main.js?v=13"></script>
+</body>
+
+</html>

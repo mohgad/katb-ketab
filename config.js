@@ -46,7 +46,7 @@ const CONFIG = {
     scrollHint: "Save the date", // text on the button at the bottom of the video (it scrolls to Save the Date)
     video: "img/hero-wedding.mp4",
     poster: "img/hero-wedding-poster.jpg", // still image shown while the video loads
-    loop: false, // true = repeat the video instead of resting on the last frame
+    loop: true, // true = repeat the video instead of resting on the last frame
   },
 
   /* ---------- SAVE THE DATE SECTION ---------- */
@@ -71,9 +71,9 @@ const CONFIG = {
 
   /* ---------- PROGRAM / TIMELINE ---------- */
   program: {
-    kicker: "How the day unfolds", // handwritten line
-    title: "The program",
-    closing: "Stay as late as your heart wants ✽",
+    kicker: "", // handwritten line
+    title: "How the day unfolds",
+    closing: "",
     // Add / remove / edit as many items as you want
     items: [
       {
@@ -104,8 +104,7 @@ const CONFIG = {
     ],
   },
 
-  /* ---------- GALLERY ("Pictures" — swipe carousel, film-toned photos) ----------
-     Photos already have the warm film look baked in.
+  /* ---------- GALLERY ("Pictures" — swipe carousel) ----------
      Best size: portrait 4:5 (e.g. 1200 × 1500).                       */
   gallery: {
     title: "Pictures", // written in script

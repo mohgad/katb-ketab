@@ -71,9 +71,9 @@ const CONFIG = {
 
   /* ---------- PROGRAM / TIMELINE ---------- */
   program: {
-    kicker: "", // handwritten line
-    title: "How the day unfolds",
-    closing: "",
+    kicker: "How the day unfolds", // handwritten line
+    title: "",
+    closing: "H&G",
     // Add / remove / edit as many items as you want
     items: [
       {

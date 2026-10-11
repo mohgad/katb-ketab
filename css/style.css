@@ -627,13 +627,14 @@ section { padding: 6rem 1.5rem; }
   inset: 0;
   background-size: cover;
   background-position: center;
-  filter: grayscale(1) brightness(0.5);
+  /* warm brown / sepia tone to match the invitation palette */
+  filter: sepia(0.85) saturate(1.25) hue-rotate(-8deg) brightness(0.62) contrast(1.05);
 }
 .venue__bg::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+  background: linear-gradient(180deg, rgba(60, 38, 22, 0.35), rgba(36, 26, 19, 0.65));
 }
 .venue__content { position: relative; z-index: 1; max-width: 640px; }
 

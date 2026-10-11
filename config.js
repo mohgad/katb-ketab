@@ -59,9 +59,9 @@ const CONFIG = {
   /* ---------- VENUE SECTION (dark, full-screen photo) ---------- */
   venue: {
     // Headline: the middle part is rendered in italic
-    titleStart: "Under one",
-    titleItalic: "very full",
-    titleEnd: "moon.",
+    titleStart: "Two hearts,",
+    titleItalic: "one",
+    titleEnd: "promise.",
     name: "Salah El-Din Citadel",
     when: "27 Dec 2026 · 5:30 PM Arrival",
     dress: "No Kids Allowed / ممنوع اصطحاب الأطفال",
